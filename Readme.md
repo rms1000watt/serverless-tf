@@ -25,7 +25,7 @@ As seen in [Example: Hello World Go](https://github.com/rms1000watt/serverless-t
 
 ```hcl
 module "serverless" {
-  source = "github.com/rms1000watt/serverless-tf"
+  source = "rms1000watt/serverless-tf/aws"
 
   functions = [
     {
@@ -41,7 +41,7 @@ As seen in [Example: HTTP Go](https://github.com/rms1000watt/serverless-tf/blob/
 
 ```hcl
 module "serverless" {
-  source = "github.com/rms1000watt/serverless-tf"
+  source = "rms1000watt/serverless-tf/aws"
 
   functions = [
     {
@@ -64,7 +64,7 @@ As seen in [Example: Schedule Go](https://github.com/rms1000watt/serverless-tf/b
 
 ```hcl
 module "serverless" {
-  source = "github.com/rms1000watt/serverless-tf"
+  source = "rms1000watt/serverless-tf/aws"
 
   functions = [
     {
@@ -79,7 +79,7 @@ module "serverless" {
 
 ```hcl
 module "serverless" {
-  source = "github.com/rms1000watt/serverless-tf"
+  source = "rms1000watt/serverless-tf/aws"
 
   functions = [
     {
@@ -108,7 +108,7 @@ Here are the options that each function supports.
 
 ```hcl
 module "serverless" {
-  source = "github.com/rms1000watt/serverless-tf"
+  source = "rms1000watt/serverless-tf/aws"
 
   service = "" // optional (default: folder name)
 
@@ -160,4 +160,3 @@ An alternative approach for full Serverless functionality would be to create a G
 - [ ] examples/hellow-world-py
 - [ ] examples/hellow-world-js
 - [ ] env vars in lambda as string mapped to map (VAR1=val1 VAR2=val2 VAR3=val3)
-- [ ] nightly clones of this project to rms1000watt/terraform-aws-serverless so it can be found at registry.terraform.io
