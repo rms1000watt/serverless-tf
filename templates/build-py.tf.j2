@@ -1,0 +1,12 @@
+// GENERATED FILE: DO NOT EDIT
+{%- for i in range(max_functions) %}
+
+data "archive_file" "lambda_py_{{i}}" {
+  type        = "zip"
+  source_file = "${local.lambda_py_{{i}}_source_file}"
+  output_path = "${local.lambda_py_{{i}}_zip}"
+  depends_on  = ["null_resource.validator"]
+
+  count       = "${local.lambda_py_{{i}}_count}"
+}
+{%- endfor %}

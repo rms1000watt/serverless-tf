@@ -1,0 +1,109 @@
+// GENERATED FILE: DO NOT EDIT
+
+data "aws_region" "current" {}
+data "aws_caller_identity" "current" {}
+
+resource "aws_api_gateway_rest_api" "global" {
+  name  = "${local.service_name}"
+
+  count = "${ {%- for i in range(max_functions) %}local.api_gateway_{{i}} || {% endfor %}false ? 1 : 0}"
+}
+{%- for i in range(max_functions) %}
+
+resource "aws_api_gateway_resource" "{{i}}" {
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  parent_id   = "${aws_api_gateway_rest_api.global.root_resource_id}"
+  path_part   = "${local.api_gateway_{{i}}_path}"
+
+  count = "${local.api_gateway_{{i}}_count}"
+}
+
+resource "aws_api_gateway_method" "{{i}}" {
+  rest_api_id   = "${aws_api_gateway_rest_api.global.id}"
+  resource_id   = "${aws_api_gateway_resource.{{i}}.id}"
+  http_method   = "${local.api_gateway_{{i}}_method}"
+  authorization = "${local.api_gateway_{{i}}_authorization}"
+
+  count = "${local.api_gateway_{{i}}_count}"
+}
+
+resource "aws_api_gateway_integration" "{{i}}_go" {
+  rest_api_id             = "${aws_api_gateway_rest_api.global.id}"
+  resource_id             = "${aws_api_gateway_method.{{i}}.resource_id}"
+  http_method             = "${aws_api_gateway_method.{{i}}.http_method}"
+  type                    = "AWS_PROXY"
+  integration_http_method = "POST"
+  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_go_{{i}}.arn}/invocations"
+
+  count = "${local.lambda_go_{{i}}_count + local.api_gateway_{{i}}_count == 2 ? 1 : 0}"
+}
+
+resource "aws_api_gateway_integration" "{{i}}_py" {
+  rest_api_id             = "${aws_api_gateway_rest_api.global.id}"
+  resource_id             = "${aws_api_gateway_method.{{i}}.resource_id}"
+  http_method             = "${aws_api_gateway_method.{{i}}.http_method}"
+  type                    = "AWS_PROXY"
+  integration_http_method = "POST"
+  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_py_{{i}}.arn}/invocations"
+
+  count = "${local.lambda_py_{{i}}_count + local.api_gateway_{{i}}_count == 2 ? 1 : 0}"
+}
+
+resource "aws_api_gateway_integration" "{{i}}_js" {
+  rest_api_id             = "${aws_api_gateway_rest_api.global.id}"
+  resource_id             = "${aws_api_gateway_method.{{i}}.resource_id}"
+  http_method             = "${aws_api_gateway_method.{{i}}.http_method}"
+  type                    = "AWS_PROXY"
+  integration_http_method = "POST"
+  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_{{i}}.arn}/invocations"
+
+  count = "${local.lambda_js_{{i}}_count + local.api_gateway_{{i}}_count == 2 ? 1 : 0}"
+}
+
+resource "aws_api_gateway_deployment" "{{i}}" {
+  depends_on = [
+    "aws_api_gateway_integration.{{i}}_go",
+    "aws_api_gateway_integration.{{i}}_py",
+    "aws_api_gateway_integration.{{i}}_js",
+  ]
+
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  stage_name  = "${local.api_gateway_{{i}}_stage}"
+
+  variables {
+    deployed_at = "${timestamp()}"
+  }
+
+  count = "${local.api_gateway_{{i}}_count}"
+}
+
+resource "aws_lambda_permission" "{{i}}_go" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${aws_lambda_function.lambda_go_{{i}}.arn}"
+  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.{{i}}.http_method}${aws_api_gateway_resource.{{i}}.path}"
+
+  count = "${local.lambda_go_{{i}}_count + local.api_gateway_{{i}}_count == 2 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "{{i}}_py" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${aws_lambda_function.lambda_py_{{i}}.arn}"
+  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.{{i}}.http_method}${aws_api_gateway_resource.{{i}}.path}"
+
+  count = "${local.lambda_py_{{i}}_count + local.api_gateway_{{i}}_count == 2 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "{{i}}_js" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${aws_lambda_function.lambda_js_{{i}}.arn}"
+  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.{{i}}.http_method}${aws_api_gateway_resource.{{i}}.path}"
+
+  count = "${local.lambda_js_{{i}}_count + local.api_gateway_{{i}}_count == 2 ? 1 : 0}"
+}
+{%- endfor %}

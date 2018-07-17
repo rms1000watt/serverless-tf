@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-MAX_FUNCTIONS=10
+MAX_FUNCTIONS=1
 MAX_EVENTS=5
 
 echo "Requires:"
@@ -12,7 +12,7 @@ for file in templates/*.j2; do
   out=${file//.j2/}
   out=${out//templates\//}
   echo "Generating: $out"
-  # jinja2 "$file" j2.json > "$out"
+  jinja2 "$file" j2.json > "$out"
 done
 
 rm j2.json

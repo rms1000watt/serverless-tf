@@ -1,3 +1,5 @@
+// GENERATED FILE: DO NOT EDIT
+
 resource "null_resource" "go_0_build" {
   provisioner "local-exec" {
     command = "${local.lambda_0_vendor_cmd != "" ? "${local.lambda_0_vendor_cmd} && " : ""}${local.lambda_0_test_cmd != "" ? "${local.lambda_0_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_0_bin}"

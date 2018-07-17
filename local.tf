@@ -1,12 +1,14 @@
+// GENERATED FILE: DO NOT EDIT
+
 locals {
   // Variable setup
   path_root_list = "${split("/", path.root)}"
   path_root_len  = "${length(local.path_root_list)}"
   parent_dir     = "${element(local.path_root_list, local.path_root_len - 1)}"
-  service_name   = "${var.service_name != "" ? var.service_name : local.parent_dir}"
+  service_name   = "${var.service != "" ? var.service : local.parent_dir}"
 }
 
-// Lambda_0
+// locals for lambda_0
 locals {
   lambda_0 = "${var.functions[0]}"
 
@@ -51,22 +53,14 @@ locals {
 
   // Lambda Generic
   lambda_0_name_computed = "${local.lambda_0_name != "" ? local.lambda_0_name : (local.lambda_go_0 ? local.lambda_go_0_name : (local.lambda_py_0 ? local.lambda_py_0_name : (local.lambda_js_0 ? local.lambda_js_0_name : "${local.service_name}-ez-lambda" ))) }" //"
+
+  // API Gateway
+  api_gateway_0               = "${lookup(local.lambda_0, "http", "" ) != "" || lookup(local.lambda_0, "http_path", "") != "" || lookup(local.lambda_0, "http_method", "") != "" || lookup(local.lambda_0, "http_authorization", "") != "" || lookup(local.lambda_0, "http_stage", "") != ""}"
+  api_gateway_0_count         = "${local.api_gateway_0 ? 1 : 0}"
+  api_gateway_0_name          = "${local.lambda_0_name_computed}-0"
+  api_gateway_0_path          = "${lookup(local.lambda_0, "http_path", local.lambda_0_name_computed)}"
+  api_gateway_0_method        = "${upper(lookup(local.lambda_0, "http_method", "get"))}"
+  api_gateway_0_stage         = "${lookup(local.lambda_0, "http_stage", "prod")}"
+  api_gateway_0_authorization = "${lookup(local.lambda_0, "http_authorization", "NONE")}"
 }
-
-// // Event 0
-// locals {
-//   event_0      = "${var.events[0]}"
-//   event_0_type = "${local.event_0["type"]}"
-
-
-//   // API Gateway
-//   api_gateway_0               = "${lower(local.event_0_type) == "http"}"
-//   api_gateway_0_count         = "${local.api_gateway_0 ? 1 : 0}"
-//   api_gateway_0_name          = "${local.lambda_name}-0"
-//   api_gateway_0_new           = "${local.api_gateway_0 && local.event_0["api_gateway_id"] == "" && local.event_0["api_gateway_root_resource_id"] == ""}"
-//   api_gateway_0_path          = "${local.event_0["path"] != ""   ? local.event_0["path"]          : local.lambda_name }"
-//   api_gateway_0_method        = "${local.event_0["method"] != "" ? upper(local.event_0["method"]) : "GET" }"
-//   api_gateway_0_stage         = "${local.event_0["stage"] != ""  ? local.event_0["stage"]         : "prod" }"
-//   api_gateway_0_authorization = "${local.event_0["authorization"] == "" || upper(local.event_0["authorization"]) == "NONE" ? "NONE" : local.event_0["authorization"]}"
-// }
 
