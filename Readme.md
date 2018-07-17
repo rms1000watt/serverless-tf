@@ -13,7 +13,7 @@ I really love [Serverless](https://www.serverless.com) for their ease of use--bu
 ## Limitations
 
 - Up to 10 functions per module
-- 1 event-type per function (http + schedule is OK for 1 function (2 event-types). http + http is not OK for 1 function (1 event-type).)
+- No duplicate event-type per function
 
 ## Alternative Approach
 
