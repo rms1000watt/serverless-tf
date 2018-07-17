@@ -4,6 +4,8 @@
 
 I really love [Serverless](https://www.serverless.com) for their ease of use--but a lot of enterprises are already integrated with Terraform. So, this Terraform module is designed to be as simple to use as Serverless by using a similar naming and structure conventions as a `serverless.yml` file.
 
+This is a work in progress, but API Gateway & Cloudwatch Rate are functional. Feel free to contribute! 😊
+
 ## Contents
 
 - [Usage](#usage)
@@ -140,6 +142,10 @@ Since this is a module, the ouput needs to be mapped from the module to your imp
 
 - Up to 10 functions per module (configurable.. update `generator.sh` then submit a PR)
 - No duplicate event-type per function (ie. only 1 `http_path` per function)
+- Depth of 1 API Gateway path
+- No dynamic path parameters in API Gateway
+
+(Please contribute if you need this functionality)
 
 ## Alternative Approach
 
@@ -154,3 +160,4 @@ An alternative approach for full Serverless functionality would be to create a G
 - [ ] examples/hellow-world-py
 - [ ] examples/hellow-world-js
 - [ ] env vars in lambda as string mapped to map (VAR1=val1 VAR2=val2 VAR3=val3)
+- [ ] nightly clones of this project to rms1000watt/terraform-aws-serverless so it can be found at registry.terraform.io
