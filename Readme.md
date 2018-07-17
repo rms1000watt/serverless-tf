@@ -84,8 +84,9 @@ module "serverless" {
       file = "main.go"
     },
     {
-      file       = "main.go"
-      http_path  = "hello-world"
+      file          = "main.go"
+      http_path     = "hello-world"
+      schedule_rate = "rate(2 hours)"
     },
     {
       file          = "main.go"
