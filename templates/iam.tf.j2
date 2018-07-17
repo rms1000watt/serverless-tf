@@ -7,4 +7,27 @@ resource "aws_iam_role" "lambda_{{i}}" {
 
   count              = "${local.lambda_{{i}}_count}"
 }
+
+resource "aws_iam_role_policy" "lambda_{{i}}" {
+  name   = "${local.lambda_{{i}}_name_computed}-policy-lambda-{{i}}"
+  role   = "${aws_iam_role.lambda_{{i}}.name}"
+  policy = "${file("${path.module}/policy-lambda.json")}"
+
+  count = "${local.lambda_{{i}}_count}"
+}
+
+resource "aws_iam_role" "api_gateway_{{i}}" {
+  name               = "${local.lambda_{{i}}_name_computed}-role-api-gateway-{{i}}"
+  assume_role_policy = "${file("${path.module}/role-api-gateway.json")}"
+
+  count = "${local.api_gateway_{{i}}_count}"
+}
+
+resource "aws_iam_role_policy" "api_gateway_{{i}}" {
+  name   = "${local.lambda_{{i}}_name_computed}-policy-api-gateway-{{i}}"
+  role   = "${aws_iam_role.api_gateway_{{i}}.name}"
+  policy = "${file("${path.module}/policy-api-gateway.json")}"
+
+  count = "${local.api_gateway_{{i}}_count}"
+}
 {%- endfor %}

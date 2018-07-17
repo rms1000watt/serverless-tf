@@ -1,0 +1,31 @@
+// GENERATED FILE: DO NOT EDIT
+{%- for i in range(max_functions) %}
+
+resource "aws_cloudwatch_event_rule" "{{i}}" {
+  name                = "${local.cloudwatch_{{i}}_name}"
+  schedule_expression = "${local.cloudwatch_{{i}}_rate}"
+
+  count = "${local.cloudwatch_{{i}}_count}"
+}
+
+resource "aws_cloudwatch_event_target" "{{i}}_go" {
+  rule = "${aws_cloudwatch_event_rule.0.name}"
+  arn  = "${aws_lambda_function.lambda_go_{{i}}.arn}"
+
+  count = "${local.lambda_go_{{i}}_count + local.cloudwatch_{{i}}_count == 2 ? 1 : 0}"
+}
+
+resource "aws_cloudwatch_event_target" "{{i}}_py" {
+  rule = "${aws_cloudwatch_event_rule.0.name}"
+  arn  = "${aws_lambda_function.lambda_py_{{i}}.arn}"
+
+  count = "${local.lambda_py_{{i}}_count + local.cloudwatch_{{i}}_count == 2 ? 1 : 0}"
+}
+
+resource "aws_cloudwatch_event_target" "{{i}}_js" {
+  rule = "${aws_cloudwatch_event_rule.0.name}"
+  arn  = "${aws_lambda_function.lambda_js_{{i}}.arn}"
+
+  count = "${local.lambda_js_{{i}}_count + local.cloudwatch_{{i}}_count == 2 ? 1 : 0}"
+}
+{%- endfor -%}

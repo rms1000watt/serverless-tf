@@ -33,6 +33,7 @@ resource "aws_api_gateway_integration" "0_go" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_go_0.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_0.arn}"
 
   count = "${local.lambda_go_0_count + local.api_gateway_0_count == 2 ? 1 : 0}"
 }
@@ -44,6 +45,7 @@ resource "aws_api_gateway_integration" "0_py" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_py_0.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_0.arn}"
 
   count = "${local.lambda_py_0_count + local.api_gateway_0_count == 2 ? 1 : 0}"
 }
@@ -55,6 +57,7 @@ resource "aws_api_gateway_integration" "0_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_0.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_0.arn}"
 
   count = "${local.lambda_js_0_count + local.api_gateway_0_count == 2 ? 1 : 0}"
 }
@@ -76,35 +79,19 @@ resource "aws_api_gateway_deployment" "0" {
   count = "${local.api_gateway_0_count}"
 }
 
-resource "aws_lambda_permission" "0_go" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_go_0.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.0.http_method}${aws_api_gateway_resource.0.path}"
-
-  count = "${local.lambda_go_0_count + local.api_gateway_0_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "0_py" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_py_0.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.0.http_method}${aws_api_gateway_resource.0.path}"
-
-  count = "${local.lambda_py_0_count + local.api_gateway_0_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "0_js" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_js_0.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.0.http_method}${aws_api_gateway_resource.0.path}"
-
-  count = "${local.lambda_js_0_count + local.api_gateway_0_count == 2 ? 1 : 0}"
-}
+// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
+// resource "aws_api_gateway_method_settings" "0" {
+//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+//   stage_name  = "${local.api_gateway_0_stage}"
+//   method_path = "${aws_api_gateway_resource.0.path_part}/${aws_api_gateway_method.0.http_method}"
+//
+//   settings {
+//     metrics_enabled = "${local.api_gateway_0_metrics}"
+//     logging_level   = "${local.api_gateway_0_logging_level}"
+//   }
+//
+//   count = "${local.api_gateway_0_count}"
+// }
 
 resource "aws_api_gateway_resource" "1" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -130,6 +117,7 @@ resource "aws_api_gateway_integration" "1_go" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_go_1.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_1.arn}"
 
   count = "${local.lambda_go_1_count + local.api_gateway_1_count == 2 ? 1 : 0}"
 }
@@ -141,6 +129,7 @@ resource "aws_api_gateway_integration" "1_py" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_py_1.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_1.arn}"
 
   count = "${local.lambda_py_1_count + local.api_gateway_1_count == 2 ? 1 : 0}"
 }
@@ -152,6 +141,7 @@ resource "aws_api_gateway_integration" "1_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_1.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_1.arn}"
 
   count = "${local.lambda_js_1_count + local.api_gateway_1_count == 2 ? 1 : 0}"
 }
@@ -173,35 +163,19 @@ resource "aws_api_gateway_deployment" "1" {
   count = "${local.api_gateway_1_count}"
 }
 
-resource "aws_lambda_permission" "1_go" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_go_1.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.1.http_method}${aws_api_gateway_resource.1.path}"
-
-  count = "${local.lambda_go_1_count + local.api_gateway_1_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "1_py" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_py_1.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.1.http_method}${aws_api_gateway_resource.1.path}"
-
-  count = "${local.lambda_py_1_count + local.api_gateway_1_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "1_js" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_js_1.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.1.http_method}${aws_api_gateway_resource.1.path}"
-
-  count = "${local.lambda_js_1_count + local.api_gateway_1_count == 2 ? 1 : 0}"
-}
+// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
+// resource "aws_api_gateway_method_settings" "1" {
+//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+//   stage_name  = "${local.api_gateway_1_stage}"
+//   method_path = "${aws_api_gateway_resource.1.path_part}/${aws_api_gateway_method.1.http_method}"
+//
+//   settings {
+//     metrics_enabled = "${local.api_gateway_1_metrics}"
+//     logging_level   = "${local.api_gateway_1_logging_level}"
+//   }
+//
+//   count = "${local.api_gateway_1_count}"
+// }
 
 resource "aws_api_gateway_resource" "2" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -227,6 +201,7 @@ resource "aws_api_gateway_integration" "2_go" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_go_2.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_2.arn}"
 
   count = "${local.lambda_go_2_count + local.api_gateway_2_count == 2 ? 1 : 0}"
 }
@@ -238,6 +213,7 @@ resource "aws_api_gateway_integration" "2_py" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_py_2.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_2.arn}"
 
   count = "${local.lambda_py_2_count + local.api_gateway_2_count == 2 ? 1 : 0}"
 }
@@ -249,6 +225,7 @@ resource "aws_api_gateway_integration" "2_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_2.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_2.arn}"
 
   count = "${local.lambda_js_2_count + local.api_gateway_2_count == 2 ? 1 : 0}"
 }
@@ -270,35 +247,19 @@ resource "aws_api_gateway_deployment" "2" {
   count = "${local.api_gateway_2_count}"
 }
 
-resource "aws_lambda_permission" "2_go" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_go_2.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.2.http_method}${aws_api_gateway_resource.2.path}"
-
-  count = "${local.lambda_go_2_count + local.api_gateway_2_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "2_py" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_py_2.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.2.http_method}${aws_api_gateway_resource.2.path}"
-
-  count = "${local.lambda_py_2_count + local.api_gateway_2_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "2_js" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_js_2.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.2.http_method}${aws_api_gateway_resource.2.path}"
-
-  count = "${local.lambda_js_2_count + local.api_gateway_2_count == 2 ? 1 : 0}"
-}
+// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
+// resource "aws_api_gateway_method_settings" "2" {
+//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+//   stage_name  = "${local.api_gateway_2_stage}"
+//   method_path = "${aws_api_gateway_resource.2.path_part}/${aws_api_gateway_method.2.http_method}"
+//
+//   settings {
+//     metrics_enabled = "${local.api_gateway_2_metrics}"
+//     logging_level   = "${local.api_gateway_2_logging_level}"
+//   }
+//
+//   count = "${local.api_gateway_2_count}"
+// }
 
 resource "aws_api_gateway_resource" "3" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -324,6 +285,7 @@ resource "aws_api_gateway_integration" "3_go" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_go_3.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_3.arn}"
 
   count = "${local.lambda_go_3_count + local.api_gateway_3_count == 2 ? 1 : 0}"
 }
@@ -335,6 +297,7 @@ resource "aws_api_gateway_integration" "3_py" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_py_3.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_3.arn}"
 
   count = "${local.lambda_py_3_count + local.api_gateway_3_count == 2 ? 1 : 0}"
 }
@@ -346,6 +309,7 @@ resource "aws_api_gateway_integration" "3_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_3.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_3.arn}"
 
   count = "${local.lambda_js_3_count + local.api_gateway_3_count == 2 ? 1 : 0}"
 }
@@ -367,35 +331,19 @@ resource "aws_api_gateway_deployment" "3" {
   count = "${local.api_gateway_3_count}"
 }
 
-resource "aws_lambda_permission" "3_go" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_go_3.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.3.http_method}${aws_api_gateway_resource.3.path}"
-
-  count = "${local.lambda_go_3_count + local.api_gateway_3_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "3_py" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_py_3.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.3.http_method}${aws_api_gateway_resource.3.path}"
-
-  count = "${local.lambda_py_3_count + local.api_gateway_3_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "3_js" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_js_3.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.3.http_method}${aws_api_gateway_resource.3.path}"
-
-  count = "${local.lambda_js_3_count + local.api_gateway_3_count == 2 ? 1 : 0}"
-}
+// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
+// resource "aws_api_gateway_method_settings" "3" {
+//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+//   stage_name  = "${local.api_gateway_3_stage}"
+//   method_path = "${aws_api_gateway_resource.3.path_part}/${aws_api_gateway_method.3.http_method}"
+//
+//   settings {
+//     metrics_enabled = "${local.api_gateway_3_metrics}"
+//     logging_level   = "${local.api_gateway_3_logging_level}"
+//   }
+//
+//   count = "${local.api_gateway_3_count}"
+// }
 
 resource "aws_api_gateway_resource" "4" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -421,6 +369,7 @@ resource "aws_api_gateway_integration" "4_go" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_go_4.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_4.arn}"
 
   count = "${local.lambda_go_4_count + local.api_gateway_4_count == 2 ? 1 : 0}"
 }
@@ -432,6 +381,7 @@ resource "aws_api_gateway_integration" "4_py" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_py_4.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_4.arn}"
 
   count = "${local.lambda_py_4_count + local.api_gateway_4_count == 2 ? 1 : 0}"
 }
@@ -443,6 +393,7 @@ resource "aws_api_gateway_integration" "4_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_4.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_4.arn}"
 
   count = "${local.lambda_js_4_count + local.api_gateway_4_count == 2 ? 1 : 0}"
 }
@@ -464,35 +415,19 @@ resource "aws_api_gateway_deployment" "4" {
   count = "${local.api_gateway_4_count}"
 }
 
-resource "aws_lambda_permission" "4_go" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_go_4.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.4.http_method}${aws_api_gateway_resource.4.path}"
-
-  count = "${local.lambda_go_4_count + local.api_gateway_4_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "4_py" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_py_4.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.4.http_method}${aws_api_gateway_resource.4.path}"
-
-  count = "${local.lambda_py_4_count + local.api_gateway_4_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "4_js" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_js_4.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.4.http_method}${aws_api_gateway_resource.4.path}"
-
-  count = "${local.lambda_js_4_count + local.api_gateway_4_count == 2 ? 1 : 0}"
-}
+// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
+// resource "aws_api_gateway_method_settings" "4" {
+//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+//   stage_name  = "${local.api_gateway_4_stage}"
+//   method_path = "${aws_api_gateway_resource.4.path_part}/${aws_api_gateway_method.4.http_method}"
+//
+//   settings {
+//     metrics_enabled = "${local.api_gateway_4_metrics}"
+//     logging_level   = "${local.api_gateway_4_logging_level}"
+//   }
+//
+//   count = "${local.api_gateway_4_count}"
+// }
 
 resource "aws_api_gateway_resource" "5" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -518,6 +453,7 @@ resource "aws_api_gateway_integration" "5_go" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_go_5.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_5.arn}"
 
   count = "${local.lambda_go_5_count + local.api_gateway_5_count == 2 ? 1 : 0}"
 }
@@ -529,6 +465,7 @@ resource "aws_api_gateway_integration" "5_py" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_py_5.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_5.arn}"
 
   count = "${local.lambda_py_5_count + local.api_gateway_5_count == 2 ? 1 : 0}"
 }
@@ -540,6 +477,7 @@ resource "aws_api_gateway_integration" "5_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_5.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_5.arn}"
 
   count = "${local.lambda_js_5_count + local.api_gateway_5_count == 2 ? 1 : 0}"
 }
@@ -561,35 +499,19 @@ resource "aws_api_gateway_deployment" "5" {
   count = "${local.api_gateway_5_count}"
 }
 
-resource "aws_lambda_permission" "5_go" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_go_5.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.5.http_method}${aws_api_gateway_resource.5.path}"
-
-  count = "${local.lambda_go_5_count + local.api_gateway_5_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "5_py" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_py_5.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.5.http_method}${aws_api_gateway_resource.5.path}"
-
-  count = "${local.lambda_py_5_count + local.api_gateway_5_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "5_js" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_js_5.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.5.http_method}${aws_api_gateway_resource.5.path}"
-
-  count = "${local.lambda_js_5_count + local.api_gateway_5_count == 2 ? 1 : 0}"
-}
+// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
+// resource "aws_api_gateway_method_settings" "5" {
+//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+//   stage_name  = "${local.api_gateway_5_stage}"
+//   method_path = "${aws_api_gateway_resource.5.path_part}/${aws_api_gateway_method.5.http_method}"
+//
+//   settings {
+//     metrics_enabled = "${local.api_gateway_5_metrics}"
+//     logging_level   = "${local.api_gateway_5_logging_level}"
+//   }
+//
+//   count = "${local.api_gateway_5_count}"
+// }
 
 resource "aws_api_gateway_resource" "6" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -615,6 +537,7 @@ resource "aws_api_gateway_integration" "6_go" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_go_6.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_6.arn}"
 
   count = "${local.lambda_go_6_count + local.api_gateway_6_count == 2 ? 1 : 0}"
 }
@@ -626,6 +549,7 @@ resource "aws_api_gateway_integration" "6_py" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_py_6.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_6.arn}"
 
   count = "${local.lambda_py_6_count + local.api_gateway_6_count == 2 ? 1 : 0}"
 }
@@ -637,6 +561,7 @@ resource "aws_api_gateway_integration" "6_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_6.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_6.arn}"
 
   count = "${local.lambda_js_6_count + local.api_gateway_6_count == 2 ? 1 : 0}"
 }
@@ -658,35 +583,19 @@ resource "aws_api_gateway_deployment" "6" {
   count = "${local.api_gateway_6_count}"
 }
 
-resource "aws_lambda_permission" "6_go" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_go_6.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.6.http_method}${aws_api_gateway_resource.6.path}"
-
-  count = "${local.lambda_go_6_count + local.api_gateway_6_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "6_py" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_py_6.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.6.http_method}${aws_api_gateway_resource.6.path}"
-
-  count = "${local.lambda_py_6_count + local.api_gateway_6_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "6_js" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_js_6.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.6.http_method}${aws_api_gateway_resource.6.path}"
-
-  count = "${local.lambda_js_6_count + local.api_gateway_6_count == 2 ? 1 : 0}"
-}
+// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
+// resource "aws_api_gateway_method_settings" "6" {
+//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+//   stage_name  = "${local.api_gateway_6_stage}"
+//   method_path = "${aws_api_gateway_resource.6.path_part}/${aws_api_gateway_method.6.http_method}"
+//
+//   settings {
+//     metrics_enabled = "${local.api_gateway_6_metrics}"
+//     logging_level   = "${local.api_gateway_6_logging_level}"
+//   }
+//
+//   count = "${local.api_gateway_6_count}"
+// }
 
 resource "aws_api_gateway_resource" "7" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -712,6 +621,7 @@ resource "aws_api_gateway_integration" "7_go" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_go_7.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_7.arn}"
 
   count = "${local.lambda_go_7_count + local.api_gateway_7_count == 2 ? 1 : 0}"
 }
@@ -723,6 +633,7 @@ resource "aws_api_gateway_integration" "7_py" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_py_7.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_7.arn}"
 
   count = "${local.lambda_py_7_count + local.api_gateway_7_count == 2 ? 1 : 0}"
 }
@@ -734,6 +645,7 @@ resource "aws_api_gateway_integration" "7_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_7.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_7.arn}"
 
   count = "${local.lambda_js_7_count + local.api_gateway_7_count == 2 ? 1 : 0}"
 }
@@ -755,35 +667,19 @@ resource "aws_api_gateway_deployment" "7" {
   count = "${local.api_gateway_7_count}"
 }
 
-resource "aws_lambda_permission" "7_go" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_go_7.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.7.http_method}${aws_api_gateway_resource.7.path}"
-
-  count = "${local.lambda_go_7_count + local.api_gateway_7_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "7_py" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_py_7.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.7.http_method}${aws_api_gateway_resource.7.path}"
-
-  count = "${local.lambda_py_7_count + local.api_gateway_7_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "7_js" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_js_7.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.7.http_method}${aws_api_gateway_resource.7.path}"
-
-  count = "${local.lambda_js_7_count + local.api_gateway_7_count == 2 ? 1 : 0}"
-}
+// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
+// resource "aws_api_gateway_method_settings" "7" {
+//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+//   stage_name  = "${local.api_gateway_7_stage}"
+//   method_path = "${aws_api_gateway_resource.7.path_part}/${aws_api_gateway_method.7.http_method}"
+//
+//   settings {
+//     metrics_enabled = "${local.api_gateway_7_metrics}"
+//     logging_level   = "${local.api_gateway_7_logging_level}"
+//   }
+//
+//   count = "${local.api_gateway_7_count}"
+// }
 
 resource "aws_api_gateway_resource" "8" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -809,6 +705,7 @@ resource "aws_api_gateway_integration" "8_go" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_go_8.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_8.arn}"
 
   count = "${local.lambda_go_8_count + local.api_gateway_8_count == 2 ? 1 : 0}"
 }
@@ -820,6 +717,7 @@ resource "aws_api_gateway_integration" "8_py" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_py_8.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_8.arn}"
 
   count = "${local.lambda_py_8_count + local.api_gateway_8_count == 2 ? 1 : 0}"
 }
@@ -831,6 +729,7 @@ resource "aws_api_gateway_integration" "8_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_8.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_8.arn}"
 
   count = "${local.lambda_js_8_count + local.api_gateway_8_count == 2 ? 1 : 0}"
 }
@@ -852,35 +751,19 @@ resource "aws_api_gateway_deployment" "8" {
   count = "${local.api_gateway_8_count}"
 }
 
-resource "aws_lambda_permission" "8_go" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_go_8.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.8.http_method}${aws_api_gateway_resource.8.path}"
-
-  count = "${local.lambda_go_8_count + local.api_gateway_8_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "8_py" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_py_8.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.8.http_method}${aws_api_gateway_resource.8.path}"
-
-  count = "${local.lambda_py_8_count + local.api_gateway_8_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "8_js" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_js_8.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.8.http_method}${aws_api_gateway_resource.8.path}"
-
-  count = "${local.lambda_js_8_count + local.api_gateway_8_count == 2 ? 1 : 0}"
-}
+// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
+// resource "aws_api_gateway_method_settings" "8" {
+//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+//   stage_name  = "${local.api_gateway_8_stage}"
+//   method_path = "${aws_api_gateway_resource.8.path_part}/${aws_api_gateway_method.8.http_method}"
+//
+//   settings {
+//     metrics_enabled = "${local.api_gateway_8_metrics}"
+//     logging_level   = "${local.api_gateway_8_logging_level}"
+//   }
+//
+//   count = "${local.api_gateway_8_count}"
+// }
 
 resource "aws_api_gateway_resource" "9" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -906,6 +789,7 @@ resource "aws_api_gateway_integration" "9_go" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_go_9.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_9.arn}"
 
   count = "${local.lambda_go_9_count + local.api_gateway_9_count == 2 ? 1 : 0}"
 }
@@ -917,6 +801,7 @@ resource "aws_api_gateway_integration" "9_py" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_py_9.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_9.arn}"
 
   count = "${local.lambda_py_9_count + local.api_gateway_9_count == 2 ? 1 : 0}"
 }
@@ -928,6 +813,7 @@ resource "aws_api_gateway_integration" "9_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_9.arn}/invocations"
+  credentials             = "${aws_iam_role.api_gateway_9.arn}"
 
   count = "${local.lambda_js_9_count + local.api_gateway_9_count == 2 ? 1 : 0}"
 }
@@ -949,32 +835,16 @@ resource "aws_api_gateway_deployment" "9" {
   count = "${local.api_gateway_9_count}"
 }
 
-resource "aws_lambda_permission" "9_go" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_go_9.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.9.http_method}${aws_api_gateway_resource.9.path}"
-
-  count = "${local.lambda_go_9_count + local.api_gateway_9_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "9_py" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_py_9.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.9.http_method}${aws_api_gateway_resource.9.path}"
-
-  count = "${local.lambda_py_9_count + local.api_gateway_9_count == 2 ? 1 : 0}"
-}
-
-resource "aws_lambda_permission" "9_js" {
-  statement_id  = "AllowExecutionFromAPIGateway"
-  action        = "lambda:InvokeFunction"
-  principal     = "apigateway.amazonaws.com"
-  function_name = "${aws_lambda_function.lambda_js_9.arn}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.9.http_method}${aws_api_gateway_resource.9.path}"
-
-  count = "${local.lambda_js_9_count + local.api_gateway_9_count == 2 ? 1 : 0}"
-}
+// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
+// resource "aws_api_gateway_method_settings" "9" {
+//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+//   stage_name  = "${local.api_gateway_9_stage}"
+//   method_path = "${aws_api_gateway_resource.9.path_part}/${aws_api_gateway_method.9.http_method}"
+//
+//   settings {
+//     metrics_enabled = "${local.api_gateway_9_metrics}"
+//     logging_level   = "${local.api_gateway_9_logging_level}"
+//   }
+//
+//   count = "${local.api_gateway_9_count}"
+// }

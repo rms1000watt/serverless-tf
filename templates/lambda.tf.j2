@@ -36,4 +36,64 @@ resource "aws_lambda_function" "lambda_js_{{i}}" {
 
   count = "${local.lambda_js_{{i}}_count}"
 }
+
+resource "aws_lambda_permission" "cloudwatch_go_{{i}}" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = "${aws_lambda_function.lambda_go_{{i}}.function_name}"
+  principal     = "events.amazonaws.com"
+  source_arn    = "${aws_cloudwatch_event_rule.{{i}}.arn}"
+
+  count = "${local.lambda_go_{{i}}_count + local.cloudwatch_{{i}}_count == 2 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "cloudwatch_py_{{i}}" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = "${aws_lambda_function.lambda_py_{{i}}.function_name}"
+  principal     = "events.amazonaws.com"
+  source_arn    = "${aws_cloudwatch_event_rule.{{i}}.arn}"
+
+  count = "${local.lambda_py_{{i}}_count + local.cloudwatch_{{i}}_count == 2 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "cloudwatch_js_{{i}}" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = "${aws_lambda_function.lambda_js_{{i}}.function_name}"
+  principal     = "events.amazonaws.com"
+  source_arn    = "${aws_cloudwatch_event_rule.{{i}}.arn}"
+
+  count = "${local.lambda_js_{{i}}_count + local.cloudwatch_{{i}}_count == 2 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_go_{{i}}" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${aws_lambda_function.lambda_go_{{i}}.arn}"
+  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.{{i}}.http_method}${aws_api_gateway_resource.{{i}}.path}"
+
+  count = "${local.lambda_go_{{i}}_count + local.api_gateway_{{i}}_count == 2 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_py_{{i}}" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${aws_lambda_function.lambda_py_{{i}}.arn}"
+  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.{{i}}.http_method}${aws_api_gateway_resource.{{i}}.path}"
+
+  count = "${local.lambda_py_{{i}}_count + local.api_gateway_{{i}}_count == 2 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_js_{{i}}" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${aws_lambda_function.lambda_js_{{i}}.arn}"
+  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.{{i}}.http_method}${aws_api_gateway_resource.{{i}}.path}"
+
+  count = "${local.lambda_js_{{i}}_count + local.api_gateway_{{i}}_count == 2 ? 1 : 0}"
+}
 {%- endfor %}
