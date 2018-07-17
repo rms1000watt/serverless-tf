@@ -23,7 +23,7 @@ As seen in [Example: Hello World Go](https://github.com/rms1000watt/serverless-t
 
 ```hcl
 module "serverless" {
-  source = "rms1000watt/serverless-tf"
+  source = "github.com/rms1000watt/serverless-tf"
 
   functions = [
     {
@@ -39,7 +39,7 @@ As seen in [Example: HTTP Go](https://github.com/rms1000watt/serverless-tf/blob/
 
 ```hcl
 module "serverless" {
-  source = "rms1000watt/serverless-tf"
+  source = "github.com/rms1000watt/serverless-tf"
 
   functions = [
     {
@@ -62,7 +62,7 @@ As seen in [Example: Schedule Go](https://github.com/rms1000watt/serverless-tf/b
 
 ```hcl
 module "serverless" {
-  source = "rms1000watt/serverless-tf"
+  source = "github.com/rms1000watt/serverless-tf"
 
   functions = [
     {
@@ -77,7 +77,7 @@ module "serverless" {
 
 ```hcl
 module "serverless" {
-  source = "rms1000watt/serverless-tf"
+  source = "github.com/rms1000watt/serverless-tf"
 
   functions = [
     {
@@ -105,7 +105,7 @@ Here are the options that each function supports.
 
 ```hcl
 module "serverless" {
-  source = "rms1000watt/serverless-tf"
+  source = "github.com/rms1000watt/serverless-tf"
 
   service = "" // optional (default: folder name)
 
