@@ -1,5 +1,5 @@
 variable "service" {
-  description = "The override, vanity service name"
+  description = "The override, vanity service name (default: folder name)"
   default     = ""
 }
 

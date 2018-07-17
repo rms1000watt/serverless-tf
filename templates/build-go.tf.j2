@@ -7,7 +7,7 @@ resource "null_resource" "go_{{i}}_build" {
   }
 
   triggers {
-    b64sha            = "${local.lambda_{{i}}_b64sha256}"
+    b64sha            = "${base64sha256(file(local.lambda_{{i}}_file))}"
     lambda_go_runtime = "${local.lambda_go_{{i}}_runtime}"
     lambda_go_name    = "${local.lambda_go_{{i}}_name}"
     lambda_go_handler = "${local.lambda_go_{{i}}_handler}"

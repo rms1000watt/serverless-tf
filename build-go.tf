@@ -6,7 +6,7 @@ resource "null_resource" "go_0_build" {
   }
 
   triggers {
-    b64sha            = "${local.lambda_0_b64sha256}"
+    b64sha            = "${base64sha256(file(local.lambda_0_file))}"
     lambda_go_runtime = "${local.lambda_go_0_runtime}"
     lambda_go_name    = "${local.lambda_go_0_name}"
     lambda_go_handler = "${local.lambda_go_0_handler}"
@@ -25,4 +25,247 @@ data "archive_file" "lambda_go_0" {
 
   depends_on = ["null_resource.go_0_build"]
   count      = "${local.lambda_go_0_count}"
+}
+
+resource "null_resource" "go_1_build" {
+  provisioner "local-exec" {
+    command = "${local.lambda_1_vendor_cmd != "" ? "${local.lambda_1_vendor_cmd} && " : ""}${local.lambda_1_test_cmd != "" ? "${local.lambda_1_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_1_bin}"
+  }
+
+  triggers {
+    b64sha            = "${base64sha256(file(local.lambda_1_file))}"
+    lambda_go_runtime = "${local.lambda_go_1_runtime}"
+    lambda_go_name    = "${local.lambda_go_1_name}"
+    lambda_go_handler = "${local.lambda_go_1_handler}"
+    lambda_go_bin     = "${local.lambda_go_1_bin}"
+    lambda_go_zip     = "${local.lambda_go_1_zip}"
+  }
+
+  depends_on = ["null_resource.validator"]
+  count      = "${local.lambda_go_1_count}"
+}
+
+data "archive_file" "lambda_go_1" {
+  type        = "zip"
+  source_file = "${local.lambda_go_1_bin}"
+  output_path = "${local.lambda_go_1_zip}"
+
+  depends_on = ["null_resource.go_1_build"]
+  count      = "${local.lambda_go_1_count}"
+}
+
+resource "null_resource" "go_2_build" {
+  provisioner "local-exec" {
+    command = "${local.lambda_2_vendor_cmd != "" ? "${local.lambda_2_vendor_cmd} && " : ""}${local.lambda_2_test_cmd != "" ? "${local.lambda_2_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_2_bin}"
+  }
+
+  triggers {
+    b64sha            = "${base64sha256(file(local.lambda_2_file))}"
+    lambda_go_runtime = "${local.lambda_go_2_runtime}"
+    lambda_go_name    = "${local.lambda_go_2_name}"
+    lambda_go_handler = "${local.lambda_go_2_handler}"
+    lambda_go_bin     = "${local.lambda_go_2_bin}"
+    lambda_go_zip     = "${local.lambda_go_2_zip}"
+  }
+
+  depends_on = ["null_resource.validator"]
+  count      = "${local.lambda_go_2_count}"
+}
+
+data "archive_file" "lambda_go_2" {
+  type        = "zip"
+  source_file = "${local.lambda_go_2_bin}"
+  output_path = "${local.lambda_go_2_zip}"
+
+  depends_on = ["null_resource.go_2_build"]
+  count      = "${local.lambda_go_2_count}"
+}
+
+resource "null_resource" "go_3_build" {
+  provisioner "local-exec" {
+    command = "${local.lambda_3_vendor_cmd != "" ? "${local.lambda_3_vendor_cmd} && " : ""}${local.lambda_3_test_cmd != "" ? "${local.lambda_3_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_3_bin}"
+  }
+
+  triggers {
+    b64sha            = "${base64sha256(file(local.lambda_3_file))}"
+    lambda_go_runtime = "${local.lambda_go_3_runtime}"
+    lambda_go_name    = "${local.lambda_go_3_name}"
+    lambda_go_handler = "${local.lambda_go_3_handler}"
+    lambda_go_bin     = "${local.lambda_go_3_bin}"
+    lambda_go_zip     = "${local.lambda_go_3_zip}"
+  }
+
+  depends_on = ["null_resource.validator"]
+  count      = "${local.lambda_go_3_count}"
+}
+
+data "archive_file" "lambda_go_3" {
+  type        = "zip"
+  source_file = "${local.lambda_go_3_bin}"
+  output_path = "${local.lambda_go_3_zip}"
+
+  depends_on = ["null_resource.go_3_build"]
+  count      = "${local.lambda_go_3_count}"
+}
+
+resource "null_resource" "go_4_build" {
+  provisioner "local-exec" {
+    command = "${local.lambda_4_vendor_cmd != "" ? "${local.lambda_4_vendor_cmd} && " : ""}${local.lambda_4_test_cmd != "" ? "${local.lambda_4_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_4_bin}"
+  }
+
+  triggers {
+    b64sha            = "${base64sha256(file(local.lambda_4_file))}"
+    lambda_go_runtime = "${local.lambda_go_4_runtime}"
+    lambda_go_name    = "${local.lambda_go_4_name}"
+    lambda_go_handler = "${local.lambda_go_4_handler}"
+    lambda_go_bin     = "${local.lambda_go_4_bin}"
+    lambda_go_zip     = "${local.lambda_go_4_zip}"
+  }
+
+  depends_on = ["null_resource.validator"]
+  count      = "${local.lambda_go_4_count}"
+}
+
+data "archive_file" "lambda_go_4" {
+  type        = "zip"
+  source_file = "${local.lambda_go_4_bin}"
+  output_path = "${local.lambda_go_4_zip}"
+
+  depends_on = ["null_resource.go_4_build"]
+  count      = "${local.lambda_go_4_count}"
+}
+
+resource "null_resource" "go_5_build" {
+  provisioner "local-exec" {
+    command = "${local.lambda_5_vendor_cmd != "" ? "${local.lambda_5_vendor_cmd} && " : ""}${local.lambda_5_test_cmd != "" ? "${local.lambda_5_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_5_bin}"
+  }
+
+  triggers {
+    b64sha            = "${base64sha256(file(local.lambda_5_file))}"
+    lambda_go_runtime = "${local.lambda_go_5_runtime}"
+    lambda_go_name    = "${local.lambda_go_5_name}"
+    lambda_go_handler = "${local.lambda_go_5_handler}"
+    lambda_go_bin     = "${local.lambda_go_5_bin}"
+    lambda_go_zip     = "${local.lambda_go_5_zip}"
+  }
+
+  depends_on = ["null_resource.validator"]
+  count      = "${local.lambda_go_5_count}"
+}
+
+data "archive_file" "lambda_go_5" {
+  type        = "zip"
+  source_file = "${local.lambda_go_5_bin}"
+  output_path = "${local.lambda_go_5_zip}"
+
+  depends_on = ["null_resource.go_5_build"]
+  count      = "${local.lambda_go_5_count}"
+}
+
+resource "null_resource" "go_6_build" {
+  provisioner "local-exec" {
+    command = "${local.lambda_6_vendor_cmd != "" ? "${local.lambda_6_vendor_cmd} && " : ""}${local.lambda_6_test_cmd != "" ? "${local.lambda_6_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_6_bin}"
+  }
+
+  triggers {
+    b64sha            = "${base64sha256(file(local.lambda_6_file))}"
+    lambda_go_runtime = "${local.lambda_go_6_runtime}"
+    lambda_go_name    = "${local.lambda_go_6_name}"
+    lambda_go_handler = "${local.lambda_go_6_handler}"
+    lambda_go_bin     = "${local.lambda_go_6_bin}"
+    lambda_go_zip     = "${local.lambda_go_6_zip}"
+  }
+
+  depends_on = ["null_resource.validator"]
+  count      = "${local.lambda_go_6_count}"
+}
+
+data "archive_file" "lambda_go_6" {
+  type        = "zip"
+  source_file = "${local.lambda_go_6_bin}"
+  output_path = "${local.lambda_go_6_zip}"
+
+  depends_on = ["null_resource.go_6_build"]
+  count      = "${local.lambda_go_6_count}"
+}
+
+resource "null_resource" "go_7_build" {
+  provisioner "local-exec" {
+    command = "${local.lambda_7_vendor_cmd != "" ? "${local.lambda_7_vendor_cmd} && " : ""}${local.lambda_7_test_cmd != "" ? "${local.lambda_7_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_7_bin}"
+  }
+
+  triggers {
+    b64sha            = "${base64sha256(file(local.lambda_7_file))}"
+    lambda_go_runtime = "${local.lambda_go_7_runtime}"
+    lambda_go_name    = "${local.lambda_go_7_name}"
+    lambda_go_handler = "${local.lambda_go_7_handler}"
+    lambda_go_bin     = "${local.lambda_go_7_bin}"
+    lambda_go_zip     = "${local.lambda_go_7_zip}"
+  }
+
+  depends_on = ["null_resource.validator"]
+  count      = "${local.lambda_go_7_count}"
+}
+
+data "archive_file" "lambda_go_7" {
+  type        = "zip"
+  source_file = "${local.lambda_go_7_bin}"
+  output_path = "${local.lambda_go_7_zip}"
+
+  depends_on = ["null_resource.go_7_build"]
+  count      = "${local.lambda_go_7_count}"
+}
+
+resource "null_resource" "go_8_build" {
+  provisioner "local-exec" {
+    command = "${local.lambda_8_vendor_cmd != "" ? "${local.lambda_8_vendor_cmd} && " : ""}${local.lambda_8_test_cmd != "" ? "${local.lambda_8_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_8_bin}"
+  }
+
+  triggers {
+    b64sha            = "${base64sha256(file(local.lambda_8_file))}"
+    lambda_go_runtime = "${local.lambda_go_8_runtime}"
+    lambda_go_name    = "${local.lambda_go_8_name}"
+    lambda_go_handler = "${local.lambda_go_8_handler}"
+    lambda_go_bin     = "${local.lambda_go_8_bin}"
+    lambda_go_zip     = "${local.lambda_go_8_zip}"
+  }
+
+  depends_on = ["null_resource.validator"]
+  count      = "${local.lambda_go_8_count}"
+}
+
+data "archive_file" "lambda_go_8" {
+  type        = "zip"
+  source_file = "${local.lambda_go_8_bin}"
+  output_path = "${local.lambda_go_8_zip}"
+
+  depends_on = ["null_resource.go_8_build"]
+  count      = "${local.lambda_go_8_count}"
+}
+
+resource "null_resource" "go_9_build" {
+  provisioner "local-exec" {
+    command = "${local.lambda_9_vendor_cmd != "" ? "${local.lambda_9_vendor_cmd} && " : ""}${local.lambda_9_test_cmd != "" ? "${local.lambda_9_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_9_bin}"
+  }
+
+  triggers {
+    b64sha            = "${base64sha256(file(local.lambda_9_file))}"
+    lambda_go_runtime = "${local.lambda_go_9_runtime}"
+    lambda_go_name    = "${local.lambda_go_9_name}"
+    lambda_go_handler = "${local.lambda_go_9_handler}"
+    lambda_go_bin     = "${local.lambda_go_9_bin}"
+    lambda_go_zip     = "${local.lambda_go_9_zip}"
+  }
+
+  depends_on = ["null_resource.validator"]
+  count      = "${local.lambda_go_9_count}"
+}
+
+data "archive_file" "lambda_go_9" {
+  type        = "zip"
+  source_file = "${local.lambda_go_9_bin}"
+  output_path = "${local.lambda_go_9_zip}"
+
+  depends_on = ["null_resource.go_9_build"]
+  count      = "${local.lambda_go_9_count}"
 }

@@ -1,0 +1,25 @@
+// GENERATED FILE: DO NOT EDIT
+
+output "lambda_arns" {
+  value {
+    {%- for i in range(max_functions) %}
+    arn_{{i}} = "${compact(flatten(list(aws_lambda_function.lambda_go_{{i}}.*.arn, aws_lambda_function.lambda_py_{{i}}.*.arn, aws_lambda_function.lambda_js_{{i}}.*.arn)))}"
+    {%- endfor %}
+  }
+}
+
+output "api_gateway_invoke_urls" {
+  value {
+    {%- for i in range(max_functions) %}
+    url_{{i}} = "${aws_api_gateway_deployment.{{i}}.*.invoke_url}"
+    {%- endfor %}
+  }
+}
+
+output "api_gateway_id" {
+  value = "${aws_api_gateway_rest_api.global.*.id}"
+}
+
+output "api_gateway_root_resource_id" {
+  value = "${aws_api_gateway_rest_api.global.*.root_resource_id}"
+}

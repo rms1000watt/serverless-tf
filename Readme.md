@@ -21,6 +21,9 @@ An alternative approach for full Serverless functionaliity would be to create a 
 
 ## TODO
 
+- [ ] `schedule` event
+- [ ] cloudwatch logs
+- [ ] better Readme (docs)
 - [ ] examples/hellow-world-py
 - [ ] examples/hellow-world-js
-- [ ] env vars in lambda (nested map in map in list)
+- [ ] env vars in lambda as string mapped to map (VAR1=val1 VAR2=val2 VAR3=val3)
