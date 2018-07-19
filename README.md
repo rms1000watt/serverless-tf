@@ -2,9 +2,9 @@
 
 ## Introduction
 
-I really love [Serverless](https://www.serverless.com) for their ease of use--but a lot of enterprises are already integrated with Terraform. So, this Terraform module is designed to be as simple to use as Serverless by using a similar naming and structure conventions as a `serverless.yml` file.
+I really love [Serverless](https://www.serverless.com) for their ease of use--but a lot of enterprises are already integrated with Terraform. So, this Terraform module was designed to be as simple to use as Serverless by mirroring the structure of `serverless.yml`.
 
-This is a work in progress, but API Gateway & Cloudwatch Rate are functional. Feel free to contribute! 😊
+This is a work in progress, but API Gateway (http) & Cloudwatch Rate (schedule) are functional. Feel free to contribute! 😊
 
 ## Contents
 
@@ -157,6 +157,6 @@ An alternative approach for full Serverless functionality would be to create a G
 - [ ] cloudwatch logs for API Gateway
 - [ ] more restrictive cloudwatch logs
 - [ ] more granular lambda roles
-- [ ] examples/hellow-world-py
-- [ ] examples/hellow-world-js
+- [ ] examples/hello-world-py
+- [ ] examples/hello-world-js
 - [ ] env vars in lambda as string mapped to map (VAR1=val1 VAR2=val2 VAR3=val3)
