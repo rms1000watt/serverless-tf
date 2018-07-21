@@ -121,14 +121,16 @@ module "serverless" {
       runtime    = ""              // optional (default: go1.x)
       handler    = ""              // optional (default: ${basename(file)})
 
-      http               = ""   // optional (default: "" unless any http_OPTS are defined)
-      http_path          = ""   // optional (default: lambda_name when http = true)
-      http_method        = ""   // optional (default: GET when http = true)
-      http_authorization = ""   // optional (default: NONE when http = true)
-      http_stage         = ""   // optional (default: prod when http = true)
+      http               = "" // optional (default: "" unless any http_OPTS are defined)
+      http_path          = "" // optional (default: lambda_name when http = true)
+      http_method        = "" // optional (default: GET when http = true)
+      http_authorization = "" // optional (default: NONE when http = true)
+      http_stage         = "" // optional (default: prod when http = true)
+      http_metrics       = "" // optional (default: false when http = true)
+      http_logging       = "" // optional (default: false when http = true)
 
-      schedule      = ""    // optional (default: "" unless any schedule_OPTS are defined)
-      schedule_rate = ""    // optional (default: rate(1 hour))
+      schedule      = "" // optional (default: "" unless any schedule_OPTS are defined)
+      schedule_rate = "" // optional (default: rate(1 hour))
     },
   ]
 }

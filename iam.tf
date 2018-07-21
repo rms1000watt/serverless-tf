@@ -1,5 +1,20 @@
 // GENERATED FILE: DO NOT EDIT
 
+resource "aws_iam_role" "api_gateway_global" {
+  name               = "${local.service_name}-role-api-gateway-global"
+  assume_role_policy = "${file("${path.module}/role-api-gateway.json")}"
+
+  count = "${local.api_gateway_0 || local.api_gateway_1 || local.api_gateway_2 || local.api_gateway_3 || local.api_gateway_4 || local.api_gateway_5 || local.api_gateway_6 || local.api_gateway_7 || local.api_gateway_8 || local.api_gateway_9 || false ? 1 : 0}"
+}
+
+resource "aws_iam_role_policy" "api_gateway_global" {
+  name   = "${local.service_name}-policy-api-gateway-global"
+  role   = "${aws_iam_role.api_gateway_global.name}"
+  policy = "${file("${path.module}/policy-api-gateway.json")}"
+
+  count = "${local.api_gateway_0 || local.api_gateway_1 || local.api_gateway_2 || local.api_gateway_3 || local.api_gateway_4 || local.api_gateway_5 || local.api_gateway_6 || local.api_gateway_7 || local.api_gateway_8 || local.api_gateway_9 || false ? 1 : 0}"
+}
+
 resource "aws_iam_role" "lambda_0" {
   name               = "${local.lambda_0_name_computed}-role-lambda-0"
   assume_role_policy = "${file("${path.module}/role-lambda.json")}"

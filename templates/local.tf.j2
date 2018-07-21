@@ -66,9 +66,9 @@ locals {
   api_gateway_{{i}}_method        = "${upper(lookup(local.lambda_{{i}}, "http_method", "get"))}"
   api_gateway_{{i}}_stage         = "${lookup(local.lambda_{{i}}, "http_stage", "prod")}"
   api_gateway_{{i}}_authorization = "${lookup(local.lambda_{{i}}, "http_authorization", "NONE")}"
-  // api_gateway_{{i}}_metrics       = "${lookup(local.lambda_{{i}}, "http_metrics", "") != ""}"
-  // api_gateway_{{i}}_logging       = "${lookup(local.lambda_{{i}}, "http_logging", "") != ""}"
-  // api_gateway_{{i}}_logging_level = "${local.api_gateway_{{i}}_logging ? "INFO" : "OFF"}"
+  api_gateway_{{i}}_metrics       = "${lookup(local.lambda_{{i}}, "http_metrics", "") != ""}"
+  api_gateway_{{i}}_logging       = "${lookup(local.lambda_{{i}}, "http_logging", "") != ""}"
+  api_gateway_{{i}}_logging_level = "${local.api_gateway_{{i}}_logging ? "INFO" : "OFF"}"
 
   // Cloudwatch Schedule
   cloudwatch_{{i}}       = "${lookup(local.lambda_{{i}}, "schedule", "" ) != "" || lookup(local.lambda_{{i}}, "schedule_rate", "") != ""}"

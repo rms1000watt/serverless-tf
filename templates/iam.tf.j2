@@ -1,4 +1,19 @@
 // GENERATED FILE: DO NOT EDIT
+
+resource "aws_iam_role" "api_gateway_global" {
+  name               = "${local.service_name}-role-api-gateway-global"
+  assume_role_policy = "${file("${path.module}/role-api-gateway.json")}"
+
+  count = "${ {%- for i in range(max_functions) %}local.api_gateway_{{i}} || {% endfor %}false ? 1 : 0}"
+}
+
+resource "aws_iam_role_policy" "api_gateway_global" {
+  name   = "${local.service_name}-policy-api-gateway-global"
+  role   = "${aws_iam_role.api_gateway_global.name}"
+  policy = "${file("${path.module}/policy-api-gateway.json")}"
+
+  count = "${ {%- for i in range(max_functions) %}local.api_gateway_{{i}} || {% endfor %}false ? 1 : 0}"
+}
 {%- for i in range(max_functions) %}
 
 resource "aws_iam_role" "lambda_{{i}}" {

@@ -65,9 +65,9 @@ locals {
   api_gateway_0_method        = "${upper(lookup(local.lambda_0, "http_method", "get"))}"
   api_gateway_0_stage         = "${lookup(local.lambda_0, "http_stage", "prod")}"
   api_gateway_0_authorization = "${lookup(local.lambda_0, "http_authorization", "NONE")}"
-  // api_gateway_0_metrics       = "${lookup(local.lambda_0, "http_metrics", "") != ""}"
-  // api_gateway_0_logging       = "${lookup(local.lambda_0, "http_logging", "") != ""}"
-  // api_gateway_0_logging_level = "${local.api_gateway_0_logging ? "INFO" : "OFF"}"
+  api_gateway_0_metrics       = "${lookup(local.lambda_0, "http_metrics", "") != ""}"
+  api_gateway_0_logging       = "${lookup(local.lambda_0, "http_logging", "") != ""}"
+  api_gateway_0_logging_level = "${local.api_gateway_0_logging ? "INFO" : "OFF"}"
 
   // Cloudwatch Schedule
   cloudwatch_0       = "${lookup(local.lambda_0, "schedule", "" ) != "" || lookup(local.lambda_0, "schedule_rate", "") != ""}"
@@ -129,9 +129,9 @@ locals {
   api_gateway_1_method        = "${upper(lookup(local.lambda_1, "http_method", "get"))}"
   api_gateway_1_stage         = "${lookup(local.lambda_1, "http_stage", "prod")}"
   api_gateway_1_authorization = "${lookup(local.lambda_1, "http_authorization", "NONE")}"
-  // api_gateway_1_metrics       = "${lookup(local.lambda_1, "http_metrics", "") != ""}"
-  // api_gateway_1_logging       = "${lookup(local.lambda_1, "http_logging", "") != ""}"
-  // api_gateway_1_logging_level = "${local.api_gateway_1_logging ? "INFO" : "OFF"}"
+  api_gateway_1_metrics       = "${lookup(local.lambda_1, "http_metrics", "") != ""}"
+  api_gateway_1_logging       = "${lookup(local.lambda_1, "http_logging", "") != ""}"
+  api_gateway_1_logging_level = "${local.api_gateway_1_logging ? "INFO" : "OFF"}"
 
   // Cloudwatch Schedule
   cloudwatch_1       = "${lookup(local.lambda_1, "schedule", "" ) != "" || lookup(local.lambda_1, "schedule_rate", "") != ""}"
@@ -193,9 +193,9 @@ locals {
   api_gateway_2_method        = "${upper(lookup(local.lambda_2, "http_method", "get"))}"
   api_gateway_2_stage         = "${lookup(local.lambda_2, "http_stage", "prod")}"
   api_gateway_2_authorization = "${lookup(local.lambda_2, "http_authorization", "NONE")}"
-  // api_gateway_2_metrics       = "${lookup(local.lambda_2, "http_metrics", "") != ""}"
-  // api_gateway_2_logging       = "${lookup(local.lambda_2, "http_logging", "") != ""}"
-  // api_gateway_2_logging_level = "${local.api_gateway_2_logging ? "INFO" : "OFF"}"
+  api_gateway_2_metrics       = "${lookup(local.lambda_2, "http_metrics", "") != ""}"
+  api_gateway_2_logging       = "${lookup(local.lambda_2, "http_logging", "") != ""}"
+  api_gateway_2_logging_level = "${local.api_gateway_2_logging ? "INFO" : "OFF"}"
 
   // Cloudwatch Schedule
   cloudwatch_2       = "${lookup(local.lambda_2, "schedule", "" ) != "" || lookup(local.lambda_2, "schedule_rate", "") != ""}"
@@ -257,9 +257,9 @@ locals {
   api_gateway_3_method        = "${upper(lookup(local.lambda_3, "http_method", "get"))}"
   api_gateway_3_stage         = "${lookup(local.lambda_3, "http_stage", "prod")}"
   api_gateway_3_authorization = "${lookup(local.lambda_3, "http_authorization", "NONE")}"
-  // api_gateway_3_metrics       = "${lookup(local.lambda_3, "http_metrics", "") != ""}"
-  // api_gateway_3_logging       = "${lookup(local.lambda_3, "http_logging", "") != ""}"
-  // api_gateway_3_logging_level = "${local.api_gateway_3_logging ? "INFO" : "OFF"}"
+  api_gateway_3_metrics       = "${lookup(local.lambda_3, "http_metrics", "") != ""}"
+  api_gateway_3_logging       = "${lookup(local.lambda_3, "http_logging", "") != ""}"
+  api_gateway_3_logging_level = "${local.api_gateway_3_logging ? "INFO" : "OFF"}"
 
   // Cloudwatch Schedule
   cloudwatch_3       = "${lookup(local.lambda_3, "schedule", "" ) != "" || lookup(local.lambda_3, "schedule_rate", "") != ""}"
@@ -321,9 +321,9 @@ locals {
   api_gateway_4_method        = "${upper(lookup(local.lambda_4, "http_method", "get"))}"
   api_gateway_4_stage         = "${lookup(local.lambda_4, "http_stage", "prod")}"
   api_gateway_4_authorization = "${lookup(local.lambda_4, "http_authorization", "NONE")}"
-  // api_gateway_4_metrics       = "${lookup(local.lambda_4, "http_metrics", "") != ""}"
-  // api_gateway_4_logging       = "${lookup(local.lambda_4, "http_logging", "") != ""}"
-  // api_gateway_4_logging_level = "${local.api_gateway_4_logging ? "INFO" : "OFF"}"
+  api_gateway_4_metrics       = "${lookup(local.lambda_4, "http_metrics", "") != ""}"
+  api_gateway_4_logging       = "${lookup(local.lambda_4, "http_logging", "") != ""}"
+  api_gateway_4_logging_level = "${local.api_gateway_4_logging ? "INFO" : "OFF"}"
 
   // Cloudwatch Schedule
   cloudwatch_4       = "${lookup(local.lambda_4, "schedule", "" ) != "" || lookup(local.lambda_4, "schedule_rate", "") != ""}"
@@ -385,9 +385,9 @@ locals {
   api_gateway_5_method        = "${upper(lookup(local.lambda_5, "http_method", "get"))}"
   api_gateway_5_stage         = "${lookup(local.lambda_5, "http_stage", "prod")}"
   api_gateway_5_authorization = "${lookup(local.lambda_5, "http_authorization", "NONE")}"
-  // api_gateway_5_metrics       = "${lookup(local.lambda_5, "http_metrics", "") != ""}"
-  // api_gateway_5_logging       = "${lookup(local.lambda_5, "http_logging", "") != ""}"
-  // api_gateway_5_logging_level = "${local.api_gateway_5_logging ? "INFO" : "OFF"}"
+  api_gateway_5_metrics       = "${lookup(local.lambda_5, "http_metrics", "") != ""}"
+  api_gateway_5_logging       = "${lookup(local.lambda_5, "http_logging", "") != ""}"
+  api_gateway_5_logging_level = "${local.api_gateway_5_logging ? "INFO" : "OFF"}"
 
   // Cloudwatch Schedule
   cloudwatch_5       = "${lookup(local.lambda_5, "schedule", "" ) != "" || lookup(local.lambda_5, "schedule_rate", "") != ""}"
@@ -449,9 +449,9 @@ locals {
   api_gateway_6_method        = "${upper(lookup(local.lambda_6, "http_method", "get"))}"
   api_gateway_6_stage         = "${lookup(local.lambda_6, "http_stage", "prod")}"
   api_gateway_6_authorization = "${lookup(local.lambda_6, "http_authorization", "NONE")}"
-  // api_gateway_6_metrics       = "${lookup(local.lambda_6, "http_metrics", "") != ""}"
-  // api_gateway_6_logging       = "${lookup(local.lambda_6, "http_logging", "") != ""}"
-  // api_gateway_6_logging_level = "${local.api_gateway_6_logging ? "INFO" : "OFF"}"
+  api_gateway_6_metrics       = "${lookup(local.lambda_6, "http_metrics", "") != ""}"
+  api_gateway_6_logging       = "${lookup(local.lambda_6, "http_logging", "") != ""}"
+  api_gateway_6_logging_level = "${local.api_gateway_6_logging ? "INFO" : "OFF"}"
 
   // Cloudwatch Schedule
   cloudwatch_6       = "${lookup(local.lambda_6, "schedule", "" ) != "" || lookup(local.lambda_6, "schedule_rate", "") != ""}"
@@ -513,9 +513,9 @@ locals {
   api_gateway_7_method        = "${upper(lookup(local.lambda_7, "http_method", "get"))}"
   api_gateway_7_stage         = "${lookup(local.lambda_7, "http_stage", "prod")}"
   api_gateway_7_authorization = "${lookup(local.lambda_7, "http_authorization", "NONE")}"
-  // api_gateway_7_metrics       = "${lookup(local.lambda_7, "http_metrics", "") != ""}"
-  // api_gateway_7_logging       = "${lookup(local.lambda_7, "http_logging", "") != ""}"
-  // api_gateway_7_logging_level = "${local.api_gateway_7_logging ? "INFO" : "OFF"}"
+  api_gateway_7_metrics       = "${lookup(local.lambda_7, "http_metrics", "") != ""}"
+  api_gateway_7_logging       = "${lookup(local.lambda_7, "http_logging", "") != ""}"
+  api_gateway_7_logging_level = "${local.api_gateway_7_logging ? "INFO" : "OFF"}"
 
   // Cloudwatch Schedule
   cloudwatch_7       = "${lookup(local.lambda_7, "schedule", "" ) != "" || lookup(local.lambda_7, "schedule_rate", "") != ""}"
@@ -577,9 +577,9 @@ locals {
   api_gateway_8_method        = "${upper(lookup(local.lambda_8, "http_method", "get"))}"
   api_gateway_8_stage         = "${lookup(local.lambda_8, "http_stage", "prod")}"
   api_gateway_8_authorization = "${lookup(local.lambda_8, "http_authorization", "NONE")}"
-  // api_gateway_8_metrics       = "${lookup(local.lambda_8, "http_metrics", "") != ""}"
-  // api_gateway_8_logging       = "${lookup(local.lambda_8, "http_logging", "") != ""}"
-  // api_gateway_8_logging_level = "${local.api_gateway_8_logging ? "INFO" : "OFF"}"
+  api_gateway_8_metrics       = "${lookup(local.lambda_8, "http_metrics", "") != ""}"
+  api_gateway_8_logging       = "${lookup(local.lambda_8, "http_logging", "") != ""}"
+  api_gateway_8_logging_level = "${local.api_gateway_8_logging ? "INFO" : "OFF"}"
 
   // Cloudwatch Schedule
   cloudwatch_8       = "${lookup(local.lambda_8, "schedule", "" ) != "" || lookup(local.lambda_8, "schedule_rate", "") != ""}"
@@ -641,9 +641,9 @@ locals {
   api_gateway_9_method        = "${upper(lookup(local.lambda_9, "http_method", "get"))}"
   api_gateway_9_stage         = "${lookup(local.lambda_9, "http_stage", "prod")}"
   api_gateway_9_authorization = "${lookup(local.lambda_9, "http_authorization", "NONE")}"
-  // api_gateway_9_metrics       = "${lookup(local.lambda_9, "http_metrics", "") != ""}"
-  // api_gateway_9_logging       = "${lookup(local.lambda_9, "http_logging", "") != ""}"
-  // api_gateway_9_logging_level = "${local.api_gateway_9_logging ? "INFO" : "OFF"}"
+  api_gateway_9_metrics       = "${lookup(local.lambda_9, "http_metrics", "") != ""}"
+  api_gateway_9_logging       = "${lookup(local.lambda_9, "http_logging", "") != ""}"
+  api_gateway_9_logging_level = "${local.api_gateway_9_logging ? "INFO" : "OFF"}"
 
   // Cloudwatch Schedule
   cloudwatch_9       = "${lookup(local.lambda_9, "schedule", "" ) != "" || lookup(local.lambda_9, "schedule_rate", "") != ""}"

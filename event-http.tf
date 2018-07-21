@@ -9,6 +9,12 @@ resource "aws_api_gateway_rest_api" "global" {
   count = "${local.api_gateway_0 || local.api_gateway_1 || local.api_gateway_2 || local.api_gateway_3 || local.api_gateway_4 || local.api_gateway_5 || local.api_gateway_6 || local.api_gateway_7 || local.api_gateway_8 || local.api_gateway_9 || false ? 1 : 0}"
 }
 
+resource "aws_api_gateway_account" "global" {
+  cloudwatch_role_arn = "${aws_iam_role.api_gateway_global.arn}"
+
+  count = "${local.api_gateway_0 || local.api_gateway_1 || local.api_gateway_2 || local.api_gateway_3 || local.api_gateway_4 || local.api_gateway_5 || local.api_gateway_6 || local.api_gateway_7 || local.api_gateway_8 || local.api_gateway_9 || false ? 1 : 0}"
+}
+
 resource "aws_api_gateway_resource" "0" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
   parent_id   = "${aws_api_gateway_rest_api.global.root_resource_id}"
@@ -79,19 +85,23 @@ resource "aws_api_gateway_deployment" "0" {
   count = "${local.api_gateway_0_count}"
 }
 
-// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
-// resource "aws_api_gateway_method_settings" "0" {
-//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
-//   stage_name  = "${local.api_gateway_0_stage}"
-//   method_path = "${aws_api_gateway_resource.0.path_part}/${aws_api_gateway_method.0.http_method}"
-//
-//   settings {
-//     metrics_enabled = "${local.api_gateway_0_metrics}"
-//     logging_level   = "${local.api_gateway_0_logging_level}"
-//   }
-//
-//   count = "${local.api_gateway_0_count}"
-// }
+resource "aws_api_gateway_method_settings" "0" {
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  stage_name  = "${local.api_gateway_0_stage}"
+  method_path = "*/*"
+
+  settings {
+    metrics_enabled = "${local.api_gateway_0_metrics}"
+    logging_level   = "${local.api_gateway_0_logging_level}"
+  }
+
+  depends_on = [
+    "aws_api_gateway_deployment.0",
+    "aws_api_gateway_account.global",
+  ]
+
+  count = "${local.api_gateway_0_count}"
+}
 
 resource "aws_api_gateway_resource" "1" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -163,19 +173,23 @@ resource "aws_api_gateway_deployment" "1" {
   count = "${local.api_gateway_1_count}"
 }
 
-// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
-// resource "aws_api_gateway_method_settings" "1" {
-//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
-//   stage_name  = "${local.api_gateway_1_stage}"
-//   method_path = "${aws_api_gateway_resource.1.path_part}/${aws_api_gateway_method.1.http_method}"
-//
-//   settings {
-//     metrics_enabled = "${local.api_gateway_1_metrics}"
-//     logging_level   = "${local.api_gateway_1_logging_level}"
-//   }
-//
-//   count = "${local.api_gateway_1_count}"
-// }
+resource "aws_api_gateway_method_settings" "1" {
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  stage_name  = "${local.api_gateway_1_stage}"
+  method_path = "*/*"
+
+  settings {
+    metrics_enabled = "${local.api_gateway_1_metrics}"
+    logging_level   = "${local.api_gateway_1_logging_level}"
+  }
+
+  depends_on = [
+    "aws_api_gateway_deployment.1",
+    "aws_api_gateway_account.global",
+  ]
+
+  count = "${local.api_gateway_1_count}"
+}
 
 resource "aws_api_gateway_resource" "2" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -247,19 +261,23 @@ resource "aws_api_gateway_deployment" "2" {
   count = "${local.api_gateway_2_count}"
 }
 
-// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
-// resource "aws_api_gateway_method_settings" "2" {
-//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
-//   stage_name  = "${local.api_gateway_2_stage}"
-//   method_path = "${aws_api_gateway_resource.2.path_part}/${aws_api_gateway_method.2.http_method}"
-//
-//   settings {
-//     metrics_enabled = "${local.api_gateway_2_metrics}"
-//     logging_level   = "${local.api_gateway_2_logging_level}"
-//   }
-//
-//   count = "${local.api_gateway_2_count}"
-// }
+resource "aws_api_gateway_method_settings" "2" {
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  stage_name  = "${local.api_gateway_2_stage}"
+  method_path = "*/*"
+
+  settings {
+    metrics_enabled = "${local.api_gateway_2_metrics}"
+    logging_level   = "${local.api_gateway_2_logging_level}"
+  }
+
+  depends_on = [
+    "aws_api_gateway_deployment.2",
+    "aws_api_gateway_account.global",
+  ]
+
+  count = "${local.api_gateway_2_count}"
+}
 
 resource "aws_api_gateway_resource" "3" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -331,19 +349,23 @@ resource "aws_api_gateway_deployment" "3" {
   count = "${local.api_gateway_3_count}"
 }
 
-// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
-// resource "aws_api_gateway_method_settings" "3" {
-//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
-//   stage_name  = "${local.api_gateway_3_stage}"
-//   method_path = "${aws_api_gateway_resource.3.path_part}/${aws_api_gateway_method.3.http_method}"
-//
-//   settings {
-//     metrics_enabled = "${local.api_gateway_3_metrics}"
-//     logging_level   = "${local.api_gateway_3_logging_level}"
-//   }
-//
-//   count = "${local.api_gateway_3_count}"
-// }
+resource "aws_api_gateway_method_settings" "3" {
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  stage_name  = "${local.api_gateway_3_stage}"
+  method_path = "*/*"
+
+  settings {
+    metrics_enabled = "${local.api_gateway_3_metrics}"
+    logging_level   = "${local.api_gateway_3_logging_level}"
+  }
+
+  depends_on = [
+    "aws_api_gateway_deployment.3",
+    "aws_api_gateway_account.global",
+  ]
+
+  count = "${local.api_gateway_3_count}"
+}
 
 resource "aws_api_gateway_resource" "4" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -415,19 +437,23 @@ resource "aws_api_gateway_deployment" "4" {
   count = "${local.api_gateway_4_count}"
 }
 
-// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
-// resource "aws_api_gateway_method_settings" "4" {
-//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
-//   stage_name  = "${local.api_gateway_4_stage}"
-//   method_path = "${aws_api_gateway_resource.4.path_part}/${aws_api_gateway_method.4.http_method}"
-//
-//   settings {
-//     metrics_enabled = "${local.api_gateway_4_metrics}"
-//     logging_level   = "${local.api_gateway_4_logging_level}"
-//   }
-//
-//   count = "${local.api_gateway_4_count}"
-// }
+resource "aws_api_gateway_method_settings" "4" {
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  stage_name  = "${local.api_gateway_4_stage}"
+  method_path = "*/*"
+
+  settings {
+    metrics_enabled = "${local.api_gateway_4_metrics}"
+    logging_level   = "${local.api_gateway_4_logging_level}"
+  }
+
+  depends_on = [
+    "aws_api_gateway_deployment.4",
+    "aws_api_gateway_account.global",
+  ]
+
+  count = "${local.api_gateway_4_count}"
+}
 
 resource "aws_api_gateway_resource" "5" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -499,19 +525,23 @@ resource "aws_api_gateway_deployment" "5" {
   count = "${local.api_gateway_5_count}"
 }
 
-// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
-// resource "aws_api_gateway_method_settings" "5" {
-//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
-//   stage_name  = "${local.api_gateway_5_stage}"
-//   method_path = "${aws_api_gateway_resource.5.path_part}/${aws_api_gateway_method.5.http_method}"
-//
-//   settings {
-//     metrics_enabled = "${local.api_gateway_5_metrics}"
-//     logging_level   = "${local.api_gateway_5_logging_level}"
-//   }
-//
-//   count = "${local.api_gateway_5_count}"
-// }
+resource "aws_api_gateway_method_settings" "5" {
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  stage_name  = "${local.api_gateway_5_stage}"
+  method_path = "*/*"
+
+  settings {
+    metrics_enabled = "${local.api_gateway_5_metrics}"
+    logging_level   = "${local.api_gateway_5_logging_level}"
+  }
+
+  depends_on = [
+    "aws_api_gateway_deployment.5",
+    "aws_api_gateway_account.global",
+  ]
+
+  count = "${local.api_gateway_5_count}"
+}
 
 resource "aws_api_gateway_resource" "6" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -583,19 +613,23 @@ resource "aws_api_gateway_deployment" "6" {
   count = "${local.api_gateway_6_count}"
 }
 
-// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
-// resource "aws_api_gateway_method_settings" "6" {
-//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
-//   stage_name  = "${local.api_gateway_6_stage}"
-//   method_path = "${aws_api_gateway_resource.6.path_part}/${aws_api_gateway_method.6.http_method}"
-//
-//   settings {
-//     metrics_enabled = "${local.api_gateway_6_metrics}"
-//     logging_level   = "${local.api_gateway_6_logging_level}"
-//   }
-//
-//   count = "${local.api_gateway_6_count}"
-// }
+resource "aws_api_gateway_method_settings" "6" {
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  stage_name  = "${local.api_gateway_6_stage}"
+  method_path = "*/*"
+
+  settings {
+    metrics_enabled = "${local.api_gateway_6_metrics}"
+    logging_level   = "${local.api_gateway_6_logging_level}"
+  }
+
+  depends_on = [
+    "aws_api_gateway_deployment.6",
+    "aws_api_gateway_account.global",
+  ]
+
+  count = "${local.api_gateway_6_count}"
+}
 
 resource "aws_api_gateway_resource" "7" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -667,19 +701,23 @@ resource "aws_api_gateway_deployment" "7" {
   count = "${local.api_gateway_7_count}"
 }
 
-// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
-// resource "aws_api_gateway_method_settings" "7" {
-//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
-//   stage_name  = "${local.api_gateway_7_stage}"
-//   method_path = "${aws_api_gateway_resource.7.path_part}/${aws_api_gateway_method.7.http_method}"
-//
-//   settings {
-//     metrics_enabled = "${local.api_gateway_7_metrics}"
-//     logging_level   = "${local.api_gateway_7_logging_level}"
-//   }
-//
-//   count = "${local.api_gateway_7_count}"
-// }
+resource "aws_api_gateway_method_settings" "7" {
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  stage_name  = "${local.api_gateway_7_stage}"
+  method_path = "*/*"
+
+  settings {
+    metrics_enabled = "${local.api_gateway_7_metrics}"
+    logging_level   = "${local.api_gateway_7_logging_level}"
+  }
+
+  depends_on = [
+    "aws_api_gateway_deployment.7",
+    "aws_api_gateway_account.global",
+  ]
+
+  count = "${local.api_gateway_7_count}"
+}
 
 resource "aws_api_gateway_resource" "8" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -751,19 +789,23 @@ resource "aws_api_gateway_deployment" "8" {
   count = "${local.api_gateway_8_count}"
 }
 
-// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
-// resource "aws_api_gateway_method_settings" "8" {
-//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
-//   stage_name  = "${local.api_gateway_8_stage}"
-//   method_path = "${aws_api_gateway_resource.8.path_part}/${aws_api_gateway_method.8.http_method}"
-//
-//   settings {
-//     metrics_enabled = "${local.api_gateway_8_metrics}"
-//     logging_level   = "${local.api_gateway_8_logging_level}"
-//   }
-//
-//   count = "${local.api_gateway_8_count}"
-// }
+resource "aws_api_gateway_method_settings" "8" {
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  stage_name  = "${local.api_gateway_8_stage}"
+  method_path = "*/*"
+
+  settings {
+    metrics_enabled = "${local.api_gateway_8_metrics}"
+    logging_level   = "${local.api_gateway_8_logging_level}"
+  }
+
+  depends_on = [
+    "aws_api_gateway_deployment.8",
+    "aws_api_gateway_account.global",
+  ]
+
+  count = "${local.api_gateway_8_count}"
+}
 
 resource "aws_api_gateway_resource" "9" {
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -835,16 +877,20 @@ resource "aws_api_gateway_deployment" "9" {
   count = "${local.api_gateway_9_count}"
 }
 
-// TODO: Figure this out properly.. metrics are still depressed.. logging requires "...role ARN set in account settings..."
-// resource "aws_api_gateway_method_settings" "9" {
-//   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
-//   stage_name  = "${local.api_gateway_9_stage}"
-//   method_path = "${aws_api_gateway_resource.9.path_part}/${aws_api_gateway_method.9.http_method}"
-//
-//   settings {
-//     metrics_enabled = "${local.api_gateway_9_metrics}"
-//     logging_level   = "${local.api_gateway_9_logging_level}"
-//   }
-//
-//   count = "${local.api_gateway_9_count}"
-// }
+resource "aws_api_gateway_method_settings" "9" {
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  stage_name  = "${local.api_gateway_9_stage}"
+  method_path = "*/*"
+
+  settings {
+    metrics_enabled = "${local.api_gateway_9_metrics}"
+    logging_level   = "${local.api_gateway_9_logging_level}"
+  }
+
+  depends_on = [
+    "aws_api_gateway_deployment.9",
+    "aws_api_gateway_account.global",
+  ]
+
+  count = "${local.api_gateway_9_count}"
+}
