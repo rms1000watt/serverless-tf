@@ -35,6 +35,34 @@ module "serverless" {
 }
 ```
 
+As seen in [Example: Hello World Py](https://github.com/rms1000watt/serverless-tf/blob/master/examples/hello-world-py/main.tf)
+
+```hcl
+module "serverless" {
+  source = "rms1000watt/serverless-tf/aws"
+
+  functions = [
+    {
+      file = "main.py"
+    },
+  ]
+}
+```
+
+As seen in [Example: Hello World JS](https://github.com/rms1000watt/serverless-tf/blob/master/examples/hello-world-js/main.tf)
+
+```hcl
+module "serverless" {
+  source = "rms1000watt/serverless-tf/aws"
+
+  functions = [
+    {
+      file = "main.js"
+    },
+  ]
+}
+```
+
 ### HTTP (API Gateway)
 
 As seen in [Example: HTTP Go](https://github.com/rms1000watt/serverless-tf/blob/master/examples/http-go/main.tf)
@@ -55,7 +83,7 @@ module "serverless" {
 Then test by running:
 
 ```bash
-curl https://$API_DEPLOYMENT_ID.execute-api.$REGION.amazonaws.com/prod/hello-world
+curl https://$API_DEPLOYMENT_ID.execute-api.$REGION.amazonaws.com/dev/hello-world
 ```
 
 ### Schedule (Cloudwatch Event)
@@ -125,7 +153,7 @@ module "serverless" {
       http_path          = "" // optional (default: lambda_name when http = true)
       http_method        = "" // optional (default: GET when http = true)
       http_authorization = "" // optional (default: NONE when http = true)
-      http_stage         = "" // optional (default: prod when http = true)
+      http_stage         = "" // optional (default: dev when http = true)
       http_metrics       = "" // optional (default: false when http = true)
       http_logging       = "" // optional (default: false when http = true)
 
@@ -156,9 +184,7 @@ An alternative approach for full Serverless functionality would be to create a G
 ## TODO
 
 - [ ] better Readme (docs)
-- [ ] cloudwatch logs for API Gateway
 - [ ] more restrictive cloudwatch logs
-- [ ] more granular lambda roles
-- [ ] examples/hello-world-py
-- [ ] examples/hello-world-js
+- [ ] lambda policy replacement
 - [ ] env vars in lambda as string mapped to map (VAR1=val1 VAR2=val2 VAR3=val3)
+- [ ] lambda function `file` within folder (ie. file = "path/to/main.go")

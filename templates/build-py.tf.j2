@@ -1,12 +1,31 @@
 // GENERATED FILE: DO NOT EDIT
 {%- for i in range(max_functions) %}
 
+resource "null_resource" "py_{{i}}_build" {
+  provisioner "local-exec" {
+    command     = "${local.lambda_{{i}}_vendor_cmd != "" ? "${local.lambda_{{i}}_vendor_cmd} && " : ""}${local.lambda_{{i}}_test_cmd != "" ? "${local.lambda_{{i}}_test_cmd} && " : ""}echo 'py {{i}} build'"
+    interpreter = ["/bin/bash", "-c"]
+  }
+
+  triggers {
+    b64sha                = "${base64sha256(file(local.lambda_{{i}}_file))}"
+    lambda_py_runtime     = "${local.lambda_py_{{i}}_runtime}"
+    lambda_py_name        = "${local.lambda_py_{{i}}_name}"
+    lambda_py_handler     = "${local.lambda_py_{{i}}_handler}"
+    lambda_py_source_file = "${local.lambda_py_{{i}}_source_file}"
+    lambda_py_zip         = "${local.lambda_py_{{i}}_zip}"
+  }
+
+  depends_on = ["null_resource.validator"]
+  count      = "${local.lambda_py_{{i}}_count}"
+}
+
 data "archive_file" "lambda_py_{{i}}" {
   type        = "zip"
   source_file = "${local.lambda_py_{{i}}_source_file}"
   output_path = "${local.lambda_py_{{i}}_zip}"
-  depends_on  = ["null_resource.validator"]
 
-  count       = "${local.lambda_py_{{i}}_count}"
+  depends_on = ["null_resource.py_{{i}}_build"]
+  count      = "${local.lambda_py_{{i}}_count}"
 }
 {%- endfor %}

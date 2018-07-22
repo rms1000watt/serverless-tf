@@ -2,7 +2,8 @@
 
 resource "null_resource" "go_0_build" {
   provisioner "local-exec" {
-    command = "${local.lambda_0_vendor_cmd != "" ? "${local.lambda_0_vendor_cmd} && " : ""}${local.lambda_0_test_cmd != "" ? "${local.lambda_0_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_0_bin}"
+    command     = "${local.lambda_0_vendor_cmd != "" ? "${local.lambda_0_vendor_cmd} && " : ""}${local.lambda_0_test_cmd != "" ? "${local.lambda_0_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_0_bin}"
+    interpreter = ["/bin/bash", "-c"]
   }
 
   triggers {
@@ -29,7 +30,8 @@ data "archive_file" "lambda_go_0" {
 
 resource "null_resource" "go_1_build" {
   provisioner "local-exec" {
-    command = "${local.lambda_1_vendor_cmd != "" ? "${local.lambda_1_vendor_cmd} && " : ""}${local.lambda_1_test_cmd != "" ? "${local.lambda_1_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_1_bin}"
+    command     = "${local.lambda_1_vendor_cmd != "" ? "${local.lambda_1_vendor_cmd} && " : ""}${local.lambda_1_test_cmd != "" ? "${local.lambda_1_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_1_bin}"
+    interpreter = ["/bin/bash", "-c"]
   }
 
   triggers {
@@ -56,7 +58,8 @@ data "archive_file" "lambda_go_1" {
 
 resource "null_resource" "go_2_build" {
   provisioner "local-exec" {
-    command = "${local.lambda_2_vendor_cmd != "" ? "${local.lambda_2_vendor_cmd} && " : ""}${local.lambda_2_test_cmd != "" ? "${local.lambda_2_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_2_bin}"
+    command     = "${local.lambda_2_vendor_cmd != "" ? "${local.lambda_2_vendor_cmd} && " : ""}${local.lambda_2_test_cmd != "" ? "${local.lambda_2_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_2_bin}"
+    interpreter = ["/bin/bash", "-c"]
   }
 
   triggers {
@@ -83,7 +86,8 @@ data "archive_file" "lambda_go_2" {
 
 resource "null_resource" "go_3_build" {
   provisioner "local-exec" {
-    command = "${local.lambda_3_vendor_cmd != "" ? "${local.lambda_3_vendor_cmd} && " : ""}${local.lambda_3_test_cmd != "" ? "${local.lambda_3_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_3_bin}"
+    command     = "${local.lambda_3_vendor_cmd != "" ? "${local.lambda_3_vendor_cmd} && " : ""}${local.lambda_3_test_cmd != "" ? "${local.lambda_3_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_3_bin}"
+    interpreter = ["/bin/bash", "-c"]
   }
 
   triggers {
@@ -110,7 +114,8 @@ data "archive_file" "lambda_go_3" {
 
 resource "null_resource" "go_4_build" {
   provisioner "local-exec" {
-    command = "${local.lambda_4_vendor_cmd != "" ? "${local.lambda_4_vendor_cmd} && " : ""}${local.lambda_4_test_cmd != "" ? "${local.lambda_4_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_4_bin}"
+    command     = "${local.lambda_4_vendor_cmd != "" ? "${local.lambda_4_vendor_cmd} && " : ""}${local.lambda_4_test_cmd != "" ? "${local.lambda_4_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_4_bin}"
+    interpreter = ["/bin/bash", "-c"]
   }
 
   triggers {
@@ -137,7 +142,8 @@ data "archive_file" "lambda_go_4" {
 
 resource "null_resource" "go_5_build" {
   provisioner "local-exec" {
-    command = "${local.lambda_5_vendor_cmd != "" ? "${local.lambda_5_vendor_cmd} && " : ""}${local.lambda_5_test_cmd != "" ? "${local.lambda_5_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_5_bin}"
+    command     = "${local.lambda_5_vendor_cmd != "" ? "${local.lambda_5_vendor_cmd} && " : ""}${local.lambda_5_test_cmd != "" ? "${local.lambda_5_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_5_bin}"
+    interpreter = ["/bin/bash", "-c"]
   }
 
   triggers {
@@ -164,7 +170,8 @@ data "archive_file" "lambda_go_5" {
 
 resource "null_resource" "go_6_build" {
   provisioner "local-exec" {
-    command = "${local.lambda_6_vendor_cmd != "" ? "${local.lambda_6_vendor_cmd} && " : ""}${local.lambda_6_test_cmd != "" ? "${local.lambda_6_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_6_bin}"
+    command     = "${local.lambda_6_vendor_cmd != "" ? "${local.lambda_6_vendor_cmd} && " : ""}${local.lambda_6_test_cmd != "" ? "${local.lambda_6_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_6_bin}"
+    interpreter = ["/bin/bash", "-c"]
   }
 
   triggers {
@@ -191,7 +198,8 @@ data "archive_file" "lambda_go_6" {
 
 resource "null_resource" "go_7_build" {
   provisioner "local-exec" {
-    command = "${local.lambda_7_vendor_cmd != "" ? "${local.lambda_7_vendor_cmd} && " : ""}${local.lambda_7_test_cmd != "" ? "${local.lambda_7_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_7_bin}"
+    command     = "${local.lambda_7_vendor_cmd != "" ? "${local.lambda_7_vendor_cmd} && " : ""}${local.lambda_7_test_cmd != "" ? "${local.lambda_7_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_7_bin}"
+    interpreter = ["/bin/bash", "-c"]
   }
 
   triggers {
@@ -218,7 +226,8 @@ data "archive_file" "lambda_go_7" {
 
 resource "null_resource" "go_8_build" {
   provisioner "local-exec" {
-    command = "${local.lambda_8_vendor_cmd != "" ? "${local.lambda_8_vendor_cmd} && " : ""}${local.lambda_8_test_cmd != "" ? "${local.lambda_8_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_8_bin}"
+    command     = "${local.lambda_8_vendor_cmd != "" ? "${local.lambda_8_vendor_cmd} && " : ""}${local.lambda_8_test_cmd != "" ? "${local.lambda_8_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_8_bin}"
+    interpreter = ["/bin/bash", "-c"]
   }
 
   triggers {
@@ -245,7 +254,8 @@ data "archive_file" "lambda_go_8" {
 
 resource "null_resource" "go_9_build" {
   provisioner "local-exec" {
-    command = "${local.lambda_9_vendor_cmd != "" ? "${local.lambda_9_vendor_cmd} && " : ""}${local.lambda_9_test_cmd != "" ? "${local.lambda_9_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_9_bin}"
+    command     = "${local.lambda_9_vendor_cmd != "" ? "${local.lambda_9_vendor_cmd} && " : ""}${local.lambda_9_test_cmd != "" ? "${local.lambda_9_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_9_bin}"
+    interpreter = ["/bin/bash", "-c"]
   }
 
   triggers {

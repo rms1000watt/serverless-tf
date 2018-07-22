@@ -1,0 +1,11 @@
+{
+  "name": "hello-world-js",
+  "version": "0.1.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"tests pass\""
+  },
+  "author": "",
+  "license": "ISC"
+}
