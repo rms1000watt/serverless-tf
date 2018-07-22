@@ -63,7 +63,9 @@ resource "aws_api_gateway_integration" "0_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_0.arn}/invocations"
-  credentials             = "${aws_iam_role.api_gateway_0.arn}"
+
+  // TODO: figure this out properly
+  // credentials             = "${aws_iam_role.api_gateway_0.arn}"
 
   count = "${local.lambda_js_0_count + local.api_gateway_0_count == 2 ? 1 : 0}"
 }
@@ -151,7 +153,9 @@ resource "aws_api_gateway_integration" "1_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_1.arn}/invocations"
-  credentials             = "${aws_iam_role.api_gateway_1.arn}"
+
+  // TODO: figure this out properly
+  // credentials             = "${aws_iam_role.api_gateway_1.arn}"
 
   count = "${local.lambda_js_1_count + local.api_gateway_1_count == 2 ? 1 : 0}"
 }
@@ -239,7 +243,9 @@ resource "aws_api_gateway_integration" "2_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_2.arn}/invocations"
-  credentials             = "${aws_iam_role.api_gateway_2.arn}"
+
+  // TODO: figure this out properly
+  // credentials             = "${aws_iam_role.api_gateway_2.arn}"
 
   count = "${local.lambda_js_2_count + local.api_gateway_2_count == 2 ? 1 : 0}"
 }
@@ -327,7 +333,9 @@ resource "aws_api_gateway_integration" "3_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_3.arn}/invocations"
-  credentials             = "${aws_iam_role.api_gateway_3.arn}"
+
+  // TODO: figure this out properly
+  // credentials             = "${aws_iam_role.api_gateway_3.arn}"
 
   count = "${local.lambda_js_3_count + local.api_gateway_3_count == 2 ? 1 : 0}"
 }
@@ -415,7 +423,9 @@ resource "aws_api_gateway_integration" "4_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_4.arn}/invocations"
-  credentials             = "${aws_iam_role.api_gateway_4.arn}"
+
+  // TODO: figure this out properly
+  // credentials             = "${aws_iam_role.api_gateway_4.arn}"
 
   count = "${local.lambda_js_4_count + local.api_gateway_4_count == 2 ? 1 : 0}"
 }
@@ -503,7 +513,9 @@ resource "aws_api_gateway_integration" "5_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_5.arn}/invocations"
-  credentials             = "${aws_iam_role.api_gateway_5.arn}"
+
+  // TODO: figure this out properly
+  // credentials             = "${aws_iam_role.api_gateway_5.arn}"
 
   count = "${local.lambda_js_5_count + local.api_gateway_5_count == 2 ? 1 : 0}"
 }
@@ -591,7 +603,9 @@ resource "aws_api_gateway_integration" "6_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_6.arn}/invocations"
-  credentials             = "${aws_iam_role.api_gateway_6.arn}"
+
+  // TODO: figure this out properly
+  // credentials             = "${aws_iam_role.api_gateway_6.arn}"
 
   count = "${local.lambda_js_6_count + local.api_gateway_6_count == 2 ? 1 : 0}"
 }
@@ -679,7 +693,9 @@ resource "aws_api_gateway_integration" "7_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_7.arn}/invocations"
-  credentials             = "${aws_iam_role.api_gateway_7.arn}"
+
+  // TODO: figure this out properly
+  // credentials             = "${aws_iam_role.api_gateway_7.arn}"
 
   count = "${local.lambda_js_7_count + local.api_gateway_7_count == 2 ? 1 : 0}"
 }
@@ -767,7 +783,9 @@ resource "aws_api_gateway_integration" "8_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_8.arn}/invocations"
-  credentials             = "${aws_iam_role.api_gateway_8.arn}"
+
+  // TODO: figure this out properly
+  // credentials             = "${aws_iam_role.api_gateway_8.arn}"
 
   count = "${local.lambda_js_8_count + local.api_gateway_8_count == 2 ? 1 : 0}"
 }
@@ -855,7 +873,9 @@ resource "aws_api_gateway_integration" "9_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_9.arn}/invocations"
-  credentials             = "${aws_iam_role.api_gateway_9.arn}"
+
+  // TODO: figure this out properly
+  // credentials             = "${aws_iam_role.api_gateway_9.arn}"
 
   count = "${local.lambda_js_9_count + local.api_gateway_9_count == 2 ? 1 : 0}"
 }

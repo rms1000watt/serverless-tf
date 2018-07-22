@@ -64,7 +64,9 @@ resource "aws_api_gateway_integration" "{{i}}_js" {
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
   uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_{{i}}.arn}/invocations"
-  credentials             = "${aws_iam_role.api_gateway_{{i}}.arn}"
+
+  // TODO: figure this out properly
+  // credentials             = "${aws_iam_role.api_gateway_{{i}}.arn}"
 
   count = "${local.lambda_js_{{i}}_count + local.api_gateway_{{i}}_count == 2 ? 1 : 0}"
 }

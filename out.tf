@@ -15,25 +15,25 @@ output "lambda_arns" {
   }
 }
 
-output "api_gateway_invoke_urls" {
-  value {
-    url_0 = "${aws_api_gateway_deployment.0.*.invoke_url}"
-    url_1 = "${aws_api_gateway_deployment.1.*.invoke_url}"
-    url_2 = "${aws_api_gateway_deployment.2.*.invoke_url}"
-    url_3 = "${aws_api_gateway_deployment.3.*.invoke_url}"
-    url_4 = "${aws_api_gateway_deployment.4.*.invoke_url}"
-    url_5 = "${aws_api_gateway_deployment.5.*.invoke_url}"
-    url_6 = "${aws_api_gateway_deployment.6.*.invoke_url}"
-    url_7 = "${aws_api_gateway_deployment.7.*.invoke_url}"
-    url_8 = "${aws_api_gateway_deployment.8.*.invoke_url}"
-    url_9 = "${aws_api_gateway_deployment.9.*.invoke_url}"
-  }
-}
-
 output "api_gateway_id" {
   value = "${aws_api_gateway_rest_api.global.*.id}"
 }
 
 output "api_gateway_root_resource_id" {
   value = "${aws_api_gateway_rest_api.global.*.root_resource_id}"
+}
+
+output "http_urls" {
+  value {
+    url_0 = "${formatlist("%s/%s", aws_api_gateway_deployment.0.*.invoke_url, (local.api_gateway_0_path != local.default_lambda_name ? local.api_gateway_0_path : "" ))}"
+    url_1 = "${formatlist("%s/%s", aws_api_gateway_deployment.1.*.invoke_url, (local.api_gateway_1_path != local.default_lambda_name ? local.api_gateway_1_path : "" ))}"
+    url_2 = "${formatlist("%s/%s", aws_api_gateway_deployment.2.*.invoke_url, (local.api_gateway_2_path != local.default_lambda_name ? local.api_gateway_2_path : "" ))}"
+    url_3 = "${formatlist("%s/%s", aws_api_gateway_deployment.3.*.invoke_url, (local.api_gateway_3_path != local.default_lambda_name ? local.api_gateway_3_path : "" ))}"
+    url_4 = "${formatlist("%s/%s", aws_api_gateway_deployment.4.*.invoke_url, (local.api_gateway_4_path != local.default_lambda_name ? local.api_gateway_4_path : "" ))}"
+    url_5 = "${formatlist("%s/%s", aws_api_gateway_deployment.5.*.invoke_url, (local.api_gateway_5_path != local.default_lambda_name ? local.api_gateway_5_path : "" ))}"
+    url_6 = "${formatlist("%s/%s", aws_api_gateway_deployment.6.*.invoke_url, (local.api_gateway_6_path != local.default_lambda_name ? local.api_gateway_6_path : "" ))}"
+    url_7 = "${formatlist("%s/%s", aws_api_gateway_deployment.7.*.invoke_url, (local.api_gateway_7_path != local.default_lambda_name ? local.api_gateway_7_path : "" ))}"
+    url_8 = "${formatlist("%s/%s", aws_api_gateway_deployment.8.*.invoke_url, (local.api_gateway_8_path != local.default_lambda_name ? local.api_gateway_8_path : "" ))}"
+    url_9 = "${formatlist("%s/%s", aws_api_gateway_deployment.9.*.invoke_url, (local.api_gateway_9_path != local.default_lambda_name ? local.api_gateway_9_path : "" ))}"
+  }
 }
