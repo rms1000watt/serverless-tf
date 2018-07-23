@@ -14,6 +14,7 @@ resource "null_resource" "py_{{i}}_build" {
     lambda_py_handler     = "${local.lambda_py_{{i}}_handler}"
     lambda_py_source_file = "${local.lambda_py_{{i}}_source_file}"
     lambda_py_zip         = "${local.lambda_py_{{i}}_zip}"
+    rebuild               = "${local.lambda_{{i}}_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]

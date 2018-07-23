@@ -13,6 +13,7 @@ resource "null_resource" "py_0_build" {
     lambda_py_handler     = "${local.lambda_py_0_handler}"
     lambda_py_source_file = "${local.lambda_py_0_source_file}"
     lambda_py_zip         = "${local.lambda_py_0_zip}"
+    rebuild               = "${local.lambda_0_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -41,6 +42,7 @@ resource "null_resource" "py_1_build" {
     lambda_py_handler     = "${local.lambda_py_1_handler}"
     lambda_py_source_file = "${local.lambda_py_1_source_file}"
     lambda_py_zip         = "${local.lambda_py_1_zip}"
+    rebuild               = "${local.lambda_1_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -69,6 +71,7 @@ resource "null_resource" "py_2_build" {
     lambda_py_handler     = "${local.lambda_py_2_handler}"
     lambda_py_source_file = "${local.lambda_py_2_source_file}"
     lambda_py_zip         = "${local.lambda_py_2_zip}"
+    rebuild               = "${local.lambda_2_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -97,6 +100,7 @@ resource "null_resource" "py_3_build" {
     lambda_py_handler     = "${local.lambda_py_3_handler}"
     lambda_py_source_file = "${local.lambda_py_3_source_file}"
     lambda_py_zip         = "${local.lambda_py_3_zip}"
+    rebuild               = "${local.lambda_3_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -125,6 +129,7 @@ resource "null_resource" "py_4_build" {
     lambda_py_handler     = "${local.lambda_py_4_handler}"
     lambda_py_source_file = "${local.lambda_py_4_source_file}"
     lambda_py_zip         = "${local.lambda_py_4_zip}"
+    rebuild               = "${local.lambda_4_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -153,6 +158,7 @@ resource "null_resource" "py_5_build" {
     lambda_py_handler     = "${local.lambda_py_5_handler}"
     lambda_py_source_file = "${local.lambda_py_5_source_file}"
     lambda_py_zip         = "${local.lambda_py_5_zip}"
+    rebuild               = "${local.lambda_5_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -181,6 +187,7 @@ resource "null_resource" "py_6_build" {
     lambda_py_handler     = "${local.lambda_py_6_handler}"
     lambda_py_source_file = "${local.lambda_py_6_source_file}"
     lambda_py_zip         = "${local.lambda_py_6_zip}"
+    rebuild               = "${local.lambda_6_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -209,6 +216,7 @@ resource "null_resource" "py_7_build" {
     lambda_py_handler     = "${local.lambda_py_7_handler}"
     lambda_py_source_file = "${local.lambda_py_7_source_file}"
     lambda_py_zip         = "${local.lambda_py_7_zip}"
+    rebuild               = "${local.lambda_7_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -237,6 +245,7 @@ resource "null_resource" "py_8_build" {
     lambda_py_handler     = "${local.lambda_py_8_handler}"
     lambda_py_source_file = "${local.lambda_py_8_source_file}"
     lambda_py_zip         = "${local.lambda_py_8_zip}"
+    rebuild               = "${local.lambda_8_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -265,6 +274,7 @@ resource "null_resource" "py_9_build" {
     lambda_py_handler     = "${local.lambda_py_9_handler}"
     lambda_py_source_file = "${local.lambda_py_9_source_file}"
     lambda_py_zip         = "${local.lambda_py_9_zip}"
+    rebuild               = "${local.lambda_9_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]

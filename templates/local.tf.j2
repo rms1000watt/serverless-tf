@@ -8,6 +8,7 @@ locals {
   service_name   = "${var.service != "" ? var.service : local.parent_dir}"
 
   default_lambda_name = "${local.service_name}-serverless-tf"
+  default_rebuild     = "never"
 
   functions_length = "${length(var.functions)}"
   zeros            = [{%- for i in range(max_functions - 1) %}{k=""},{% endfor %}{k=""}]
@@ -29,6 +30,7 @@ locals {
   lambda_{{i}}_name       = "${lookup(local.lambda_{{i}}, "name", "")}"
   lambda_{{i}}_runtime    = "${lookup(local.lambda_{{i}}, "runtime", "")}"
   lambda_{{i}}_handler    = "${lookup(local.lambda_{{i}}, "handler", "")}"
+  lambda_{{i}}_rebuild    = "${lookup(local.lambda_{{i}}, "rebuild", local.default_rebuild) != local.default_rebuild}"
 
   // Lambda for Golang
   lambda_go_{{i}}         = "${contains(split(".", local.lambda_{{i}}_file), "go")}"

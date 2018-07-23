@@ -146,8 +146,9 @@ module "serverless" {
       vendor_cmd = "govendor sync" // optional (default: "")
       test_cmd   = "go test ./..." // optional (default: "")
       name       = ""              // optional (default: folder name + basename(file) + list_index)
-      runtime    = ""              // optional (default: go1.x)
+      runtime    = ""              // optional (default: go1.x for *.go, python3.6 for *.py, nodejs8.10 for *.js)
       handler    = ""              // optional (default: ${basename(file)})
+      rebuild    = ""              // optional (default: never)
 
       http               = "" // optional (default: "" unless any http_OPTS are defined)
       http_path          = "" // optional (default: lambda_name when http = true)

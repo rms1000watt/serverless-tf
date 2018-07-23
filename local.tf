@@ -8,6 +8,7 @@ locals {
   service_name   = "${var.service != "" ? var.service : local.parent_dir}"
 
   default_lambda_name = "${local.service_name}-serverless-tf"
+  default_rebuild     = "never"
 
   functions_length = "${length(var.functions)}"
   zeros            = [{k=""},{k=""},{k=""},{k=""},{k=""},{k=""},{k=""},{k=""},{k=""},{k=""}]
@@ -28,6 +29,7 @@ locals {
   lambda_0_name       = "${lookup(local.lambda_0, "name", "")}"
   lambda_0_runtime    = "${lookup(local.lambda_0, "runtime", "")}"
   lambda_0_handler    = "${lookup(local.lambda_0, "handler", "")}"
+  lambda_0_rebuild    = "${lookup(local.lambda_0, "rebuild", local.default_rebuild) != local.default_rebuild}"
 
   // Lambda for Golang
   lambda_go_0         = "${contains(split(".", local.lambda_0_file), "go")}"
@@ -92,6 +94,7 @@ locals {
   lambda_1_name       = "${lookup(local.lambda_1, "name", "")}"
   lambda_1_runtime    = "${lookup(local.lambda_1, "runtime", "")}"
   lambda_1_handler    = "${lookup(local.lambda_1, "handler", "")}"
+  lambda_1_rebuild    = "${lookup(local.lambda_1, "rebuild", local.default_rebuild) != local.default_rebuild}"
 
   // Lambda for Golang
   lambda_go_1         = "${contains(split(".", local.lambda_1_file), "go")}"
@@ -156,6 +159,7 @@ locals {
   lambda_2_name       = "${lookup(local.lambda_2, "name", "")}"
   lambda_2_runtime    = "${lookup(local.lambda_2, "runtime", "")}"
   lambda_2_handler    = "${lookup(local.lambda_2, "handler", "")}"
+  lambda_2_rebuild    = "${lookup(local.lambda_2, "rebuild", local.default_rebuild) != local.default_rebuild}"
 
   // Lambda for Golang
   lambda_go_2         = "${contains(split(".", local.lambda_2_file), "go")}"
@@ -220,6 +224,7 @@ locals {
   lambda_3_name       = "${lookup(local.lambda_3, "name", "")}"
   lambda_3_runtime    = "${lookup(local.lambda_3, "runtime", "")}"
   lambda_3_handler    = "${lookup(local.lambda_3, "handler", "")}"
+  lambda_3_rebuild    = "${lookup(local.lambda_3, "rebuild", local.default_rebuild) != local.default_rebuild}"
 
   // Lambda for Golang
   lambda_go_3         = "${contains(split(".", local.lambda_3_file), "go")}"
@@ -284,6 +289,7 @@ locals {
   lambda_4_name       = "${lookup(local.lambda_4, "name", "")}"
   lambda_4_runtime    = "${lookup(local.lambda_4, "runtime", "")}"
   lambda_4_handler    = "${lookup(local.lambda_4, "handler", "")}"
+  lambda_4_rebuild    = "${lookup(local.lambda_4, "rebuild", local.default_rebuild) != local.default_rebuild}"
 
   // Lambda for Golang
   lambda_go_4         = "${contains(split(".", local.lambda_4_file), "go")}"
@@ -348,6 +354,7 @@ locals {
   lambda_5_name       = "${lookup(local.lambda_5, "name", "")}"
   lambda_5_runtime    = "${lookup(local.lambda_5, "runtime", "")}"
   lambda_5_handler    = "${lookup(local.lambda_5, "handler", "")}"
+  lambda_5_rebuild    = "${lookup(local.lambda_5, "rebuild", local.default_rebuild) != local.default_rebuild}"
 
   // Lambda for Golang
   lambda_go_5         = "${contains(split(".", local.lambda_5_file), "go")}"
@@ -412,6 +419,7 @@ locals {
   lambda_6_name       = "${lookup(local.lambda_6, "name", "")}"
   lambda_6_runtime    = "${lookup(local.lambda_6, "runtime", "")}"
   lambda_6_handler    = "${lookup(local.lambda_6, "handler", "")}"
+  lambda_6_rebuild    = "${lookup(local.lambda_6, "rebuild", local.default_rebuild) != local.default_rebuild}"
 
   // Lambda for Golang
   lambda_go_6         = "${contains(split(".", local.lambda_6_file), "go")}"
@@ -476,6 +484,7 @@ locals {
   lambda_7_name       = "${lookup(local.lambda_7, "name", "")}"
   lambda_7_runtime    = "${lookup(local.lambda_7, "runtime", "")}"
   lambda_7_handler    = "${lookup(local.lambda_7, "handler", "")}"
+  lambda_7_rebuild    = "${lookup(local.lambda_7, "rebuild", local.default_rebuild) != local.default_rebuild}"
 
   // Lambda for Golang
   lambda_go_7         = "${contains(split(".", local.lambda_7_file), "go")}"
@@ -540,6 +549,7 @@ locals {
   lambda_8_name       = "${lookup(local.lambda_8, "name", "")}"
   lambda_8_runtime    = "${lookup(local.lambda_8, "runtime", "")}"
   lambda_8_handler    = "${lookup(local.lambda_8, "handler", "")}"
+  lambda_8_rebuild    = "${lookup(local.lambda_8, "rebuild", local.default_rebuild) != local.default_rebuild}"
 
   // Lambda for Golang
   lambda_go_8         = "${contains(split(".", local.lambda_8_file), "go")}"
@@ -604,6 +614,7 @@ locals {
   lambda_9_name       = "${lookup(local.lambda_9, "name", "")}"
   lambda_9_runtime    = "${lookup(local.lambda_9, "runtime", "")}"
   lambda_9_handler    = "${lookup(local.lambda_9, "handler", "")}"
+  lambda_9_rebuild    = "${lookup(local.lambda_9, "rebuild", local.default_rebuild) != local.default_rebuild}"
 
   // Lambda for Golang
   lambda_go_9         = "${contains(split(".", local.lambda_9_file), "go")}"

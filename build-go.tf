@@ -13,6 +13,7 @@ resource "null_resource" "go_0_build" {
     lambda_go_handler = "${local.lambda_go_0_handler}"
     lambda_go_bin     = "${local.lambda_go_0_bin}"
     lambda_go_zip     = "${local.lambda_go_0_zip}"
+    rebuild           = "${local.lambda_0_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -41,6 +42,7 @@ resource "null_resource" "go_1_build" {
     lambda_go_handler = "${local.lambda_go_1_handler}"
     lambda_go_bin     = "${local.lambda_go_1_bin}"
     lambda_go_zip     = "${local.lambda_go_1_zip}"
+    rebuild           = "${local.lambda_1_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -69,6 +71,7 @@ resource "null_resource" "go_2_build" {
     lambda_go_handler = "${local.lambda_go_2_handler}"
     lambda_go_bin     = "${local.lambda_go_2_bin}"
     lambda_go_zip     = "${local.lambda_go_2_zip}"
+    rebuild           = "${local.lambda_2_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -97,6 +100,7 @@ resource "null_resource" "go_3_build" {
     lambda_go_handler = "${local.lambda_go_3_handler}"
     lambda_go_bin     = "${local.lambda_go_3_bin}"
     lambda_go_zip     = "${local.lambda_go_3_zip}"
+    rebuild           = "${local.lambda_3_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -125,6 +129,7 @@ resource "null_resource" "go_4_build" {
     lambda_go_handler = "${local.lambda_go_4_handler}"
     lambda_go_bin     = "${local.lambda_go_4_bin}"
     lambda_go_zip     = "${local.lambda_go_4_zip}"
+    rebuild           = "${local.lambda_4_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -153,6 +158,7 @@ resource "null_resource" "go_5_build" {
     lambda_go_handler = "${local.lambda_go_5_handler}"
     lambda_go_bin     = "${local.lambda_go_5_bin}"
     lambda_go_zip     = "${local.lambda_go_5_zip}"
+    rebuild           = "${local.lambda_5_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -181,6 +187,7 @@ resource "null_resource" "go_6_build" {
     lambda_go_handler = "${local.lambda_go_6_handler}"
     lambda_go_bin     = "${local.lambda_go_6_bin}"
     lambda_go_zip     = "${local.lambda_go_6_zip}"
+    rebuild           = "${local.lambda_6_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -209,6 +216,7 @@ resource "null_resource" "go_7_build" {
     lambda_go_handler = "${local.lambda_go_7_handler}"
     lambda_go_bin     = "${local.lambda_go_7_bin}"
     lambda_go_zip     = "${local.lambda_go_7_zip}"
+    rebuild           = "${local.lambda_7_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -237,6 +245,7 @@ resource "null_resource" "go_8_build" {
     lambda_go_handler = "${local.lambda_go_8_handler}"
     lambda_go_bin     = "${local.lambda_go_8_bin}"
     lambda_go_zip     = "${local.lambda_go_8_zip}"
+    rebuild           = "${local.lambda_8_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
@@ -265,6 +274,7 @@ resource "null_resource" "go_9_build" {
     lambda_go_handler = "${local.lambda_go_9_handler}"
     lambda_go_bin     = "${local.lambda_go_9_bin}"
     lambda_go_zip     = "${local.lambda_go_9_zip}"
+    rebuild           = "${local.lambda_9_rebuild ? timestamp() : local.default_rebuild}"
   }
 
   depends_on = ["null_resource.validator"]
