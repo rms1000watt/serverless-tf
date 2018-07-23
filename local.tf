@@ -43,7 +43,7 @@ locals {
   lambda_py_0_count       = "${local.lambda_py_0 ? 1 : 0}"
   lambda_py_0_name        = "${local.lambda_py_0 && local.lambda_0_name != "" ? "${local.service_name}-${local.api_gateway_0_stage}-${local.lambda_0_name}" : "${local.service_name}-${local.api_gateway_0_stage}-${replace(replace(local.lambda_0_file, ".py", ""), "/", "-")}-0" }" //"
   lambda_py_0_runtime     = "${local.lambda_py_0 && local.lambda_0_runtime != "" ? local.lambda_0_runtime : "python3.6" }"
-  lambda_py_0_handler     = "${local.lambda_py_0 && local.lambda_0_handler != "" ? local.lambda_0_handler : replace(local.lambda_0_file, ".py", ".handler")}" //"
+  lambda_py_0_handler     = "${local.lambda_py_0 && local.lambda_0_handler != "" ? local.lambda_0_handler : replace(local.lambda_0_file, ".py", ".handler")}"
   lambda_py_0_source_file = "${local.lambda_py_0 ? local.lambda_0_file : ""}"
   lambda_py_0_zip         = "${local.lambda_py_0 ? "${path.root}/.terraform/archive_files/${local.lambda_py_0_name}-lambda.zip" : ""}" //"
 
@@ -52,12 +52,12 @@ locals {
   lambda_js_0_count       = "${local.lambda_js_0 ? 1 : 0}"
   lambda_js_0_name        = "${local.lambda_js_0 && local.lambda_0_name != "" ? "${local.service_name}-${local.api_gateway_0_stage}-${local.lambda_0_name}" : "${local.service_name}-${local.api_gateway_0_stage}-${replace(replace(local.lambda_0_file, ".js", ""), "/", "-")}-0" }" //"
   lambda_js_0_runtime     = "${local.lambda_js_0 && local.lambda_0_runtime != "" ? local.lambda_0_runtime : "nodejs8.10" }"
-  lambda_js_0_handler     = "${local.lambda_js_0 && local.lambda_0_handler != "" ? local.lambda_0_handler : replace(local.lambda_0_file, ".js", ".handler")}" //"
+  lambda_js_0_handler     = "${local.lambda_js_0 && local.lambda_0_handler != "" ? local.lambda_0_handler : replace(local.lambda_0_file, ".js", ".handler")}"
   lambda_js_0_source_file = "${local.lambda_js_0 ? local.lambda_0_file : ""}"
   lambda_js_0_zip         = "${local.lambda_js_0 ? "${path.root}/.terraform/archive_files/${local.lambda_js_0_name}-lambda.zip" : ""}" //"
 
   // Lambda Generic
-  lambda_0_name_computed = "${local.lambda_0_name != "" ? local.lambda_0_name : (local.lambda_go_0 ? local.lambda_go_0_name : (local.lambda_py_0 ? local.lambda_py_0_name : (local.lambda_js_0 ? local.lambda_js_0_name : local.default_lambda_name ))) }" //"
+  lambda_0_name_computed = "${local.lambda_0_name != "" ? local.lambda_0_name : (local.lambda_go_0 ? local.lambda_go_0_name : (local.lambda_py_0 ? local.lambda_py_0_name : (local.lambda_js_0 ? local.lambda_js_0_name : local.default_lambda_name ))) }"
 
   // API Gateway
   api_gateway_0               = "${lookup(local.lambda_0, "http", "" ) != "" || lookup(local.lambda_0, "http_path", "") != "" || lookup(local.lambda_0, "http_method", "") != "" || lookup(local.lambda_0, "http_authorization", "") != "" || lookup(local.lambda_0, "http_stage", "") != ""}"
@@ -107,7 +107,7 @@ locals {
   lambda_py_1_count       = "${local.lambda_py_1 ? 1 : 0}"
   lambda_py_1_name        = "${local.lambda_py_1 && local.lambda_1_name != "" ? "${local.service_name}-${local.api_gateway_1_stage}-${local.lambda_1_name}" : "${local.service_name}-${local.api_gateway_1_stage}-${replace(replace(local.lambda_1_file, ".py", ""), "/", "-")}-1" }" //"
   lambda_py_1_runtime     = "${local.lambda_py_1 && local.lambda_1_runtime != "" ? local.lambda_1_runtime : "python3.6" }"
-  lambda_py_1_handler     = "${local.lambda_py_1 && local.lambda_1_handler != "" ? local.lambda_1_handler : replace(local.lambda_1_file, ".py", ".handler")}" //"
+  lambda_py_1_handler     = "${local.lambda_py_1 && local.lambda_1_handler != "" ? local.lambda_1_handler : replace(local.lambda_1_file, ".py", ".handler")}"
   lambda_py_1_source_file = "${local.lambda_py_1 ? local.lambda_1_file : ""}"
   lambda_py_1_zip         = "${local.lambda_py_1 ? "${path.root}/.terraform/archive_files/${local.lambda_py_1_name}-lambda.zip" : ""}" //"
 
@@ -116,12 +116,12 @@ locals {
   lambda_js_1_count       = "${local.lambda_js_1 ? 1 : 0}"
   lambda_js_1_name        = "${local.lambda_js_1 && local.lambda_1_name != "" ? "${local.service_name}-${local.api_gateway_1_stage}-${local.lambda_1_name}" : "${local.service_name}-${local.api_gateway_1_stage}-${replace(replace(local.lambda_1_file, ".js", ""), "/", "-")}-1" }" //"
   lambda_js_1_runtime     = "${local.lambda_js_1 && local.lambda_1_runtime != "" ? local.lambda_1_runtime : "nodejs8.10" }"
-  lambda_js_1_handler     = "${local.lambda_js_1 && local.lambda_1_handler != "" ? local.lambda_1_handler : replace(local.lambda_1_file, ".js", ".handler")}" //"
+  lambda_js_1_handler     = "${local.lambda_js_1 && local.lambda_1_handler != "" ? local.lambda_1_handler : replace(local.lambda_1_file, ".js", ".handler")}"
   lambda_js_1_source_file = "${local.lambda_js_1 ? local.lambda_1_file : ""}"
   lambda_js_1_zip         = "${local.lambda_js_1 ? "${path.root}/.terraform/archive_files/${local.lambda_js_1_name}-lambda.zip" : ""}" //"
 
   // Lambda Generic
-  lambda_1_name_computed = "${local.lambda_1_name != "" ? local.lambda_1_name : (local.lambda_go_1 ? local.lambda_go_1_name : (local.lambda_py_1 ? local.lambda_py_1_name : (local.lambda_js_1 ? local.lambda_js_1_name : local.default_lambda_name ))) }" //"
+  lambda_1_name_computed = "${local.lambda_1_name != "" ? local.lambda_1_name : (local.lambda_go_1 ? local.lambda_go_1_name : (local.lambda_py_1 ? local.lambda_py_1_name : (local.lambda_js_1 ? local.lambda_js_1_name : local.default_lambda_name ))) }"
 
   // API Gateway
   api_gateway_1               = "${lookup(local.lambda_1, "http", "" ) != "" || lookup(local.lambda_1, "http_path", "") != "" || lookup(local.lambda_1, "http_method", "") != "" || lookup(local.lambda_1, "http_authorization", "") != "" || lookup(local.lambda_1, "http_stage", "") != ""}"
@@ -171,7 +171,7 @@ locals {
   lambda_py_2_count       = "${local.lambda_py_2 ? 1 : 0}"
   lambda_py_2_name        = "${local.lambda_py_2 && local.lambda_2_name != "" ? "${local.service_name}-${local.api_gateway_2_stage}-${local.lambda_2_name}" : "${local.service_name}-${local.api_gateway_2_stage}-${replace(replace(local.lambda_2_file, ".py", ""), "/", "-")}-2" }" //"
   lambda_py_2_runtime     = "${local.lambda_py_2 && local.lambda_2_runtime != "" ? local.lambda_2_runtime : "python3.6" }"
-  lambda_py_2_handler     = "${local.lambda_py_2 && local.lambda_2_handler != "" ? local.lambda_2_handler : replace(local.lambda_2_file, ".py", ".handler")}" //"
+  lambda_py_2_handler     = "${local.lambda_py_2 && local.lambda_2_handler != "" ? local.lambda_2_handler : replace(local.lambda_2_file, ".py", ".handler")}"
   lambda_py_2_source_file = "${local.lambda_py_2 ? local.lambda_2_file : ""}"
   lambda_py_2_zip         = "${local.lambda_py_2 ? "${path.root}/.terraform/archive_files/${local.lambda_py_2_name}-lambda.zip" : ""}" //"
 
@@ -180,12 +180,12 @@ locals {
   lambda_js_2_count       = "${local.lambda_js_2 ? 1 : 0}"
   lambda_js_2_name        = "${local.lambda_js_2 && local.lambda_2_name != "" ? "${local.service_name}-${local.api_gateway_2_stage}-${local.lambda_2_name}" : "${local.service_name}-${local.api_gateway_2_stage}-${replace(replace(local.lambda_2_file, ".js", ""), "/", "-")}-2" }" //"
   lambda_js_2_runtime     = "${local.lambda_js_2 && local.lambda_2_runtime != "" ? local.lambda_2_runtime : "nodejs8.10" }"
-  lambda_js_2_handler     = "${local.lambda_js_2 && local.lambda_2_handler != "" ? local.lambda_2_handler : replace(local.lambda_2_file, ".js", ".handler")}" //"
+  lambda_js_2_handler     = "${local.lambda_js_2 && local.lambda_2_handler != "" ? local.lambda_2_handler : replace(local.lambda_2_file, ".js", ".handler")}"
   lambda_js_2_source_file = "${local.lambda_js_2 ? local.lambda_2_file : ""}"
   lambda_js_2_zip         = "${local.lambda_js_2 ? "${path.root}/.terraform/archive_files/${local.lambda_js_2_name}-lambda.zip" : ""}" //"
 
   // Lambda Generic
-  lambda_2_name_computed = "${local.lambda_2_name != "" ? local.lambda_2_name : (local.lambda_go_2 ? local.lambda_go_2_name : (local.lambda_py_2 ? local.lambda_py_2_name : (local.lambda_js_2 ? local.lambda_js_2_name : local.default_lambda_name ))) }" //"
+  lambda_2_name_computed = "${local.lambda_2_name != "" ? local.lambda_2_name : (local.lambda_go_2 ? local.lambda_go_2_name : (local.lambda_py_2 ? local.lambda_py_2_name : (local.lambda_js_2 ? local.lambda_js_2_name : local.default_lambda_name ))) }"
 
   // API Gateway
   api_gateway_2               = "${lookup(local.lambda_2, "http", "" ) != "" || lookup(local.lambda_2, "http_path", "") != "" || lookup(local.lambda_2, "http_method", "") != "" || lookup(local.lambda_2, "http_authorization", "") != "" || lookup(local.lambda_2, "http_stage", "") != ""}"
@@ -235,7 +235,7 @@ locals {
   lambda_py_3_count       = "${local.lambda_py_3 ? 1 : 0}"
   lambda_py_3_name        = "${local.lambda_py_3 && local.lambda_3_name != "" ? "${local.service_name}-${local.api_gateway_3_stage}-${local.lambda_3_name}" : "${local.service_name}-${local.api_gateway_3_stage}-${replace(replace(local.lambda_3_file, ".py", ""), "/", "-")}-3" }" //"
   lambda_py_3_runtime     = "${local.lambda_py_3 && local.lambda_3_runtime != "" ? local.lambda_3_runtime : "python3.6" }"
-  lambda_py_3_handler     = "${local.lambda_py_3 && local.lambda_3_handler != "" ? local.lambda_3_handler : replace(local.lambda_3_file, ".py", ".handler")}" //"
+  lambda_py_3_handler     = "${local.lambda_py_3 && local.lambda_3_handler != "" ? local.lambda_3_handler : replace(local.lambda_3_file, ".py", ".handler")}"
   lambda_py_3_source_file = "${local.lambda_py_3 ? local.lambda_3_file : ""}"
   lambda_py_3_zip         = "${local.lambda_py_3 ? "${path.root}/.terraform/archive_files/${local.lambda_py_3_name}-lambda.zip" : ""}" //"
 
@@ -244,12 +244,12 @@ locals {
   lambda_js_3_count       = "${local.lambda_js_3 ? 1 : 0}"
   lambda_js_3_name        = "${local.lambda_js_3 && local.lambda_3_name != "" ? "${local.service_name}-${local.api_gateway_3_stage}-${local.lambda_3_name}" : "${local.service_name}-${local.api_gateway_3_stage}-${replace(replace(local.lambda_3_file, ".js", ""), "/", "-")}-3" }" //"
   lambda_js_3_runtime     = "${local.lambda_js_3 && local.lambda_3_runtime != "" ? local.lambda_3_runtime : "nodejs8.10" }"
-  lambda_js_3_handler     = "${local.lambda_js_3 && local.lambda_3_handler != "" ? local.lambda_3_handler : replace(local.lambda_3_file, ".js", ".handler")}" //"
+  lambda_js_3_handler     = "${local.lambda_js_3 && local.lambda_3_handler != "" ? local.lambda_3_handler : replace(local.lambda_3_file, ".js", ".handler")}"
   lambda_js_3_source_file = "${local.lambda_js_3 ? local.lambda_3_file : ""}"
   lambda_js_3_zip         = "${local.lambda_js_3 ? "${path.root}/.terraform/archive_files/${local.lambda_js_3_name}-lambda.zip" : ""}" //"
 
   // Lambda Generic
-  lambda_3_name_computed = "${local.lambda_3_name != "" ? local.lambda_3_name : (local.lambda_go_3 ? local.lambda_go_3_name : (local.lambda_py_3 ? local.lambda_py_3_name : (local.lambda_js_3 ? local.lambda_js_3_name : local.default_lambda_name ))) }" //"
+  lambda_3_name_computed = "${local.lambda_3_name != "" ? local.lambda_3_name : (local.lambda_go_3 ? local.lambda_go_3_name : (local.lambda_py_3 ? local.lambda_py_3_name : (local.lambda_js_3 ? local.lambda_js_3_name : local.default_lambda_name ))) }"
 
   // API Gateway
   api_gateway_3               = "${lookup(local.lambda_3, "http", "" ) != "" || lookup(local.lambda_3, "http_path", "") != "" || lookup(local.lambda_3, "http_method", "") != "" || lookup(local.lambda_3, "http_authorization", "") != "" || lookup(local.lambda_3, "http_stage", "") != ""}"
@@ -299,7 +299,7 @@ locals {
   lambda_py_4_count       = "${local.lambda_py_4 ? 1 : 0}"
   lambda_py_4_name        = "${local.lambda_py_4 && local.lambda_4_name != "" ? "${local.service_name}-${local.api_gateway_4_stage}-${local.lambda_4_name}" : "${local.service_name}-${local.api_gateway_4_stage}-${replace(replace(local.lambda_4_file, ".py", ""), "/", "-")}-4" }" //"
   lambda_py_4_runtime     = "${local.lambda_py_4 && local.lambda_4_runtime != "" ? local.lambda_4_runtime : "python3.6" }"
-  lambda_py_4_handler     = "${local.lambda_py_4 && local.lambda_4_handler != "" ? local.lambda_4_handler : replace(local.lambda_4_file, ".py", ".handler")}" //"
+  lambda_py_4_handler     = "${local.lambda_py_4 && local.lambda_4_handler != "" ? local.lambda_4_handler : replace(local.lambda_4_file, ".py", ".handler")}"
   lambda_py_4_source_file = "${local.lambda_py_4 ? local.lambda_4_file : ""}"
   lambda_py_4_zip         = "${local.lambda_py_4 ? "${path.root}/.terraform/archive_files/${local.lambda_py_4_name}-lambda.zip" : ""}" //"
 
@@ -308,12 +308,12 @@ locals {
   lambda_js_4_count       = "${local.lambda_js_4 ? 1 : 0}"
   lambda_js_4_name        = "${local.lambda_js_4 && local.lambda_4_name != "" ? "${local.service_name}-${local.api_gateway_4_stage}-${local.lambda_4_name}" : "${local.service_name}-${local.api_gateway_4_stage}-${replace(replace(local.lambda_4_file, ".js", ""), "/", "-")}-4" }" //"
   lambda_js_4_runtime     = "${local.lambda_js_4 && local.lambda_4_runtime != "" ? local.lambda_4_runtime : "nodejs8.10" }"
-  lambda_js_4_handler     = "${local.lambda_js_4 && local.lambda_4_handler != "" ? local.lambda_4_handler : replace(local.lambda_4_file, ".js", ".handler")}" //"
+  lambda_js_4_handler     = "${local.lambda_js_4 && local.lambda_4_handler != "" ? local.lambda_4_handler : replace(local.lambda_4_file, ".js", ".handler")}"
   lambda_js_4_source_file = "${local.lambda_js_4 ? local.lambda_4_file : ""}"
   lambda_js_4_zip         = "${local.lambda_js_4 ? "${path.root}/.terraform/archive_files/${local.lambda_js_4_name}-lambda.zip" : ""}" //"
 
   // Lambda Generic
-  lambda_4_name_computed = "${local.lambda_4_name != "" ? local.lambda_4_name : (local.lambda_go_4 ? local.lambda_go_4_name : (local.lambda_py_4 ? local.lambda_py_4_name : (local.lambda_js_4 ? local.lambda_js_4_name : local.default_lambda_name ))) }" //"
+  lambda_4_name_computed = "${local.lambda_4_name != "" ? local.lambda_4_name : (local.lambda_go_4 ? local.lambda_go_4_name : (local.lambda_py_4 ? local.lambda_py_4_name : (local.lambda_js_4 ? local.lambda_js_4_name : local.default_lambda_name ))) }"
 
   // API Gateway
   api_gateway_4               = "${lookup(local.lambda_4, "http", "" ) != "" || lookup(local.lambda_4, "http_path", "") != "" || lookup(local.lambda_4, "http_method", "") != "" || lookup(local.lambda_4, "http_authorization", "") != "" || lookup(local.lambda_4, "http_stage", "") != ""}"
@@ -363,7 +363,7 @@ locals {
   lambda_py_5_count       = "${local.lambda_py_5 ? 1 : 0}"
   lambda_py_5_name        = "${local.lambda_py_5 && local.lambda_5_name != "" ? "${local.service_name}-${local.api_gateway_5_stage}-${local.lambda_5_name}" : "${local.service_name}-${local.api_gateway_5_stage}-${replace(replace(local.lambda_5_file, ".py", ""), "/", "-")}-5" }" //"
   lambda_py_5_runtime     = "${local.lambda_py_5 && local.lambda_5_runtime != "" ? local.lambda_5_runtime : "python3.6" }"
-  lambda_py_5_handler     = "${local.lambda_py_5 && local.lambda_5_handler != "" ? local.lambda_5_handler : replace(local.lambda_5_file, ".py", ".handler")}" //"
+  lambda_py_5_handler     = "${local.lambda_py_5 && local.lambda_5_handler != "" ? local.lambda_5_handler : replace(local.lambda_5_file, ".py", ".handler")}"
   lambda_py_5_source_file = "${local.lambda_py_5 ? local.lambda_5_file : ""}"
   lambda_py_5_zip         = "${local.lambda_py_5 ? "${path.root}/.terraform/archive_files/${local.lambda_py_5_name}-lambda.zip" : ""}" //"
 
@@ -372,12 +372,12 @@ locals {
   lambda_js_5_count       = "${local.lambda_js_5 ? 1 : 0}"
   lambda_js_5_name        = "${local.lambda_js_5 && local.lambda_5_name != "" ? "${local.service_name}-${local.api_gateway_5_stage}-${local.lambda_5_name}" : "${local.service_name}-${local.api_gateway_5_stage}-${replace(replace(local.lambda_5_file, ".js", ""), "/", "-")}-5" }" //"
   lambda_js_5_runtime     = "${local.lambda_js_5 && local.lambda_5_runtime != "" ? local.lambda_5_runtime : "nodejs8.10" }"
-  lambda_js_5_handler     = "${local.lambda_js_5 && local.lambda_5_handler != "" ? local.lambda_5_handler : replace(local.lambda_5_file, ".js", ".handler")}" //"
+  lambda_js_5_handler     = "${local.lambda_js_5 && local.lambda_5_handler != "" ? local.lambda_5_handler : replace(local.lambda_5_file, ".js", ".handler")}"
   lambda_js_5_source_file = "${local.lambda_js_5 ? local.lambda_5_file : ""}"
   lambda_js_5_zip         = "${local.lambda_js_5 ? "${path.root}/.terraform/archive_files/${local.lambda_js_5_name}-lambda.zip" : ""}" //"
 
   // Lambda Generic
-  lambda_5_name_computed = "${local.lambda_5_name != "" ? local.lambda_5_name : (local.lambda_go_5 ? local.lambda_go_5_name : (local.lambda_py_5 ? local.lambda_py_5_name : (local.lambda_js_5 ? local.lambda_js_5_name : local.default_lambda_name ))) }" //"
+  lambda_5_name_computed = "${local.lambda_5_name != "" ? local.lambda_5_name : (local.lambda_go_5 ? local.lambda_go_5_name : (local.lambda_py_5 ? local.lambda_py_5_name : (local.lambda_js_5 ? local.lambda_js_5_name : local.default_lambda_name ))) }"
 
   // API Gateway
   api_gateway_5               = "${lookup(local.lambda_5, "http", "" ) != "" || lookup(local.lambda_5, "http_path", "") != "" || lookup(local.lambda_5, "http_method", "") != "" || lookup(local.lambda_5, "http_authorization", "") != "" || lookup(local.lambda_5, "http_stage", "") != ""}"
@@ -427,7 +427,7 @@ locals {
   lambda_py_6_count       = "${local.lambda_py_6 ? 1 : 0}"
   lambda_py_6_name        = "${local.lambda_py_6 && local.lambda_6_name != "" ? "${local.service_name}-${local.api_gateway_6_stage}-${local.lambda_6_name}" : "${local.service_name}-${local.api_gateway_6_stage}-${replace(replace(local.lambda_6_file, ".py", ""), "/", "-")}-6" }" //"
   lambda_py_6_runtime     = "${local.lambda_py_6 && local.lambda_6_runtime != "" ? local.lambda_6_runtime : "python3.6" }"
-  lambda_py_6_handler     = "${local.lambda_py_6 && local.lambda_6_handler != "" ? local.lambda_6_handler : replace(local.lambda_6_file, ".py", ".handler")}" //"
+  lambda_py_6_handler     = "${local.lambda_py_6 && local.lambda_6_handler != "" ? local.lambda_6_handler : replace(local.lambda_6_file, ".py", ".handler")}"
   lambda_py_6_source_file = "${local.lambda_py_6 ? local.lambda_6_file : ""}"
   lambda_py_6_zip         = "${local.lambda_py_6 ? "${path.root}/.terraform/archive_files/${local.lambda_py_6_name}-lambda.zip" : ""}" //"
 
@@ -436,12 +436,12 @@ locals {
   lambda_js_6_count       = "${local.lambda_js_6 ? 1 : 0}"
   lambda_js_6_name        = "${local.lambda_js_6 && local.lambda_6_name != "" ? "${local.service_name}-${local.api_gateway_6_stage}-${local.lambda_6_name}" : "${local.service_name}-${local.api_gateway_6_stage}-${replace(replace(local.lambda_6_file, ".js", ""), "/", "-")}-6" }" //"
   lambda_js_6_runtime     = "${local.lambda_js_6 && local.lambda_6_runtime != "" ? local.lambda_6_runtime : "nodejs8.10" }"
-  lambda_js_6_handler     = "${local.lambda_js_6 && local.lambda_6_handler != "" ? local.lambda_6_handler : replace(local.lambda_6_file, ".js", ".handler")}" //"
+  lambda_js_6_handler     = "${local.lambda_js_6 && local.lambda_6_handler != "" ? local.lambda_6_handler : replace(local.lambda_6_file, ".js", ".handler")}"
   lambda_js_6_source_file = "${local.lambda_js_6 ? local.lambda_6_file : ""}"
   lambda_js_6_zip         = "${local.lambda_js_6 ? "${path.root}/.terraform/archive_files/${local.lambda_js_6_name}-lambda.zip" : ""}" //"
 
   // Lambda Generic
-  lambda_6_name_computed = "${local.lambda_6_name != "" ? local.lambda_6_name : (local.lambda_go_6 ? local.lambda_go_6_name : (local.lambda_py_6 ? local.lambda_py_6_name : (local.lambda_js_6 ? local.lambda_js_6_name : local.default_lambda_name ))) }" //"
+  lambda_6_name_computed = "${local.lambda_6_name != "" ? local.lambda_6_name : (local.lambda_go_6 ? local.lambda_go_6_name : (local.lambda_py_6 ? local.lambda_py_6_name : (local.lambda_js_6 ? local.lambda_js_6_name : local.default_lambda_name ))) }"
 
   // API Gateway
   api_gateway_6               = "${lookup(local.lambda_6, "http", "" ) != "" || lookup(local.lambda_6, "http_path", "") != "" || lookup(local.lambda_6, "http_method", "") != "" || lookup(local.lambda_6, "http_authorization", "") != "" || lookup(local.lambda_6, "http_stage", "") != ""}"
@@ -491,7 +491,7 @@ locals {
   lambda_py_7_count       = "${local.lambda_py_7 ? 1 : 0}"
   lambda_py_7_name        = "${local.lambda_py_7 && local.lambda_7_name != "" ? "${local.service_name}-${local.api_gateway_7_stage}-${local.lambda_7_name}" : "${local.service_name}-${local.api_gateway_7_stage}-${replace(replace(local.lambda_7_file, ".py", ""), "/", "-")}-7" }" //"
   lambda_py_7_runtime     = "${local.lambda_py_7 && local.lambda_7_runtime != "" ? local.lambda_7_runtime : "python3.6" }"
-  lambda_py_7_handler     = "${local.lambda_py_7 && local.lambda_7_handler != "" ? local.lambda_7_handler : replace(local.lambda_7_file, ".py", ".handler")}" //"
+  lambda_py_7_handler     = "${local.lambda_py_7 && local.lambda_7_handler != "" ? local.lambda_7_handler : replace(local.lambda_7_file, ".py", ".handler")}"
   lambda_py_7_source_file = "${local.lambda_py_7 ? local.lambda_7_file : ""}"
   lambda_py_7_zip         = "${local.lambda_py_7 ? "${path.root}/.terraform/archive_files/${local.lambda_py_7_name}-lambda.zip" : ""}" //"
 
@@ -500,12 +500,12 @@ locals {
   lambda_js_7_count       = "${local.lambda_js_7 ? 1 : 0}"
   lambda_js_7_name        = "${local.lambda_js_7 && local.lambda_7_name != "" ? "${local.service_name}-${local.api_gateway_7_stage}-${local.lambda_7_name}" : "${local.service_name}-${local.api_gateway_7_stage}-${replace(replace(local.lambda_7_file, ".js", ""), "/", "-")}-7" }" //"
   lambda_js_7_runtime     = "${local.lambda_js_7 && local.lambda_7_runtime != "" ? local.lambda_7_runtime : "nodejs8.10" }"
-  lambda_js_7_handler     = "${local.lambda_js_7 && local.lambda_7_handler != "" ? local.lambda_7_handler : replace(local.lambda_7_file, ".js", ".handler")}" //"
+  lambda_js_7_handler     = "${local.lambda_js_7 && local.lambda_7_handler != "" ? local.lambda_7_handler : replace(local.lambda_7_file, ".js", ".handler")}"
   lambda_js_7_source_file = "${local.lambda_js_7 ? local.lambda_7_file : ""}"
   lambda_js_7_zip         = "${local.lambda_js_7 ? "${path.root}/.terraform/archive_files/${local.lambda_js_7_name}-lambda.zip" : ""}" //"
 
   // Lambda Generic
-  lambda_7_name_computed = "${local.lambda_7_name != "" ? local.lambda_7_name : (local.lambda_go_7 ? local.lambda_go_7_name : (local.lambda_py_7 ? local.lambda_py_7_name : (local.lambda_js_7 ? local.lambda_js_7_name : local.default_lambda_name ))) }" //"
+  lambda_7_name_computed = "${local.lambda_7_name != "" ? local.lambda_7_name : (local.lambda_go_7 ? local.lambda_go_7_name : (local.lambda_py_7 ? local.lambda_py_7_name : (local.lambda_js_7 ? local.lambda_js_7_name : local.default_lambda_name ))) }"
 
   // API Gateway
   api_gateway_7               = "${lookup(local.lambda_7, "http", "" ) != "" || lookup(local.lambda_7, "http_path", "") != "" || lookup(local.lambda_7, "http_method", "") != "" || lookup(local.lambda_7, "http_authorization", "") != "" || lookup(local.lambda_7, "http_stage", "") != ""}"
@@ -555,7 +555,7 @@ locals {
   lambda_py_8_count       = "${local.lambda_py_8 ? 1 : 0}"
   lambda_py_8_name        = "${local.lambda_py_8 && local.lambda_8_name != "" ? "${local.service_name}-${local.api_gateway_8_stage}-${local.lambda_8_name}" : "${local.service_name}-${local.api_gateway_8_stage}-${replace(replace(local.lambda_8_file, ".py", ""), "/", "-")}-8" }" //"
   lambda_py_8_runtime     = "${local.lambda_py_8 && local.lambda_8_runtime != "" ? local.lambda_8_runtime : "python3.6" }"
-  lambda_py_8_handler     = "${local.lambda_py_8 && local.lambda_8_handler != "" ? local.lambda_8_handler : replace(local.lambda_8_file, ".py", ".handler")}" //"
+  lambda_py_8_handler     = "${local.lambda_py_8 && local.lambda_8_handler != "" ? local.lambda_8_handler : replace(local.lambda_8_file, ".py", ".handler")}"
   lambda_py_8_source_file = "${local.lambda_py_8 ? local.lambda_8_file : ""}"
   lambda_py_8_zip         = "${local.lambda_py_8 ? "${path.root}/.terraform/archive_files/${local.lambda_py_8_name}-lambda.zip" : ""}" //"
 
@@ -564,12 +564,12 @@ locals {
   lambda_js_8_count       = "${local.lambda_js_8 ? 1 : 0}"
   lambda_js_8_name        = "${local.lambda_js_8 && local.lambda_8_name != "" ? "${local.service_name}-${local.api_gateway_8_stage}-${local.lambda_8_name}" : "${local.service_name}-${local.api_gateway_8_stage}-${replace(replace(local.lambda_8_file, ".js", ""), "/", "-")}-8" }" //"
   lambda_js_8_runtime     = "${local.lambda_js_8 && local.lambda_8_runtime != "" ? local.lambda_8_runtime : "nodejs8.10" }"
-  lambda_js_8_handler     = "${local.lambda_js_8 && local.lambda_8_handler != "" ? local.lambda_8_handler : replace(local.lambda_8_file, ".js", ".handler")}" //"
+  lambda_js_8_handler     = "${local.lambda_js_8 && local.lambda_8_handler != "" ? local.lambda_8_handler : replace(local.lambda_8_file, ".js", ".handler")}"
   lambda_js_8_source_file = "${local.lambda_js_8 ? local.lambda_8_file : ""}"
   lambda_js_8_zip         = "${local.lambda_js_8 ? "${path.root}/.terraform/archive_files/${local.lambda_js_8_name}-lambda.zip" : ""}" //"
 
   // Lambda Generic
-  lambda_8_name_computed = "${local.lambda_8_name != "" ? local.lambda_8_name : (local.lambda_go_8 ? local.lambda_go_8_name : (local.lambda_py_8 ? local.lambda_py_8_name : (local.lambda_js_8 ? local.lambda_js_8_name : local.default_lambda_name ))) }" //"
+  lambda_8_name_computed = "${local.lambda_8_name != "" ? local.lambda_8_name : (local.lambda_go_8 ? local.lambda_go_8_name : (local.lambda_py_8 ? local.lambda_py_8_name : (local.lambda_js_8 ? local.lambda_js_8_name : local.default_lambda_name ))) }"
 
   // API Gateway
   api_gateway_8               = "${lookup(local.lambda_8, "http", "" ) != "" || lookup(local.lambda_8, "http_path", "") != "" || lookup(local.lambda_8, "http_method", "") != "" || lookup(local.lambda_8, "http_authorization", "") != "" || lookup(local.lambda_8, "http_stage", "") != ""}"
@@ -619,7 +619,7 @@ locals {
   lambda_py_9_count       = "${local.lambda_py_9 ? 1 : 0}"
   lambda_py_9_name        = "${local.lambda_py_9 && local.lambda_9_name != "" ? "${local.service_name}-${local.api_gateway_9_stage}-${local.lambda_9_name}" : "${local.service_name}-${local.api_gateway_9_stage}-${replace(replace(local.lambda_9_file, ".py", ""), "/", "-")}-9" }" //"
   lambda_py_9_runtime     = "${local.lambda_py_9 && local.lambda_9_runtime != "" ? local.lambda_9_runtime : "python3.6" }"
-  lambda_py_9_handler     = "${local.lambda_py_9 && local.lambda_9_handler != "" ? local.lambda_9_handler : replace(local.lambda_9_file, ".py", ".handler")}" //"
+  lambda_py_9_handler     = "${local.lambda_py_9 && local.lambda_9_handler != "" ? local.lambda_9_handler : replace(local.lambda_9_file, ".py", ".handler")}"
   lambda_py_9_source_file = "${local.lambda_py_9 ? local.lambda_9_file : ""}"
   lambda_py_9_zip         = "${local.lambda_py_9 ? "${path.root}/.terraform/archive_files/${local.lambda_py_9_name}-lambda.zip" : ""}" //"
 
@@ -628,12 +628,12 @@ locals {
   lambda_js_9_count       = "${local.lambda_js_9 ? 1 : 0}"
   lambda_js_9_name        = "${local.lambda_js_9 && local.lambda_9_name != "" ? "${local.service_name}-${local.api_gateway_9_stage}-${local.lambda_9_name}" : "${local.service_name}-${local.api_gateway_9_stage}-${replace(replace(local.lambda_9_file, ".js", ""), "/", "-")}-9" }" //"
   lambda_js_9_runtime     = "${local.lambda_js_9 && local.lambda_9_runtime != "" ? local.lambda_9_runtime : "nodejs8.10" }"
-  lambda_js_9_handler     = "${local.lambda_js_9 && local.lambda_9_handler != "" ? local.lambda_9_handler : replace(local.lambda_9_file, ".js", ".handler")}" //"
+  lambda_js_9_handler     = "${local.lambda_js_9 && local.lambda_9_handler != "" ? local.lambda_9_handler : replace(local.lambda_9_file, ".js", ".handler")}"
   lambda_js_9_source_file = "${local.lambda_js_9 ? local.lambda_9_file : ""}"
   lambda_js_9_zip         = "${local.lambda_js_9 ? "${path.root}/.terraform/archive_files/${local.lambda_js_9_name}-lambda.zip" : ""}" //"
 
   // Lambda Generic
-  lambda_9_name_computed = "${local.lambda_9_name != "" ? local.lambda_9_name : (local.lambda_go_9 ? local.lambda_go_9_name : (local.lambda_py_9 ? local.lambda_py_9_name : (local.lambda_js_9 ? local.lambda_js_9_name : local.default_lambda_name ))) }" //"
+  lambda_9_name_computed = "${local.lambda_9_name != "" ? local.lambda_9_name : (local.lambda_go_9 ? local.lambda_go_9_name : (local.lambda_py_9 ? local.lambda_py_9_name : (local.lambda_js_9 ? local.lambda_js_9_name : local.default_lambda_name ))) }"
 
   // API Gateway
   api_gateway_9               = "${lookup(local.lambda_9, "http", "" ) != "" || lookup(local.lambda_9, "http_path", "") != "" || lookup(local.lambda_9, "http_method", "") != "" || lookup(local.lambda_9, "http_authorization", "") != "" || lookup(local.lambda_9, "http_stage", "") != ""}"
