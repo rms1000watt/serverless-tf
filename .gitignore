@@ -4,6 +4,8 @@ bin
 *tfstate*
 *vendor/*
 !*vendor/vendor.json
+examples/*/vendor/*
+!examples/*/vendor/vendor.json
 saved-plan
 j2.json
 ignore*
