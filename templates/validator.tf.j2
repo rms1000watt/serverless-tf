@@ -2,7 +2,7 @@
 
 resource "null_resource" "validator" {
   provisioner "local-exec" {
-    command = "${local.functions_length > {{max_functions}} ? "echo 'More than {{max_functions}} functions provided in module' && exit 1" : "exit 0"}"
+    command = "${local.functions_length > {{max_functions}} || {%- for i in range(max_functions) %} local.lambda_{{i}}_env_keys_list_length != local.lambda_{{i}}_env_vals_list_length ||{% endfor %} false ? "echo 'More than {{max_functions}} functions provided in module OR length(env_keys) != length(env_vals)' && exit 1" : "exit 0"}"
   }
 
   triggers {

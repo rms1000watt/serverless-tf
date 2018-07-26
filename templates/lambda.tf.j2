@@ -5,10 +5,14 @@ resource "aws_lambda_function" "lambda_go_{{i}}" {
   filename         = "${local.lambda_go_{{i}}_zip}"
   function_name    = "${local.lambda_go_{{i}}_name}"
   handler          = "${local.lambda_go_{{i}}_handler}"
-  role             = "${aws_iam_role.lambda_{{i}}.arn}"
+  role             = "${local.lambda_{{i}}_role_arn != "" ? local.lambda_{{i}}_role_arn  : aws_iam_role.lambda_{{i}}.arn}"
   source_code_hash = "${data.archive_file.lambda_go_{{i}}.output_base64sha256}"
   runtime          = "${local.lambda_go_{{i}}_runtime}"
   timeout          = "${local.lambda_{{i}}_timeout}"
+
+  environment {
+    variables = "${local.lambda_{{i}}_env}"
+  }
 
   count = "${local.lambda_go_{{i}}_count}"
 }
@@ -17,10 +21,14 @@ resource "aws_lambda_function" "lambda_py_{{i}}" {
   filename         = "${local.lambda_py_{{i}}_zip}"
   function_name    = "${local.lambda_py_{{i}}_name}"
   handler          = "${local.lambda_py_{{i}}_handler}"
-  role             = "${aws_iam_role.lambda_{{i}}.arn}"
+  role             = "${local.lambda_{{i}}_role_arn != "" ? local.lambda_{{i}}_role_arn  : aws_iam_role.lambda_{{i}}.arn}"
   source_code_hash = "${data.archive_file.lambda_py_{{i}}.output_base64sha256}"
   runtime          = "${local.lambda_py_{{i}}_runtime}"
   timeout          = "${local.lambda_{{i}}_timeout}"
+
+  environment {
+    variables = "${local.lambda_{{i}}_env}"
+  }
 
   count = "${local.lambda_py_{{i}}_count}"
 }
@@ -29,10 +37,14 @@ resource "aws_lambda_function" "lambda_js_{{i}}" {
   filename         = "${local.lambda_js_{{i}}_zip}"
   function_name    = "${local.lambda_js_{{i}}_name}"
   handler          = "${local.lambda_js_{{i}}_handler}"
-  role             = "${aws_iam_role.lambda_{{i}}.arn}"
+  role             = "${local.lambda_{{i}}_role_arn != "" ? local.lambda_{{i}}_role_arn  : aws_iam_role.lambda_{{i}}.arn}"
   source_code_hash = "${data.archive_file.lambda_js_{{i}}.output_base64sha256}"
   runtime          = "${local.lambda_js_{{i}}_runtime}"
   timeout          = "${local.lambda_{{i}}_timeout}"
+
+  environment {
+    variables = "${local.lambda_{{i}}_env}"
+  }
 
   count = "${local.lambda_js_{{i}}_count}"
 }

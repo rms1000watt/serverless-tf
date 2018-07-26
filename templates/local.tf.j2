@@ -26,11 +26,19 @@ locals {
   lambda_{{i}}_vendor_cmd = "${lookup(local.lambda_{{i}}, "vendor_cmd", "")}"
   lambda_{{i}}_test_cmd   = "${lookup(local.lambda_{{i}}, "test_cmd", "")}"
   lambda_{{i}}_timeout    = "${lookup(local.lambda_{{i}}, "timeout", "5")}"
-  lambda_{{i}}_env_vars   = "${lookup(local.lambda_{{i}}, "env_vars", "")}"
   lambda_{{i}}_name       = "${lookup(local.lambda_{{i}}, "name", "")}"
   lambda_{{i}}_runtime    = "${lookup(local.lambda_{{i}}, "runtime", "")}"
   lambda_{{i}}_handler    = "${lookup(local.lambda_{{i}}, "handler", "")}"
   lambda_{{i}}_rebuild    = "${lookup(local.lambda_{{i}}, "rebuild", local.default_rebuild) != local.default_rebuild}"
+  lambda_{{i}}_role_arn   = "${lookup(local.lambda_{{i}}, "role_arn", "")}"
+
+  lambda_{{i}}_env_keys             = "${lookup(local.lambda_{{i}}, "env_keys", "AUTHOR")}"
+  lambda_{{i}}_env_vals             = "${lookup(local.lambda_{{i}}, "env_vals", "rms1000watt")}"
+  lambda_{{i}}_env_keys_list        = "${split(" ", local.lambda_{{i}}_env_keys)}"
+  lambda_{{i}}_env_vals_list        = "${split(" ", local.lambda_{{i}}_env_vals)}"
+  lambda_{{i}}_env_keys_list_length = "${length(local.lambda_{{i}}_env_keys_list)}"
+  lambda_{{i}}_env_vals_list_length = "${length(local.lambda_{{i}}_env_vals_list)}"
+  lambda_{{i}}_env                  = "${zipmap(local.lambda_{{i}}_env_keys_list, local.lambda_{{i}}_env_vals_list)}"
 
   // Lambda for Golang
   lambda_go_{{i}}         = "${contains(split(".", local.lambda_{{i}}_file), "go")}"

@@ -130,6 +130,11 @@ module "serverless" {
 }
 ```
 
+### Override Lambda Role/Policy
+
+See [Example: HTTP S3 Go](https://github.com/rms1000watt/serverless-tf/blob/master/examples/http-s3-go/main.tf) for an example to override Lambda Role/Policy allowing it to connect to an S3 bucket.
+
+
 ## Options
 
 Here are the options that each function supports.
@@ -149,6 +154,9 @@ module "serverless" {
       runtime    = ""              // optional (default: go1.x for *.go, python3.6 for *.py, nodejs8.10 for *.js)
       handler    = ""              // optional (default: ${basename(file)})
       rebuild    = ""              // optional (default: never)
+      role_arn   = ""              // optional (default: default role with cloudwatch access)
+      env_keys   = ""              // optional (default: "") (usage: space delimited list: "KEY1 KEY2 KEY3")
+      env_vals   = ""              // optional (default: "") (usage: space delimited list: "value1 value2 value3")
 
       http               = "" // optional (default: "" unless any http_OPTS are defined)
       http_path          = "" // optional (default: lambda_name when http = true)
@@ -186,6 +194,4 @@ An alternative approach for full Serverless functionality would be to create a G
 
 - [ ] better Readme (docs)
 - [ ] more restrictive cloudwatch logs
-- [ ] lambda policy replacement
-- [ ] env vars in lambda as string mapped to map (VAR1=val1 VAR2=val2 VAR3=val3)
 - [ ] lambda function `file` within folder (ie. file = "path/to/main.go")
