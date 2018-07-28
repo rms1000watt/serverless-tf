@@ -191,8 +191,8 @@ An alternative approach for full Serverless functionality would be to create a G
 
 ## TODO
 
-- [ ] Better docs
-- [ ] Authorizer creation and usage
+- [ ] Better Docs
+- [ ] API Gateway Authorizer
 - [ ] SQS
 - [ ] SNS
 - [ ] S3
