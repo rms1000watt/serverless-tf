@@ -3,7 +3,7 @@
 
 resource "null_resource" "py_{{i}}_build" {
   provisioner "local-exec" {
-    command     = "${local.lambda_{{i}}_vendor_cmd != "" ? "${local.lambda_{{i}}_vendor_cmd} && " : ""}${local.lambda_{{i}}_test_cmd != "" ? "${local.lambda_{{i}}_test_cmd} && " : ""}echo 'py {{i}} build'"
+    command     = "cd ${local.lambda_{{i}}_dir}; ${local.lambda_{{i}}_vendor_cmd != "" ? "${local.lambda_{{i}}_vendor_cmd} && " : ""}${local.lambda_{{i}}_test_cmd != "" ? "${local.lambda_{{i}}_test_cmd} && " : ""}echo 'py {{i}} build'"
     interpreter = ["/bin/bash", "-c"]
   }
 

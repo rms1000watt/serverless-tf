@@ -3,7 +3,7 @@
 
 resource "null_resource" "go_{{i}}_build" {
   provisioner "local-exec" {
-    command     = "${local.lambda_{{i}}_vendor_cmd != "" ? "${local.lambda_{{i}}_vendor_cmd} && " : ""}${local.lambda_{{i}}_test_cmd != "" ? "${local.lambda_{{i}}_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_{{i}}_bin}"
+    command     = "cd ${local.lambda_{{i}}_dir}; ${local.lambda_{{i}}_vendor_cmd != "" ? "${local.lambda_{{i}}_vendor_cmd} && " : ""}${local.lambda_{{i}}_test_cmd != "" ? "${local.lambda_{{i}}_test_cmd} && " : ""}GOOS=linux go build -o ${local.lambda_go_{{i}}_bin}"
     interpreter = ["/bin/bash", "-c"]
   }
 

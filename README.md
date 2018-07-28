@@ -134,7 +134,6 @@ module "serverless" {
 
 See [Example: HTTP S3 Go](https://github.com/rms1000watt/serverless-tf/blob/master/examples/http-s3-go/main.tf) for an example to override Lambda Role/Policy allowing it to connect to an S3 bucket.
 
-
 ## Options
 
 Here are the options that each function supports.
@@ -192,6 +191,13 @@ An alternative approach for full Serverless functionality would be to create a G
 
 ## TODO
 
-- [ ] better Readme (docs)
-- [ ] more restrictive cloudwatch logs
-- [ ] lambda function `file` within folder (ie. file = "path/to/main.go")
+- [ ] Better docs
+- [ ] Authorizer creation and usage
+- [ ] SQS
+- [ ] SNS
+- [ ] S3
+- [ ] Cloudwatch Event
+- [ ] Cloudwatch Log
+- [ ] Kinesis
+- [ ] Dynamo
+- [ ] Cognito

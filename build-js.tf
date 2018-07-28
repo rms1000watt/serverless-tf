@@ -2,7 +2,7 @@
 
 resource "null_resource" "js_0_build" {
   provisioner "local-exec" {
-    command     = "${local.lambda_0_vendor_cmd != "" ? "${local.lambda_0_vendor_cmd} && " : ""}${local.lambda_0_test_cmd != "" ? "${local.lambda_0_test_cmd} && " : ""}echo 'js 0 build'"
+    command     = "cd ${local.lambda_0_dir}; ${local.lambda_0_vendor_cmd != "" ? "${local.lambda_0_vendor_cmd} && " : ""}${local.lambda_0_test_cmd != "" ? "${local.lambda_0_test_cmd} && " : ""}echo 'js 0 build'"
     interpreter = ["/bin/bash", "-c"]
   }
 
@@ -31,7 +31,7 @@ data "archive_file" "lambda_js_0" {
 
 resource "null_resource" "js_1_build" {
   provisioner "local-exec" {
-    command     = "${local.lambda_1_vendor_cmd != "" ? "${local.lambda_1_vendor_cmd} && " : ""}${local.lambda_1_test_cmd != "" ? "${local.lambda_1_test_cmd} && " : ""}echo 'js 1 build'"
+    command     = "cd ${local.lambda_1_dir}; ${local.lambda_1_vendor_cmd != "" ? "${local.lambda_1_vendor_cmd} && " : ""}${local.lambda_1_test_cmd != "" ? "${local.lambda_1_test_cmd} && " : ""}echo 'js 1 build'"
     interpreter = ["/bin/bash", "-c"]
   }
 
@@ -60,7 +60,7 @@ data "archive_file" "lambda_js_1" {
 
 resource "null_resource" "js_2_build" {
   provisioner "local-exec" {
-    command     = "${local.lambda_2_vendor_cmd != "" ? "${local.lambda_2_vendor_cmd} && " : ""}${local.lambda_2_test_cmd != "" ? "${local.lambda_2_test_cmd} && " : ""}echo 'js 2 build'"
+    command     = "cd ${local.lambda_2_dir}; ${local.lambda_2_vendor_cmd != "" ? "${local.lambda_2_vendor_cmd} && " : ""}${local.lambda_2_test_cmd != "" ? "${local.lambda_2_test_cmd} && " : ""}echo 'js 2 build'"
     interpreter = ["/bin/bash", "-c"]
   }
 
@@ -89,7 +89,7 @@ data "archive_file" "lambda_js_2" {
 
 resource "null_resource" "js_3_build" {
   provisioner "local-exec" {
-    command     = "${local.lambda_3_vendor_cmd != "" ? "${local.lambda_3_vendor_cmd} && " : ""}${local.lambda_3_test_cmd != "" ? "${local.lambda_3_test_cmd} && " : ""}echo 'js 3 build'"
+    command     = "cd ${local.lambda_3_dir}; ${local.lambda_3_vendor_cmd != "" ? "${local.lambda_3_vendor_cmd} && " : ""}${local.lambda_3_test_cmd != "" ? "${local.lambda_3_test_cmd} && " : ""}echo 'js 3 build'"
     interpreter = ["/bin/bash", "-c"]
   }
 
@@ -118,7 +118,7 @@ data "archive_file" "lambda_js_3" {
 
 resource "null_resource" "js_4_build" {
   provisioner "local-exec" {
-    command     = "${local.lambda_4_vendor_cmd != "" ? "${local.lambda_4_vendor_cmd} && " : ""}${local.lambda_4_test_cmd != "" ? "${local.lambda_4_test_cmd} && " : ""}echo 'js 4 build'"
+    command     = "cd ${local.lambda_4_dir}; ${local.lambda_4_vendor_cmd != "" ? "${local.lambda_4_vendor_cmd} && " : ""}${local.lambda_4_test_cmd != "" ? "${local.lambda_4_test_cmd} && " : ""}echo 'js 4 build'"
     interpreter = ["/bin/bash", "-c"]
   }
 
@@ -147,7 +147,7 @@ data "archive_file" "lambda_js_4" {
 
 resource "null_resource" "js_5_build" {
   provisioner "local-exec" {
-    command     = "${local.lambda_5_vendor_cmd != "" ? "${local.lambda_5_vendor_cmd} && " : ""}${local.lambda_5_test_cmd != "" ? "${local.lambda_5_test_cmd} && " : ""}echo 'js 5 build'"
+    command     = "cd ${local.lambda_5_dir}; ${local.lambda_5_vendor_cmd != "" ? "${local.lambda_5_vendor_cmd} && " : ""}${local.lambda_5_test_cmd != "" ? "${local.lambda_5_test_cmd} && " : ""}echo 'js 5 build'"
     interpreter = ["/bin/bash", "-c"]
   }
 
@@ -176,7 +176,7 @@ data "archive_file" "lambda_js_5" {
 
 resource "null_resource" "js_6_build" {
   provisioner "local-exec" {
-    command     = "${local.lambda_6_vendor_cmd != "" ? "${local.lambda_6_vendor_cmd} && " : ""}${local.lambda_6_test_cmd != "" ? "${local.lambda_6_test_cmd} && " : ""}echo 'js 6 build'"
+    command     = "cd ${local.lambda_6_dir}; ${local.lambda_6_vendor_cmd != "" ? "${local.lambda_6_vendor_cmd} && " : ""}${local.lambda_6_test_cmd != "" ? "${local.lambda_6_test_cmd} && " : ""}echo 'js 6 build'"
     interpreter = ["/bin/bash", "-c"]
   }
 
@@ -205,7 +205,7 @@ data "archive_file" "lambda_js_6" {
 
 resource "null_resource" "js_7_build" {
   provisioner "local-exec" {
-    command     = "${local.lambda_7_vendor_cmd != "" ? "${local.lambda_7_vendor_cmd} && " : ""}${local.lambda_7_test_cmd != "" ? "${local.lambda_7_test_cmd} && " : ""}echo 'js 7 build'"
+    command     = "cd ${local.lambda_7_dir}; ${local.lambda_7_vendor_cmd != "" ? "${local.lambda_7_vendor_cmd} && " : ""}${local.lambda_7_test_cmd != "" ? "${local.lambda_7_test_cmd} && " : ""}echo 'js 7 build'"
     interpreter = ["/bin/bash", "-c"]
   }
 
@@ -234,7 +234,7 @@ data "archive_file" "lambda_js_7" {
 
 resource "null_resource" "js_8_build" {
   provisioner "local-exec" {
-    command     = "${local.lambda_8_vendor_cmd != "" ? "${local.lambda_8_vendor_cmd} && " : ""}${local.lambda_8_test_cmd != "" ? "${local.lambda_8_test_cmd} && " : ""}echo 'js 8 build'"
+    command     = "cd ${local.lambda_8_dir}; ${local.lambda_8_vendor_cmd != "" ? "${local.lambda_8_vendor_cmd} && " : ""}${local.lambda_8_test_cmd != "" ? "${local.lambda_8_test_cmd} && " : ""}echo 'js 8 build'"
     interpreter = ["/bin/bash", "-c"]
   }
 
@@ -263,7 +263,7 @@ data "archive_file" "lambda_js_8" {
 
 resource "null_resource" "js_9_build" {
   provisioner "local-exec" {
-    command     = "${local.lambda_9_vendor_cmd != "" ? "${local.lambda_9_vendor_cmd} && " : ""}${local.lambda_9_test_cmd != "" ? "${local.lambda_9_test_cmd} && " : ""}echo 'js 9 build'"
+    command     = "cd ${local.lambda_9_dir}; ${local.lambda_9_vendor_cmd != "" ? "${local.lambda_9_vendor_cmd} && " : ""}${local.lambda_9_test_cmd != "" ? "${local.lambda_9_test_cmd} && " : ""}echo 'js 9 build'"
     interpreter = ["/bin/bash", "-c"]
   }
 
