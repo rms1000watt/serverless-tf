@@ -45,7 +45,7 @@ resource "aws_api_gateway_integration" "0_n_auth" {
   http_method             = "${aws_api_gateway_method.0_n_auth.http_method}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
-  uri                     = "${local.lambda_0_arn}"
+  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${local.lambda_0_arn}/invocations"
 
   count = "${local.api_gateway_0_count + local.api_gateway_0_authorizer_count == 1 ? 1 : 0}"
 }
@@ -138,7 +138,7 @@ resource "aws_api_gateway_integration" "1_n_auth" {
   http_method             = "${aws_api_gateway_method.1_n_auth.http_method}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
-  uri                     = "${local.lambda_1_arn}"
+  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${local.lambda_1_arn}/invocations"
 
   count = "${local.api_gateway_1_count + local.api_gateway_1_authorizer_count == 1 ? 1 : 0}"
 }
@@ -231,7 +231,7 @@ resource "aws_api_gateway_integration" "2_n_auth" {
   http_method             = "${aws_api_gateway_method.2_n_auth.http_method}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
-  uri                     = "${local.lambda_2_arn}"
+  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${local.lambda_2_arn}/invocations"
 
   count = "${local.api_gateway_2_count + local.api_gateway_2_authorizer_count == 1 ? 1 : 0}"
 }
@@ -324,7 +324,7 @@ resource "aws_api_gateway_integration" "3_n_auth" {
   http_method             = "${aws_api_gateway_method.3_n_auth.http_method}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
-  uri                     = "${local.lambda_3_arn}"
+  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${local.lambda_3_arn}/invocations"
 
   count = "${local.api_gateway_3_count + local.api_gateway_3_authorizer_count == 1 ? 1 : 0}"
 }
@@ -417,7 +417,7 @@ resource "aws_api_gateway_integration" "4_n_auth" {
   http_method             = "${aws_api_gateway_method.4_n_auth.http_method}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
-  uri                     = "${local.lambda_4_arn}"
+  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${local.lambda_4_arn}/invocations"
 
   count = "${local.api_gateway_4_count + local.api_gateway_4_authorizer_count == 1 ? 1 : 0}"
 }
@@ -510,7 +510,7 @@ resource "aws_api_gateway_integration" "5_n_auth" {
   http_method             = "${aws_api_gateway_method.5_n_auth.http_method}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
-  uri                     = "${local.lambda_5_arn}"
+  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${local.lambda_5_arn}/invocations"
 
   count = "${local.api_gateway_5_count + local.api_gateway_5_authorizer_count == 1 ? 1 : 0}"
 }
@@ -603,7 +603,7 @@ resource "aws_api_gateway_integration" "6_n_auth" {
   http_method             = "${aws_api_gateway_method.6_n_auth.http_method}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
-  uri                     = "${local.lambda_6_arn}"
+  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${local.lambda_6_arn}/invocations"
 
   count = "${local.api_gateway_6_count + local.api_gateway_6_authorizer_count == 1 ? 1 : 0}"
 }
@@ -696,7 +696,7 @@ resource "aws_api_gateway_integration" "7_n_auth" {
   http_method             = "${aws_api_gateway_method.7_n_auth.http_method}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
-  uri                     = "${local.lambda_7_arn}"
+  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${local.lambda_7_arn}/invocations"
 
   count = "${local.api_gateway_7_count + local.api_gateway_7_authorizer_count == 1 ? 1 : 0}"
 }
@@ -789,7 +789,7 @@ resource "aws_api_gateway_integration" "8_n_auth" {
   http_method             = "${aws_api_gateway_method.8_n_auth.http_method}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
-  uri                     = "${local.lambda_8_arn}"
+  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${local.lambda_8_arn}/invocations"
 
   count = "${local.api_gateway_8_count + local.api_gateway_8_authorizer_count == 1 ? 1 : 0}"
 }
@@ -882,7 +882,7 @@ resource "aws_api_gateway_integration" "9_n_auth" {
   http_method             = "${aws_api_gateway_method.9_n_auth.http_method}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
-  uri                     = "${local.lambda_9_arn}"
+  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${local.lambda_9_arn}/invocations"
 
   count = "${local.api_gateway_9_count + local.api_gateway_9_authorizer_count == 1 ? 1 : 0}"
 }
