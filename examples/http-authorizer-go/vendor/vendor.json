@@ -1,0 +1,31 @@
+{
+	"comment": "",
+	"ignore": "test",
+	"package": [
+		{
+			"checksumSHA1": "svZ6M8HcrUhmTgMVdLlSh9bt5ow=",
+			"path": "github.com/aws/aws-lambda-go/events",
+			"revision": "3574a030467ca312f135e64a4a1bf293a216febd",
+			"revisionTime": "2018-06-28T16:18:45Z"
+		},
+		{
+			"checksumSHA1": "Atnv24CtEnB8ZLGDqFevLMfzLtQ=",
+			"path": "github.com/aws/aws-lambda-go/lambda",
+			"revision": "3574a030467ca312f135e64a4a1bf293a216febd",
+			"revisionTime": "2018-06-28T16:18:45Z"
+		},
+		{
+			"checksumSHA1": "d4ehJWLS4YsqFG825pgwdvKDB6A=",
+			"path": "github.com/aws/aws-lambda-go/lambda/messages",
+			"revision": "3574a030467ca312f135e64a4a1bf293a216febd",
+			"revisionTime": "2018-06-28T16:18:45Z"
+		},
+		{
+			"checksumSHA1": "f9MhOwQHveaPVWO6trwfqHa+W0M=",
+			"path": "github.com/aws/aws-lambda-go/lambdacontext",
+			"revision": "3574a030467ca312f135e64a4a1bf293a216febd",
+			"revisionTime": "2018-06-28T16:18:45Z"
+		}
+	],
+	"rootPath": "github.com/rms1000watt/serverless-tf/examples/http-authorizer-go"
+}

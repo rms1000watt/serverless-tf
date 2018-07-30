@@ -134,6 +134,30 @@ module "serverless" {
 
 See [Example: HTTP S3 Go](https://github.com/rms1000watt/serverless-tf/blob/master/examples/http-s3-go/main.tf) for an example to override Lambda Role/Policy allowing it to connect to an S3 bucket.
 
+### HTTP with Authorizer
+
+As seen in [Example: HTTP Authorizer Go](https://github.com/rms1000watt/serverless-tf/blob/master/examples/http-authorizer-go/main.tf)
+
+```hcl
+module "serverless" {
+  source = "../.."
+
+  functions = [
+    {
+      file       = "main.go"
+      name       = "authorizer-1"
+      vendor_cmd = "govendor sync"
+    },
+    {
+      file = "../hello-world-go/main.go"
+
+      http_path       = "hello-world"
+      http_authorizer = "authorizer-1"
+    },
+  ]
+}
+```
+
 ## Options
 
 Here are the options that each function supports.
@@ -146,24 +170,24 @@ module "serverless" {
 
   functions = [
     {
-      file       = "main.go"
+      file       = "main.go"       // required (usage: relative path to file: main.go, ../main.go, path/to/main.go)
       vendor_cmd = "govendor sync" // optional (default: "")
       test_cmd   = "go test ./..." // optional (default: "")
-      name       = ""              // optional (default: folder name + basename(file) + list_index)
+      name       = ""              // optional (default: folder name + basename(file) + list_index, only required if this will be authorizer)
       runtime    = ""              // optional (default: go1.x for *.go, python3.6 for *.py, nodejs8.10 for *.js)
       handler    = ""              // optional (default: ${basename(file)})
       rebuild    = ""              // optional (default: never)
-      role_arn   = ""              // optional (default: default role with cloudwatch access)
+      role_arn   = ""              // optional (default: default role with cloudwatch access: role-lambda.json)
       env_keys   = ""              // optional (default: "") (usage: space delimited list: "KEY1 KEY2 KEY3")
       env_vals   = ""              // optional (default: "") (usage: space delimited list: "value1 value2 value3")
 
-      http               = "" // optional (default: "" unless any http_OPTS are defined)
-      http_path          = "" // optional (default: lambda_name when http = true)
-      http_method        = "" // optional (default: GET when http = true)
-      http_authorization = "" // optional (default: NONE when http = true)
-      http_stage         = "" // optional (default: dev when http = true)
-      http_metrics       = "" // optional (default: false when http = true)
-      http_logging       = "" // optional (default: false when http = true)
+      http            = "" // optional (default: "" unless any http_OPTS are defined)
+      http_path       = "" // optional (default: lambda_name when http = true)
+      http_method     = "" // optional (default: GET when http = true)
+      http_stage      = "" // optional (default: dev when http = true)
+      http_metrics    = "" // optional (default: "" when http = true)
+      http_logging    = "" // optional (default: "" when http = true)
+      http_authorizer = "" // optional (default: "")
 
       schedule      = "" // optional (default: "" unless any schedule_OPTS are defined)
       schedule_rate = "" // optional (default: rate(1 hour))
@@ -193,6 +217,7 @@ An alternative approach for full Serverless functionality would be to create a G
 
 - [ ] Better Docs
 - [ ] API Gateway Authorizer
+- [ ] Readme for each example with explanation
 - [ ] SQS
 - [ ] SNS
 - [ ] S3

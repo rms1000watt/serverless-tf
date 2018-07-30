@@ -1,8 +1,5 @@
 // GENERATED FILE: DO NOT EDIT
 
-data "aws_region" "current" {}
-data "aws_caller_identity" "current" {}
-
 resource "aws_api_gateway_rest_api" "global" {
   name  = "${local.service_name}"
 
@@ -24,62 +21,51 @@ resource "aws_api_gateway_resource" "{{i}}" {
   count = "${local.api_gateway_{{i}}_count}"
 }
 
-resource "aws_api_gateway_method" "{{i}}" {
+resource "aws_api_gateway_method" "{{i}}_n_auth" {
   rest_api_id   = "${aws_api_gateway_rest_api.global.id}"
   resource_id   = "${aws_api_gateway_resource.{{i}}.id}"
   http_method   = "${local.api_gateway_{{i}}_method}"
   authorization = "${local.api_gateway_{{i}}_authorization}"
 
-  count = "${local.api_gateway_{{i}}_count}"
+  count = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_authorizer_count == 1 ? 1 : 0}"
 }
 
-resource "aws_api_gateway_integration" "{{i}}_go" {
-  rest_api_id             = "${aws_api_gateway_rest_api.global.id}"
-  resource_id             = "${aws_api_gateway_method.{{i}}.resource_id}"
-  http_method             = "${aws_api_gateway_method.{{i}}.http_method}"
-  type                    = "AWS_PROXY"
-  integration_http_method = "POST"
-  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_go_{{i}}.arn}/invocations"
+resource "aws_api_gateway_method" "{{i}}_w_auth" {
+  rest_api_id   = "${aws_api_gateway_rest_api.global.id}"
+  resource_id   = "${aws_api_gateway_resource.{{i}}.id}"
+  http_method   = "${local.api_gateway_{{i}}_method}"
+  authorization = "${local.api_gateway_{{i}}_authorization}"
+  authorizer_id = "${aws_api_gateway_authorizer.{{i}}.id}"
 
-  // TODO: figure this out properly
-  // credentials             = "${aws_iam_role.api_gateway_{{i}}.arn}"
-
-  count = "${local.lambda_go_{{i}}_count + local.api_gateway_{{i}}_count == 2 ? 1 : 0}"
+  count = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_authorizer_count == 2 ? 1 : 0}"
 }
 
-resource "aws_api_gateway_integration" "{{i}}_py" {
+resource "aws_api_gateway_integration" "{{i}}_n_auth" {
   rest_api_id             = "${aws_api_gateway_rest_api.global.id}"
-  resource_id             = "${aws_api_gateway_method.{{i}}.resource_id}"
-  http_method             = "${aws_api_gateway_method.{{i}}.http_method}"
+  resource_id             = "${aws_api_gateway_method.{{i}}_n_auth.resource_id}"
+  http_method             = "${aws_api_gateway_method.{{i}}_n_auth.http_method}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
-  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_py_{{i}}.arn}/invocations"
+  uri                     = "${local.lambda_{{i}}_arn}"
 
-  // TODO: figure this out properly
-  // credentials             = "${aws_iam_role.api_gateway_{{i}}.arn}"
-
-  count = "${local.lambda_py_{{i}}_count + local.api_gateway_{{i}}_count == 2 ? 1 : 0}"
+  count = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_authorizer_count == 1 ? 1 : 0}"
 }
 
-resource "aws_api_gateway_integration" "{{i}}_js" {
+resource "aws_api_gateway_integration" "{{i}}_w_auth" {
   rest_api_id             = "${aws_api_gateway_rest_api.global.id}"
-  resource_id             = "${aws_api_gateway_method.{{i}}.resource_id}"
-  http_method             = "${aws_api_gateway_method.{{i}}.http_method}"
+  resource_id             = "${aws_api_gateway_method.{{i}}_w_auth.resource_id}"
+  http_method             = "${aws_api_gateway_method.{{i}}_w_auth.http_method}"
   type                    = "AWS_PROXY"
   integration_http_method = "POST"
-  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${aws_lambda_function.lambda_js_{{i}}.arn}/invocations"
+  uri                     = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${local.lambda_{{i}}_arn}/invocations"
 
-  // TODO: figure this out properly
-  // credentials             = "${aws_iam_role.api_gateway_{{i}}.arn}"
-
-  count = "${local.lambda_js_{{i}}_count + local.api_gateway_{{i}}_count == 2 ? 1 : 0}"
+  count = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_authorizer_count == 2 ? 1 : 0}"
 }
 
 resource "aws_api_gateway_deployment" "{{i}}" {
   depends_on = [
-    "aws_api_gateway_integration.{{i}}_go",
-    "aws_api_gateway_integration.{{i}}_py",
-    "aws_api_gateway_integration.{{i}}_js",
+    "aws_api_gateway_integration.{{i}}_n_auth",
+    "aws_api_gateway_integration.{{i}}_w_auth",
   ]
 
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
@@ -109,4 +95,15 @@ resource "aws_api_gateway_method_settings" "{{i}}" {
 
   count = "${local.api_gateway_{{i}}_count}"
 }
+
+resource "aws_api_gateway_authorizer" "{{i}}" {
+  name                   = "${local.api_gateway_{{i}}_authorizer}"
+  rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
+  authorizer_uri         = "${local.api_gateway_{{i}}_authorizer_uri}"
+  authorizer_credentials = "${local.api_gateway_{{i}}_authorizer_role_arn}"
+  type                   = "REQUEST"
+
+  count = "${local.api_gateway_{{i}}_authorizer_count}"
+}
+
 {%- endfor %}
