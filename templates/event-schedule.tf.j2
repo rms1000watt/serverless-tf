@@ -9,7 +9,7 @@ resource "aws_cloudwatch_event_rule" "{{i}}" {
 }
 
 resource "aws_cloudwatch_event_target" "{{i}}" {
-  rule = "${aws_cloudwatch_event_rule.0.name}"
+  rule = "${aws_cloudwatch_event_rule.{{i}}.name}"
   arn  = "${local.lambda_{{i}}_arn}"
 
   count = "${local.cloudwatch_{{i}}_count}"
