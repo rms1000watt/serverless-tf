@@ -45,4 +45,31 @@ resource "aws_iam_role_policy" "api_gateway_{{i}}" {
 
   count = "${local.api_gateway_{{i}}_count}"
 }
+
+resource "aws_iam_role" "api_gateway_{{i}}_authorizer" {
+  name               = "${local.lambda_{{i}}_name_computed}-r-apiga-{{i}}"
+  assume_role_policy = "${file("${path.module}/role-api-gateway-authorizer.json")}"
+
+  count = "${local.api_gateway_{{i}}_authorizer_count}"
+}
+
+data "template_file" "api_gateway_{{i}}_authorizer" {
+  template = "${file("${path.module}/policy-api-gateway-authorizer.json.tpl")}"
+
+  vars {
+    authorizer_lambda_arn = "${local.api_gateway_{{i}}_authorizer_lambda_arn}"
+    region                = "${data.aws_region.current.name}"
+    account_id            = "${data.aws_caller_identity.current.account_id}"
+  }
+
+  count = "${local.api_gateway_{{i}}_authorizer_count}"
+}
+
+resource "aws_iam_role_policy" "api_gateway_{{i}}_authorizer" {
+  name   = "${local.lambda_{{i}}_name_computed}-p-apiga-{{i}}"
+  role   = "${aws_iam_role.api_gateway_{{i}}.name}"
+  policy = "${data.template_file.api_gateway_{{i}}_authorizer.rendered}"
+
+  count = "${local.api_gateway_{{i}}_authorizer_count}"
+}
 {%- endfor %}

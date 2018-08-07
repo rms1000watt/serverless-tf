@@ -12,7 +12,7 @@ module "serverless" {
       vendor_cmd = "govendor sync"
     },
     {
-      file = "../hello-world-go/main.go"
+      file = "../http-go/main.go"
 
       http_path       = "hello-world"
       http_authorizer = "authorizer-1"

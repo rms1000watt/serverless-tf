@@ -100,7 +100,7 @@ resource "aws_api_gateway_authorizer" "{{i}}" {
   name                   = "${local.api_gateway_{{i}}_authorizer}"
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_{{i}}_authorizer_uri}"
-  authorizer_credentials = "${local.api_gateway_{{i}}_authorizer_role_arn}"
+  authorizer_credentials = "${aws_iam_role.api_gateway_{{i}}_authorizer.arn}"
   type                   = "REQUEST"
 
   count = "${local.api_gateway_{{i}}_authorizer_count}"

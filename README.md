@@ -167,6 +167,7 @@ module "serverless" {
   source = "rms1000watt/serverless-tf/aws"
 
   service = "" // optional (default: folder name)
+  stage   = "" // optional (default: dev)
 
   functions = [
     {
@@ -184,7 +185,6 @@ module "serverless" {
       http            = "" // optional (default: "" unless any http_OPTS are defined)
       http_path       = "" // optional (default: lambda_name when http = true)
       http_method     = "" // optional (default: GET when http = true)
-      http_stage      = "" // optional (default: dev when http = true)
       http_metrics    = "" // optional (default: "" when http = true)
       http_logging    = "" // optional (default: "" when http = true)
       http_authorizer = "" // optional (default: "")

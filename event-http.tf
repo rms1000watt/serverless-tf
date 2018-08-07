@@ -99,7 +99,7 @@ resource "aws_api_gateway_authorizer" "0" {
   name                   = "${local.api_gateway_0_authorizer}"
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_0_authorizer_uri}"
-  authorizer_credentials = "${local.api_gateway_0_authorizer_role_arn}"
+  authorizer_credentials = "${aws_iam_role.api_gateway_0_authorizer.arn}"
   type                   = "REQUEST"
 
   count = "${local.api_gateway_0_authorizer_count}"
@@ -192,7 +192,7 @@ resource "aws_api_gateway_authorizer" "1" {
   name                   = "${local.api_gateway_1_authorizer}"
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_1_authorizer_uri}"
-  authorizer_credentials = "${local.api_gateway_1_authorizer_role_arn}"
+  authorizer_credentials = "${aws_iam_role.api_gateway_1_authorizer.arn}"
   type                   = "REQUEST"
 
   count = "${local.api_gateway_1_authorizer_count}"
@@ -285,7 +285,7 @@ resource "aws_api_gateway_authorizer" "2" {
   name                   = "${local.api_gateway_2_authorizer}"
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_2_authorizer_uri}"
-  authorizer_credentials = "${local.api_gateway_2_authorizer_role_arn}"
+  authorizer_credentials = "${aws_iam_role.api_gateway_2_authorizer.arn}"
   type                   = "REQUEST"
 
   count = "${local.api_gateway_2_authorizer_count}"
@@ -378,7 +378,7 @@ resource "aws_api_gateway_authorizer" "3" {
   name                   = "${local.api_gateway_3_authorizer}"
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_3_authorizer_uri}"
-  authorizer_credentials = "${local.api_gateway_3_authorizer_role_arn}"
+  authorizer_credentials = "${aws_iam_role.api_gateway_3_authorizer.arn}"
   type                   = "REQUEST"
 
   count = "${local.api_gateway_3_authorizer_count}"
@@ -471,7 +471,7 @@ resource "aws_api_gateway_authorizer" "4" {
   name                   = "${local.api_gateway_4_authorizer}"
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_4_authorizer_uri}"
-  authorizer_credentials = "${local.api_gateway_4_authorizer_role_arn}"
+  authorizer_credentials = "${aws_iam_role.api_gateway_4_authorizer.arn}"
   type                   = "REQUEST"
 
   count = "${local.api_gateway_4_authorizer_count}"
@@ -564,7 +564,7 @@ resource "aws_api_gateway_authorizer" "5" {
   name                   = "${local.api_gateway_5_authorizer}"
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_5_authorizer_uri}"
-  authorizer_credentials = "${local.api_gateway_5_authorizer_role_arn}"
+  authorizer_credentials = "${aws_iam_role.api_gateway_5_authorizer.arn}"
   type                   = "REQUEST"
 
   count = "${local.api_gateway_5_authorizer_count}"
@@ -657,7 +657,7 @@ resource "aws_api_gateway_authorizer" "6" {
   name                   = "${local.api_gateway_6_authorizer}"
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_6_authorizer_uri}"
-  authorizer_credentials = "${local.api_gateway_6_authorizer_role_arn}"
+  authorizer_credentials = "${aws_iam_role.api_gateway_6_authorizer.arn}"
   type                   = "REQUEST"
 
   count = "${local.api_gateway_6_authorizer_count}"
@@ -750,7 +750,7 @@ resource "aws_api_gateway_authorizer" "7" {
   name                   = "${local.api_gateway_7_authorizer}"
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_7_authorizer_uri}"
-  authorizer_credentials = "${local.api_gateway_7_authorizer_role_arn}"
+  authorizer_credentials = "${aws_iam_role.api_gateway_7_authorizer.arn}"
   type                   = "REQUEST"
 
   count = "${local.api_gateway_7_authorizer_count}"
@@ -843,7 +843,7 @@ resource "aws_api_gateway_authorizer" "8" {
   name                   = "${local.api_gateway_8_authorizer}"
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_8_authorizer_uri}"
-  authorizer_credentials = "${local.api_gateway_8_authorizer_role_arn}"
+  authorizer_credentials = "${aws_iam_role.api_gateway_8_authorizer.arn}"
   type                   = "REQUEST"
 
   count = "${local.api_gateway_8_authorizer_count}"
@@ -936,7 +936,7 @@ resource "aws_api_gateway_authorizer" "9" {
   name                   = "${local.api_gateway_9_authorizer}"
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_9_authorizer_uri}"
-  authorizer_credentials = "${local.api_gateway_9_authorizer_role_arn}"
+  authorizer_credentials = "${aws_iam_role.api_gateway_9_authorizer.arn}"
   type                   = "REQUEST"
 
   count = "${local.api_gateway_9_authorizer_count}"
