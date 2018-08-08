@@ -10,7 +10,7 @@ resource "aws_iam_role" "api_gateway_global" {
 resource "aws_iam_role_policy" "api_gateway_global" {
   name   = "${local.service_name}-p-apig-g"
   role   = "${aws_iam_role.api_gateway_global.name}"
-  policy = "${file("${path.module}/policy-api-gateway.json")}"
+  policy = "${file("${path.module}/policy-cloudwatch.json")}"
 
   count = "${ {%- for i in range(max_functions) %}local.api_gateway_{{i}} || {% endfor %}false ? 1 : 0}"
 }
@@ -26,40 +26,23 @@ resource "aws_iam_role" "lambda_{{i}}" {
 resource "aws_iam_role_policy" "lambda_{{i}}" {
   name   = "${local.lambda_{{i}}_name_computed}-p-lbd-{{i}}"
   role   = "${aws_iam_role.lambda_{{i}}.name}"
-  policy = "${file("${path.module}/policy-lambda.json")}"
+  policy = "${file("${path.module}/policy-cloudwatch.json")}"
 
   count = "${local.lambda_{{i}}_count}"
 }
 
-resource "aws_iam_role" "api_gateway_{{i}}" {
-  name               = "${local.lambda_{{i}}_name_computed}-r-apig-{{i}}"
-  assume_role_policy = "${file("${path.module}/role-api-gateway.json")}"
-
-  count = "${local.api_gateway_{{i}}_count}"
-}
-
-resource "aws_iam_role_policy" "api_gateway_{{i}}" {
-  name   = "${local.lambda_{{i}}_name_computed}-p-apig-{{i}}"
-  role   = "${aws_iam_role.api_gateway_{{i}}.name}"
-  policy = "${file("${path.module}/policy-api-gateway.json")}"
-
-  count = "${local.api_gateway_{{i}}_count}"
-}
-
 resource "aws_iam_role" "api_gateway_{{i}}_authorizer" {
   name               = "${local.lambda_{{i}}_name_computed}-r-apiga-{{i}}"
-  assume_role_policy = "${file("${path.module}/role-api-gateway-authorizer.json")}"
+  assume_role_policy = "${file("${path.module}/role-api-gateway.json")}"
 
   count = "${local.api_gateway_{{i}}_authorizer_count}"
 }
 
 data "template_file" "api_gateway_{{i}}_authorizer" {
-  template = "${file("${path.module}/policy-api-gateway-authorizer.json.tpl")}"
+  template = "${file("${path.module}/policy-authorizer.json.tpl")}"
 
   vars {
     authorizer_lambda_arn = "${local.api_gateway_{{i}}_authorizer_lambda_arn}"
-    region                = "${data.aws_region.current.name}"
-    account_id            = "${data.aws_caller_identity.current.account_id}"
   }
 
   count = "${local.api_gateway_{{i}}_authorizer_count}"
@@ -71,5 +54,26 @@ resource "aws_iam_role_policy" "api_gateway_{{i}}_authorizer" {
   policy = "${data.template_file.api_gateway_{{i}}_authorizer.rendered}"
 
   count = "${local.api_gateway_{{i}}_authorizer_count}"
+}
+
+resource "aws_iam_policy" "api_gateway_{{i}}_authorizer_default" {
+  name   = "${local.lambda_{{i}}_name_computed}-p-apiga-{{i}}"
+  policy = "${file("${path.module}/policy-cloudwatch.json")}"
+
+  count = "${local.api_gateway_{{i}}_authorizer_count == 1 && local.api_gateway_{{i}}_authorizer_policy_arn_count == 0 ? 1 : 0}"
+}
+
+resource "aws_iam_role_policy_attachment" "api_gateway_{{i}}_authorizer_default" {
+  role       = "${aws_iam_role.api_gateway_{{i}}_authorizer.name}"
+  policy_arn = "${aws_iam_policy.api_gateway_{{i}}_authorizer_default.arn}"
+
+  count = "${local.api_gateway_{{i}}_authorizer_count == 1 && local.api_gateway_{{i}}_authorizer_policy_arn_count == 0 ? 1 : 0}"
+}
+
+resource "aws_iam_role_policy_attachment" "api_gateway_{{i}}_authorizer_custom" {
+  role       = "${aws_iam_role.api_gateway_{{i}}_authorizer.name}"
+  policy_arn = "${local.api_gateway_{{i}}_authorizer_policy_arn}"
+
+  count = "${local.api_gateway_{{i}}_authorizer_count + local.api_gateway_{{i}}_authorizer_policy_arn_count == 2 ? 1 : 0}"
 }
 {%- endfor %}

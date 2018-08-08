@@ -158,6 +158,10 @@ module "serverless" {
 }
 ```
 
+### HTTP with Authorizer with Custom Policy
+
+As seen in [Example: HTTP Authorizer S3 Go](https://github.com/rms1000watt/serverless-tf/blob/master/examples/http-authorizer-s3-go/main.tf) to override authorizer with a custom policy.
+
 ## Options
 
 Here are the options that each function supports.
@@ -182,12 +186,13 @@ module "serverless" {
       env_keys   = ""              // optional (default: "") (usage: space delimited list: "KEY1 KEY2 KEY3")
       env_vals   = ""              // optional (default: "") (usage: space delimited list: "value1 value2 value3")
 
-      http            = "" // optional (default: "" unless any http_OPTS are defined)
-      http_path       = "" // optional (default: lambda_name when http = true)
-      http_method     = "" // optional (default: GET when http = true)
-      http_metrics    = "" // optional (default: "" when http = true)
-      http_logging    = "" // optional (default: "" when http = true)
-      http_authorizer = "" // optional (default: "")
+      http                       = "" // optional (default: "" unless any http_OPTS are defined)
+      http_path                  = "" // optional (default: lambda_name when http = true)
+      http_method                = "" // optional (default: GET when http = true)
+      http_metrics               = "" // optional (default: "" when http = true)
+      http_logging               = "" // optional (default: "" when http = true)
+      http_authorizer            = "" // optional (default: "" specify function name you want to use as CUSTOM REQUEST authorizer)
+      http_authorizer_policy_arn = "" // optional (default: "" specify policy arn if you need additional permissions)
 
       schedule      = "" // optional (default: "" unless any schedule_OPTS are defined)
       schedule_rate = "" // optional (default: rate(1 hour))

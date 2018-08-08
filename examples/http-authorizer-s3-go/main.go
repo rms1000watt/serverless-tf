@@ -24,6 +24,8 @@ func Handler(request events.APIGatewayCustomAuthorizerRequestTypeRequest) (res e
 		},
 	}
 
+	// Access s3 here since you have permissions
+
 	fmt.Println("Returning Policy")
 	return
 }
