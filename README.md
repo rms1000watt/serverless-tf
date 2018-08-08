@@ -220,9 +220,6 @@ An alternative approach for full Serverless functionality would be to create a G
 
 ## TODO
 
-- [ ] Better Docs
-- [ ] API Gateway Authorizer
-- [ ] Readme for each example with explanation
 - [ ] SQS
 - [ ] SNS
 - [ ] S3
