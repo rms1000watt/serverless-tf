@@ -13,7 +13,7 @@
     {
       "Effect": "Allow",
       "Action": "lambda:InvokeFunction",
-      "Resource": ["arn:aws:lambda:us-west-2:401319614350:function:http-authorizer-go-dev-authorizer-1"]
+      "Resource": ["arn:aws:lambda:us-west-2:401319614350:function:http-authorizer-go-dev-authorizer-1", "*"]
     }
   ]
 }
