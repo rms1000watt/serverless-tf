@@ -6,23 +6,14 @@
       "Action": [
         "logs:CreateLogGroup",
         "logs:CreateLogStream",
-        "logs:DescribeLogGroups",
-        "logs:DescribeLogStreams",
-        "logs:PutLogEvents",
-        "logs:GetLogEvents",
-        "logs:FilterLogEvents"
+        "logs:PutLogEvents"
       ],
       "Resource": "arn:aws:logs:*:*:*"
     },
     {
       "Effect": "Allow",
       "Action": "lambda:InvokeFunction",
-      "Resource": "arn:aws:lambda:${region}:${account_id}:function:${authorizer_lambda_arn}",
-      "Condition": {
-        "ArnLike": {
-          "AWS:SourceArn": "arn:aws:execute-api:${region}:${account_id}:*/authorizers/*"
-        }
-      }
+      "Resource": ["arn:aws:lambda:us-west-2:401319614350:function:http-authorizer-go-dev-authorizer-1"]
     }
   ]
 }

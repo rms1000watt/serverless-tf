@@ -66,7 +66,7 @@ data "template_file" "api_gateway_0_authorizer" {
 
 resource "aws_iam_role_policy" "api_gateway_0_authorizer" {
   name   = "${local.lambda_0_name_computed}-p-apiga-0"
-  role   = "${aws_iam_role.api_gateway_0.name}"
+  role   = "${aws_iam_role.api_gateway_0_authorizer.name}"
   policy = "${data.template_file.api_gateway_0_authorizer.rendered}"
 
   count = "${local.api_gateway_0_authorizer_count}"
@@ -123,7 +123,7 @@ data "template_file" "api_gateway_1_authorizer" {
 
 resource "aws_iam_role_policy" "api_gateway_1_authorizer" {
   name   = "${local.lambda_1_name_computed}-p-apiga-1"
-  role   = "${aws_iam_role.api_gateway_1.name}"
+  role   = "${aws_iam_role.api_gateway_1_authorizer.name}"
   policy = "${data.template_file.api_gateway_1_authorizer.rendered}"
 
   count = "${local.api_gateway_1_authorizer_count}"
@@ -180,7 +180,7 @@ data "template_file" "api_gateway_2_authorizer" {
 
 resource "aws_iam_role_policy" "api_gateway_2_authorizer" {
   name   = "${local.lambda_2_name_computed}-p-apiga-2"
-  role   = "${aws_iam_role.api_gateway_2.name}"
+  role   = "${aws_iam_role.api_gateway_2_authorizer.name}"
   policy = "${data.template_file.api_gateway_2_authorizer.rendered}"
 
   count = "${local.api_gateway_2_authorizer_count}"
@@ -237,7 +237,7 @@ data "template_file" "api_gateway_3_authorizer" {
 
 resource "aws_iam_role_policy" "api_gateway_3_authorizer" {
   name   = "${local.lambda_3_name_computed}-p-apiga-3"
-  role   = "${aws_iam_role.api_gateway_3.name}"
+  role   = "${aws_iam_role.api_gateway_3_authorizer.name}"
   policy = "${data.template_file.api_gateway_3_authorizer.rendered}"
 
   count = "${local.api_gateway_3_authorizer_count}"
@@ -294,7 +294,7 @@ data "template_file" "api_gateway_4_authorizer" {
 
 resource "aws_iam_role_policy" "api_gateway_4_authorizer" {
   name   = "${local.lambda_4_name_computed}-p-apiga-4"
-  role   = "${aws_iam_role.api_gateway_4.name}"
+  role   = "${aws_iam_role.api_gateway_4_authorizer.name}"
   policy = "${data.template_file.api_gateway_4_authorizer.rendered}"
 
   count = "${local.api_gateway_4_authorizer_count}"
@@ -351,7 +351,7 @@ data "template_file" "api_gateway_5_authorizer" {
 
 resource "aws_iam_role_policy" "api_gateway_5_authorizer" {
   name   = "${local.lambda_5_name_computed}-p-apiga-5"
-  role   = "${aws_iam_role.api_gateway_5.name}"
+  role   = "${aws_iam_role.api_gateway_5_authorizer.name}"
   policy = "${data.template_file.api_gateway_5_authorizer.rendered}"
 
   count = "${local.api_gateway_5_authorizer_count}"
@@ -408,7 +408,7 @@ data "template_file" "api_gateway_6_authorizer" {
 
 resource "aws_iam_role_policy" "api_gateway_6_authorizer" {
   name   = "${local.lambda_6_name_computed}-p-apiga-6"
-  role   = "${aws_iam_role.api_gateway_6.name}"
+  role   = "${aws_iam_role.api_gateway_6_authorizer.name}"
   policy = "${data.template_file.api_gateway_6_authorizer.rendered}"
 
   count = "${local.api_gateway_6_authorizer_count}"
@@ -465,7 +465,7 @@ data "template_file" "api_gateway_7_authorizer" {
 
 resource "aws_iam_role_policy" "api_gateway_7_authorizer" {
   name   = "${local.lambda_7_name_computed}-p-apiga-7"
-  role   = "${aws_iam_role.api_gateway_7.name}"
+  role   = "${aws_iam_role.api_gateway_7_authorizer.name}"
   policy = "${data.template_file.api_gateway_7_authorizer.rendered}"
 
   count = "${local.api_gateway_7_authorizer_count}"
@@ -522,7 +522,7 @@ data "template_file" "api_gateway_8_authorizer" {
 
 resource "aws_iam_role_policy" "api_gateway_8_authorizer" {
   name   = "${local.lambda_8_name_computed}-p-apiga-8"
-  role   = "${aws_iam_role.api_gateway_8.name}"
+  role   = "${aws_iam_role.api_gateway_8_authorizer.name}"
   policy = "${data.template_file.api_gateway_8_authorizer.rendered}"
 
   count = "${local.api_gateway_8_authorizer_count}"
@@ -579,7 +579,7 @@ data "template_file" "api_gateway_9_authorizer" {
 
 resource "aws_iam_role_policy" "api_gateway_9_authorizer" {
   name   = "${local.lambda_9_name_computed}-p-apiga-9"
-  role   = "${aws_iam_role.api_gateway_9.name}"
+  role   = "${aws_iam_role.api_gateway_9_authorizer.name}"
   policy = "${data.template_file.api_gateway_9_authorizer.rendered}"
 
   count = "${local.api_gateway_9_authorizer_count}"
