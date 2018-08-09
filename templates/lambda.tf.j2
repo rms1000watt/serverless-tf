@@ -65,6 +65,16 @@ resource "aws_lambda_permission" "cloudwatch_{{i}}" {
   count = "${local.cloudwatch_{{i}}_count}"
 }
 
+resource "aws_lambda_permission" "s3_{{i}}" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_{{i}}_name_computed}"
+  principal     = "s3.amazonaws.com"
+  source_arn    = "${local.s3_{{i}}_bucket_arn}"
+
+  count = "${local.s3_{{i}}_count}"
+}
+
 resource "aws_lambda_permission" "api_gateway_{{i}}_n_auth" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"

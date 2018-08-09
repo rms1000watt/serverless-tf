@@ -64,6 +64,16 @@ resource "aws_lambda_permission" "cloudwatch_0" {
   count = "${local.cloudwatch_0_count}"
 }
 
+resource "aws_lambda_permission" "s3_0" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_0_name_computed}"
+  principal     = "s3.amazonaws.com"
+  source_arn    = "${local.s3_0_bucket_arn}"
+
+  count = "${local.s3_0_count}"
+}
+
 resource "aws_lambda_permission" "api_gateway_0_n_auth" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
@@ -158,6 +168,16 @@ resource "aws_lambda_permission" "cloudwatch_1" {
   ]
 
   count = "${local.cloudwatch_1_count}"
+}
+
+resource "aws_lambda_permission" "s3_1" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_1_name_computed}"
+  principal     = "s3.amazonaws.com"
+  source_arn    = "${local.s3_1_bucket_arn}"
+
+  count = "${local.s3_1_count}"
 }
 
 resource "aws_lambda_permission" "api_gateway_1_n_auth" {
@@ -256,6 +276,16 @@ resource "aws_lambda_permission" "cloudwatch_2" {
   count = "${local.cloudwatch_2_count}"
 }
 
+resource "aws_lambda_permission" "s3_2" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_2_name_computed}"
+  principal     = "s3.amazonaws.com"
+  source_arn    = "${local.s3_2_bucket_arn}"
+
+  count = "${local.s3_2_count}"
+}
+
 resource "aws_lambda_permission" "api_gateway_2_n_auth" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
@@ -350,6 +380,16 @@ resource "aws_lambda_permission" "cloudwatch_3" {
   ]
 
   count = "${local.cloudwatch_3_count}"
+}
+
+resource "aws_lambda_permission" "s3_3" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_3_name_computed}"
+  principal     = "s3.amazonaws.com"
+  source_arn    = "${local.s3_3_bucket_arn}"
+
+  count = "${local.s3_3_count}"
 }
 
 resource "aws_lambda_permission" "api_gateway_3_n_auth" {
@@ -448,6 +488,16 @@ resource "aws_lambda_permission" "cloudwatch_4" {
   count = "${local.cloudwatch_4_count}"
 }
 
+resource "aws_lambda_permission" "s3_4" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_4_name_computed}"
+  principal     = "s3.amazonaws.com"
+  source_arn    = "${local.s3_4_bucket_arn}"
+
+  count = "${local.s3_4_count}"
+}
+
 resource "aws_lambda_permission" "api_gateway_4_n_auth" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
@@ -542,6 +592,16 @@ resource "aws_lambda_permission" "cloudwatch_5" {
   ]
 
   count = "${local.cloudwatch_5_count}"
+}
+
+resource "aws_lambda_permission" "s3_5" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_5_name_computed}"
+  principal     = "s3.amazonaws.com"
+  source_arn    = "${local.s3_5_bucket_arn}"
+
+  count = "${local.s3_5_count}"
 }
 
 resource "aws_lambda_permission" "api_gateway_5_n_auth" {
@@ -640,6 +700,16 @@ resource "aws_lambda_permission" "cloudwatch_6" {
   count = "${local.cloudwatch_6_count}"
 }
 
+resource "aws_lambda_permission" "s3_6" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_6_name_computed}"
+  principal     = "s3.amazonaws.com"
+  source_arn    = "${local.s3_6_bucket_arn}"
+
+  count = "${local.s3_6_count}"
+}
+
 resource "aws_lambda_permission" "api_gateway_6_n_auth" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
@@ -734,6 +804,16 @@ resource "aws_lambda_permission" "cloudwatch_7" {
   ]
 
   count = "${local.cloudwatch_7_count}"
+}
+
+resource "aws_lambda_permission" "s3_7" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_7_name_computed}"
+  principal     = "s3.amazonaws.com"
+  source_arn    = "${local.s3_7_bucket_arn}"
+
+  count = "${local.s3_7_count}"
 }
 
 resource "aws_lambda_permission" "api_gateway_7_n_auth" {
@@ -832,6 +912,16 @@ resource "aws_lambda_permission" "cloudwatch_8" {
   count = "${local.cloudwatch_8_count}"
 }
 
+resource "aws_lambda_permission" "s3_8" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_8_name_computed}"
+  principal     = "s3.amazonaws.com"
+  source_arn    = "${local.s3_8_bucket_arn}"
+
+  count = "${local.s3_8_count}"
+}
+
 resource "aws_lambda_permission" "api_gateway_8_n_auth" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
@@ -926,6 +1016,16 @@ resource "aws_lambda_permission" "cloudwatch_9" {
   ]
 
   count = "${local.cloudwatch_9_count}"
+}
+
+resource "aws_lambda_permission" "s3_9" {
+  statement_id  = "AllowExecutionFromS3Bucket"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_9_name_computed}"
+  principal     = "s3.amazonaws.com"
+  source_arn    = "${local.s3_9_bucket_arn}"
+
+  count = "${local.s3_9_count}"
 }
 
 resource "aws_lambda_permission" "api_gateway_9_n_auth" {

@@ -10,6 +10,7 @@ locals {
 
   default_lambda_name = "${local.service_name}-serverless-tf"
   default_rebuild     = "never"
+  default_s3_events   = "s3:ObjectRemoved:* s3:ObjectCreated:* s3:ReducedRedundancyLostObject"
 
   functions_length = "${length(var.functions)}"
   zero             = ["0"]
@@ -101,6 +102,15 @@ locals {
   cloudwatch_0_count = "${local.cloudwatch_0 ? 1 : 0}"
   cloudwatch_0_name  = "${local.lambda_0_name_computed}"
   cloudwatch_0_rate  = "${lookup(local.lambda_0, "schedule_rate", "rate(1 hour)")}"
+
+  // S3
+  s3_0_bucket      = "${lookup(local.lambda_0, "s3_bucket", "")}"
+  s3_0_bucket_arn  = "arn:aws:s3:::${local.s3_0_bucket}"
+  s3_0_count       = "${local.s3_0_bucket != "" ? 1 : 0}"
+  s3_0_prefix      = "${lookup(local.lambda_0, "s3_prefix", "")}"
+  s3_0_suffix      = "${lookup(local.lambda_0, "s3_suffix", "")}"
+  s3_0_events      = "${lookup(local.lambda_0, "s3_events", local.default_s3_events)}"
+  s3_0_events_list = "${split(" ", local.s3_0_events)}"
 }
 
 // locals for lambda_1
@@ -185,6 +195,15 @@ locals {
   cloudwatch_1_count = "${local.cloudwatch_1 ? 1 : 0}"
   cloudwatch_1_name  = "${local.lambda_1_name_computed}"
   cloudwatch_1_rate  = "${lookup(local.lambda_1, "schedule_rate", "rate(1 hour)")}"
+
+  // S3
+  s3_1_bucket      = "${lookup(local.lambda_1, "s3_bucket", "")}"
+  s3_1_bucket_arn  = "arn:aws:s3:::${local.s3_1_bucket}"
+  s3_1_count       = "${local.s3_1_bucket != "" ? 1 : 0}"
+  s3_1_prefix      = "${lookup(local.lambda_1, "s3_prefix", "")}"
+  s3_1_suffix      = "${lookup(local.lambda_1, "s3_suffix", "")}"
+  s3_1_events      = "${lookup(local.lambda_1, "s3_events", local.default_s3_events)}"
+  s3_1_events_list = "${split(" ", local.s3_1_events)}"
 }
 
 // locals for lambda_2
@@ -269,6 +288,15 @@ locals {
   cloudwatch_2_count = "${local.cloudwatch_2 ? 1 : 0}"
   cloudwatch_2_name  = "${local.lambda_2_name_computed}"
   cloudwatch_2_rate  = "${lookup(local.lambda_2, "schedule_rate", "rate(1 hour)")}"
+
+  // S3
+  s3_2_bucket      = "${lookup(local.lambda_2, "s3_bucket", "")}"
+  s3_2_bucket_arn  = "arn:aws:s3:::${local.s3_2_bucket}"
+  s3_2_count       = "${local.s3_2_bucket != "" ? 1 : 0}"
+  s3_2_prefix      = "${lookup(local.lambda_2, "s3_prefix", "")}"
+  s3_2_suffix      = "${lookup(local.lambda_2, "s3_suffix", "")}"
+  s3_2_events      = "${lookup(local.lambda_2, "s3_events", local.default_s3_events)}"
+  s3_2_events_list = "${split(" ", local.s3_2_events)}"
 }
 
 // locals for lambda_3
@@ -353,6 +381,15 @@ locals {
   cloudwatch_3_count = "${local.cloudwatch_3 ? 1 : 0}"
   cloudwatch_3_name  = "${local.lambda_3_name_computed}"
   cloudwatch_3_rate  = "${lookup(local.lambda_3, "schedule_rate", "rate(1 hour)")}"
+
+  // S3
+  s3_3_bucket      = "${lookup(local.lambda_3, "s3_bucket", "")}"
+  s3_3_bucket_arn  = "arn:aws:s3:::${local.s3_3_bucket}"
+  s3_3_count       = "${local.s3_3_bucket != "" ? 1 : 0}"
+  s3_3_prefix      = "${lookup(local.lambda_3, "s3_prefix", "")}"
+  s3_3_suffix      = "${lookup(local.lambda_3, "s3_suffix", "")}"
+  s3_3_events      = "${lookup(local.lambda_3, "s3_events", local.default_s3_events)}"
+  s3_3_events_list = "${split(" ", local.s3_3_events)}"
 }
 
 // locals for lambda_4
@@ -437,6 +474,15 @@ locals {
   cloudwatch_4_count = "${local.cloudwatch_4 ? 1 : 0}"
   cloudwatch_4_name  = "${local.lambda_4_name_computed}"
   cloudwatch_4_rate  = "${lookup(local.lambda_4, "schedule_rate", "rate(1 hour)")}"
+
+  // S3
+  s3_4_bucket      = "${lookup(local.lambda_4, "s3_bucket", "")}"
+  s3_4_bucket_arn  = "arn:aws:s3:::${local.s3_4_bucket}"
+  s3_4_count       = "${local.s3_4_bucket != "" ? 1 : 0}"
+  s3_4_prefix      = "${lookup(local.lambda_4, "s3_prefix", "")}"
+  s3_4_suffix      = "${lookup(local.lambda_4, "s3_suffix", "")}"
+  s3_4_events      = "${lookup(local.lambda_4, "s3_events", local.default_s3_events)}"
+  s3_4_events_list = "${split(" ", local.s3_4_events)}"
 }
 
 // locals for lambda_5
@@ -521,6 +567,15 @@ locals {
   cloudwatch_5_count = "${local.cloudwatch_5 ? 1 : 0}"
   cloudwatch_5_name  = "${local.lambda_5_name_computed}"
   cloudwatch_5_rate  = "${lookup(local.lambda_5, "schedule_rate", "rate(1 hour)")}"
+
+  // S3
+  s3_5_bucket      = "${lookup(local.lambda_5, "s3_bucket", "")}"
+  s3_5_bucket_arn  = "arn:aws:s3:::${local.s3_5_bucket}"
+  s3_5_count       = "${local.s3_5_bucket != "" ? 1 : 0}"
+  s3_5_prefix      = "${lookup(local.lambda_5, "s3_prefix", "")}"
+  s3_5_suffix      = "${lookup(local.lambda_5, "s3_suffix", "")}"
+  s3_5_events      = "${lookup(local.lambda_5, "s3_events", local.default_s3_events)}"
+  s3_5_events_list = "${split(" ", local.s3_5_events)}"
 }
 
 // locals for lambda_6
@@ -605,6 +660,15 @@ locals {
   cloudwatch_6_count = "${local.cloudwatch_6 ? 1 : 0}"
   cloudwatch_6_name  = "${local.lambda_6_name_computed}"
   cloudwatch_6_rate  = "${lookup(local.lambda_6, "schedule_rate", "rate(1 hour)")}"
+
+  // S3
+  s3_6_bucket      = "${lookup(local.lambda_6, "s3_bucket", "")}"
+  s3_6_bucket_arn  = "arn:aws:s3:::${local.s3_6_bucket}"
+  s3_6_count       = "${local.s3_6_bucket != "" ? 1 : 0}"
+  s3_6_prefix      = "${lookup(local.lambda_6, "s3_prefix", "")}"
+  s3_6_suffix      = "${lookup(local.lambda_6, "s3_suffix", "")}"
+  s3_6_events      = "${lookup(local.lambda_6, "s3_events", local.default_s3_events)}"
+  s3_6_events_list = "${split(" ", local.s3_6_events)}"
 }
 
 // locals for lambda_7
@@ -689,6 +753,15 @@ locals {
   cloudwatch_7_count = "${local.cloudwatch_7 ? 1 : 0}"
   cloudwatch_7_name  = "${local.lambda_7_name_computed}"
   cloudwatch_7_rate  = "${lookup(local.lambda_7, "schedule_rate", "rate(1 hour)")}"
+
+  // S3
+  s3_7_bucket      = "${lookup(local.lambda_7, "s3_bucket", "")}"
+  s3_7_bucket_arn  = "arn:aws:s3:::${local.s3_7_bucket}"
+  s3_7_count       = "${local.s3_7_bucket != "" ? 1 : 0}"
+  s3_7_prefix      = "${lookup(local.lambda_7, "s3_prefix", "")}"
+  s3_7_suffix      = "${lookup(local.lambda_7, "s3_suffix", "")}"
+  s3_7_events      = "${lookup(local.lambda_7, "s3_events", local.default_s3_events)}"
+  s3_7_events_list = "${split(" ", local.s3_7_events)}"
 }
 
 // locals for lambda_8
@@ -773,6 +846,15 @@ locals {
   cloudwatch_8_count = "${local.cloudwatch_8 ? 1 : 0}"
   cloudwatch_8_name  = "${local.lambda_8_name_computed}"
   cloudwatch_8_rate  = "${lookup(local.lambda_8, "schedule_rate", "rate(1 hour)")}"
+
+  // S3
+  s3_8_bucket      = "${lookup(local.lambda_8, "s3_bucket", "")}"
+  s3_8_bucket_arn  = "arn:aws:s3:::${local.s3_8_bucket}"
+  s3_8_count       = "${local.s3_8_bucket != "" ? 1 : 0}"
+  s3_8_prefix      = "${lookup(local.lambda_8, "s3_prefix", "")}"
+  s3_8_suffix      = "${lookup(local.lambda_8, "s3_suffix", "")}"
+  s3_8_events      = "${lookup(local.lambda_8, "s3_events", local.default_s3_events)}"
+  s3_8_events_list = "${split(" ", local.s3_8_events)}"
 }
 
 // locals for lambda_9
@@ -857,4 +939,13 @@ locals {
   cloudwatch_9_count = "${local.cloudwatch_9 ? 1 : 0}"
   cloudwatch_9_name  = "${local.lambda_9_name_computed}"
   cloudwatch_9_rate  = "${lookup(local.lambda_9, "schedule_rate", "rate(1 hour)")}"
+
+  // S3
+  s3_9_bucket      = "${lookup(local.lambda_9, "s3_bucket", "")}"
+  s3_9_bucket_arn  = "arn:aws:s3:::${local.s3_9_bucket}"
+  s3_9_count       = "${local.s3_9_bucket != "" ? 1 : 0}"
+  s3_9_prefix      = "${lookup(local.lambda_9, "s3_prefix", "")}"
+  s3_9_suffix      = "${lookup(local.lambda_9, "s3_suffix", "")}"
+  s3_9_events      = "${lookup(local.lambda_9, "s3_events", local.default_s3_events)}"
+  s3_9_events_list = "${split(" ", local.s3_9_events)}"
 }

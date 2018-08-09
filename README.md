@@ -103,6 +103,23 @@ module "serverless" {
 }
 ```
 
+### S3 Event
+
+As seen in [Example: S3 Go](https://github.com/rms1000watt/serverless-tf/blob/master/examples/s3-go/main.tf)
+
+```hcl
+module "serverless" {
+  source = "../.."
+
+  functions = [
+    {
+      file      = "main.go"
+      s3_bucket = "org-x-super-cool-bucket"
+    },
+  ]
+}
+```
+
 ### Combination of Events
 
 ```hcl
@@ -196,6 +213,11 @@ module "serverless" {
 
       schedule      = "" // optional (default: "" unless any schedule_OPTS are defined)
       schedule_rate = "" // optional (default: rate(1 hour))
+
+      s3_bucket = "" // optional (default: "") (usage: bucket must exist with this name)
+      s3_events = "" // optional (default: "s3:ObjectRemoved:* s3:ObjectCreated:* s3:ReducedRedundancyLostObject" when s3_bucket != "") (usage: space delimited list)
+      s3_prefix = "" // optional (default: "")
+      s3_suffix = "" // optional (default: "")
     },
   ]
 }
