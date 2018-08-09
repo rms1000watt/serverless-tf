@@ -5,7 +5,7 @@ resource "aws_s3_bucket_notification" "0" {
 
   lambda_function {
     lambda_function_arn = "${local.lambda_0_arn}"
-    events              = "${local.s3_0_events_list}"
+    events              = ["${local.s3_0_events_list}"]
     filter_prefix       = "${local.s3_0_prefix}"
     filter_suffix       = "${local.s3_0_suffix}"
   }
@@ -18,7 +18,7 @@ resource "aws_s3_bucket_notification" "1" {
 
   lambda_function {
     lambda_function_arn = "${local.lambda_1_arn}"
-    events              = "${local.s3_1_events_list}"
+    events              = ["${local.s3_1_events_list}"]
     filter_prefix       = "${local.s3_1_prefix}"
     filter_suffix       = "${local.s3_1_suffix}"
   }
@@ -31,7 +31,7 @@ resource "aws_s3_bucket_notification" "2" {
 
   lambda_function {
     lambda_function_arn = "${local.lambda_2_arn}"
-    events              = "${local.s3_2_events_list}"
+    events              = ["${local.s3_2_events_list}"]
     filter_prefix       = "${local.s3_2_prefix}"
     filter_suffix       = "${local.s3_2_suffix}"
   }
@@ -44,7 +44,7 @@ resource "aws_s3_bucket_notification" "3" {
 
   lambda_function {
     lambda_function_arn = "${local.lambda_3_arn}"
-    events              = "${local.s3_3_events_list}"
+    events              = ["${local.s3_3_events_list}"]
     filter_prefix       = "${local.s3_3_prefix}"
     filter_suffix       = "${local.s3_3_suffix}"
   }
@@ -57,7 +57,7 @@ resource "aws_s3_bucket_notification" "4" {
 
   lambda_function {
     lambda_function_arn = "${local.lambda_4_arn}"
-    events              = "${local.s3_4_events_list}"
+    events              = ["${local.s3_4_events_list}"]
     filter_prefix       = "${local.s3_4_prefix}"
     filter_suffix       = "${local.s3_4_suffix}"
   }
@@ -70,7 +70,7 @@ resource "aws_s3_bucket_notification" "5" {
 
   lambda_function {
     lambda_function_arn = "${local.lambda_5_arn}"
-    events              = "${local.s3_5_events_list}"
+    events              = ["${local.s3_5_events_list}"]
     filter_prefix       = "${local.s3_5_prefix}"
     filter_suffix       = "${local.s3_5_suffix}"
   }
@@ -83,7 +83,7 @@ resource "aws_s3_bucket_notification" "6" {
 
   lambda_function {
     lambda_function_arn = "${local.lambda_6_arn}"
-    events              = "${local.s3_6_events_list}"
+    events              = ["${local.s3_6_events_list}"]
     filter_prefix       = "${local.s3_6_prefix}"
     filter_suffix       = "${local.s3_6_suffix}"
   }
@@ -96,7 +96,7 @@ resource "aws_s3_bucket_notification" "7" {
 
   lambda_function {
     lambda_function_arn = "${local.lambda_7_arn}"
-    events              = "${local.s3_7_events_list}"
+    events              = ["${local.s3_7_events_list}"]
     filter_prefix       = "${local.s3_7_prefix}"
     filter_suffix       = "${local.s3_7_suffix}"
   }
@@ -109,7 +109,7 @@ resource "aws_s3_bucket_notification" "8" {
 
   lambda_function {
     lambda_function_arn = "${local.lambda_8_arn}"
-    events              = "${local.s3_8_events_list}"
+    events              = ["${local.s3_8_events_list}"]
     filter_prefix       = "${local.s3_8_prefix}"
     filter_suffix       = "${local.s3_8_suffix}"
   }
@@ -122,7 +122,7 @@ resource "aws_s3_bucket_notification" "9" {
 
   lambda_function {
     lambda_function_arn = "${local.lambda_9_arn}"
-    events              = "${local.s3_9_events_list}"
+    events              = ["${local.s3_9_events_list}"]
     filter_prefix       = "${local.s3_9_prefix}"
     filter_suffix       = "${local.s3_9_suffix}"
   }

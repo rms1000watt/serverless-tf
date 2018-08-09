@@ -6,7 +6,7 @@ resource "aws_s3_bucket_notification" "{{i}}" {
 
   lambda_function {
     lambda_function_arn = "${local.lambda_{{i}}_arn}"
-    events              = "${local.s3_{{i}}_events_list}"
+    events              = ["${local.s3_{{i}}_events_list}"]
     filter_prefix       = "${local.s3_{{i}}_prefix}"
     filter_suffix       = "${local.s3_{{i}}_suffix}"
   }
