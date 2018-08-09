@@ -244,7 +244,6 @@ An alternative approach for full Serverless functionality would be to create a G
 
 - [ ] SQS
 - [ ] SNS
-- [ ] S3
 - [ ] Cloudwatch Event
 - [ ] Cloudwatch Log
 - [ ] Kinesis
