@@ -6,6 +6,8 @@ set -e
 export AWS_PROFILE=personal
 pwd=$(pwd)
 
+aws s3 mb s3://org-x-super-cool-bucket
+
 for dir in examples/*; do
   echo "Testing: $dir"
   cd "$dir"
@@ -23,3 +25,5 @@ for logGroup in $(aws logs describe-log-groups | jq '.logGroups[].logGroupName' 
   echo "Deleting log group: $logGroup"
   aws logs delete-log-group --log-group-name "$logGroup"
 done
+
+aws s3 rb s3://org-x-super-cool-bucket

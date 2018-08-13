@@ -18,8 +18,8 @@ done
 
 rm -rf outputs ||:
 mkdir outputs ||:
-for file in outputs_*.tf; do
-  mv "$file" "outputs/${file//outputs_/}"
+for file in outputs.*.tf; do
+  mv "$file" "outputs/${file//outputs./}"
 done
 
 rm j2.json

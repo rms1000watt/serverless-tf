@@ -10,7 +10,8 @@ resource "aws_s3_bucket_notification" "0" {
     filter_suffix       = "${local.s3_0_suffix}"
   }
 
-  count = "${local.s3_0_count}"
+  provider = "aws.0"
+  count    = "${local.s3_0_count}"
 }
 
 resource "aws_s3_bucket_notification" "1" {
@@ -23,7 +24,8 @@ resource "aws_s3_bucket_notification" "1" {
     filter_suffix       = "${local.s3_1_suffix}"
   }
 
-  count = "${local.s3_1_count}"
+  provider = "aws.1"
+  count    = "${local.s3_1_count}"
 }
 
 resource "aws_s3_bucket_notification" "2" {
@@ -36,7 +38,8 @@ resource "aws_s3_bucket_notification" "2" {
     filter_suffix       = "${local.s3_2_suffix}"
   }
 
-  count = "${local.s3_2_count}"
+  provider = "aws.2"
+  count    = "${local.s3_2_count}"
 }
 
 resource "aws_s3_bucket_notification" "3" {
@@ -49,7 +52,8 @@ resource "aws_s3_bucket_notification" "3" {
     filter_suffix       = "${local.s3_3_suffix}"
   }
 
-  count = "${local.s3_3_count}"
+  provider = "aws.3"
+  count    = "${local.s3_3_count}"
 }
 
 resource "aws_s3_bucket_notification" "4" {
@@ -62,7 +66,8 @@ resource "aws_s3_bucket_notification" "4" {
     filter_suffix       = "${local.s3_4_suffix}"
   }
 
-  count = "${local.s3_4_count}"
+  provider = "aws.4"
+  count    = "${local.s3_4_count}"
 }
 
 resource "aws_s3_bucket_notification" "5" {
@@ -75,7 +80,8 @@ resource "aws_s3_bucket_notification" "5" {
     filter_suffix       = "${local.s3_5_suffix}"
   }
 
-  count = "${local.s3_5_count}"
+  provider = "aws.5"
+  count    = "${local.s3_5_count}"
 }
 
 resource "aws_s3_bucket_notification" "6" {
@@ -88,7 +94,8 @@ resource "aws_s3_bucket_notification" "6" {
     filter_suffix       = "${local.s3_6_suffix}"
   }
 
-  count = "${local.s3_6_count}"
+  provider = "aws.6"
+  count    = "${local.s3_6_count}"
 }
 
 resource "aws_s3_bucket_notification" "7" {
@@ -101,7 +108,8 @@ resource "aws_s3_bucket_notification" "7" {
     filter_suffix       = "${local.s3_7_suffix}"
   }
 
-  count = "${local.s3_7_count}"
+  provider = "aws.7"
+  count    = "${local.s3_7_count}"
 }
 
 resource "aws_s3_bucket_notification" "8" {
@@ -114,7 +122,8 @@ resource "aws_s3_bucket_notification" "8" {
     filter_suffix       = "${local.s3_8_suffix}"
   }
 
-  count = "${local.s3_8_count}"
+  provider = "aws.8"
+  count    = "${local.s3_8_count}"
 }
 
 resource "aws_s3_bucket_notification" "9" {
@@ -127,5 +136,6 @@ resource "aws_s3_bucket_notification" "9" {
     filter_suffix       = "${local.s3_9_suffix}"
   }
 
-  count = "${local.s3_9_count}"
+  provider = "aws.9"
+  count    = "${local.s3_9_count}"
 }

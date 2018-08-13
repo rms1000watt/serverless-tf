@@ -5,13 +5,15 @@ resource "aws_cloudwatch_event_rule" "{{i}}" {
   name                = "${local.cloudwatch_{{i}}_name}"
   schedule_expression = "${local.cloudwatch_{{i}}_rate}"
 
-  count = "${local.cloudwatch_{{i}}_count}"
+  provider = "aws.{{i}}"
+  count    = "${local.cloudwatch_{{i}}_count}"
 }
 
 resource "aws_cloudwatch_event_target" "{{i}}" {
   rule = "${aws_cloudwatch_event_rule.{{i}}.name}"
   arn  = "${local.lambda_{{i}}_arn}"
 
-  count = "${local.cloudwatch_{{i}}_count}"
+  provider = "aws.{{i}}"
+  count    = "${local.cloudwatch_{{i}}_count}"
 }
 {%- endfor -%}

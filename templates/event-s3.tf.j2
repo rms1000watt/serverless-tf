@@ -11,6 +11,7 @@ resource "aws_s3_bucket_notification" "{{i}}" {
     filter_suffix       = "${local.s3_{{i}}_suffix}"
   }
 
-  count = "${local.s3_{{i}}_count}"
+  provider = "aws.{{i}}"
+  count    = "${local.s3_{{i}}_count}"
 }
 {%- endfor -%}

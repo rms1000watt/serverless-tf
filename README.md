@@ -120,6 +120,35 @@ module "serverless" {
 }
 ```
 
+### Different Regions
+
+As seen in [Example: Regions Go](https://github.com/rms1000watt/serverless-tf/blob/master/examples/regions-go/main.tf)
+
+```hcl
+provider "aws" {
+  region = "us-west-2"
+}
+
+module "serverless" {
+  source = "../.."
+
+  functions = [
+    {
+      region        = "us-east-1"
+      file          = "../http-go/main.go"
+      schedule_rate = "rate(1 hour)"
+      http_path     = "hello-world"
+    },
+    {
+      region        = "us-east-2"
+      file          = "../http-go/main.go"
+      schedule_rate = "rate(1 hour)"
+      http_path     = "hello-world"
+    },
+  ]
+}
+```
+
 ### Combination of Events
 
 ```hcl
@@ -202,6 +231,7 @@ module "serverless" {
       role_arn   = ""              // optional (default: default role with cloudwatch access: role-lambda.json)
       env_keys   = ""              // optional (default: "") (usage: space delimited list: "KEY1 KEY2 KEY3")
       env_vals   = ""              // optional (default: "") (usage: space delimited list: "value1 value2 value3")
+      region     = ""              // optional (default: "") (usage: define a different region to deploy the function + events within)
 
       http                       = "" // optional (default: "" unless any http_OPTS are defined)
       http_path                  = "" // optional (default: lambda_name when http = true)

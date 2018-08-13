@@ -1,0 +1,8 @@
+// GENERATED FILE: DO NOT EDIT
+{%- for i in range(max_functions) %}
+
+provider "aws" {
+  alias = "{{i}}"
+  region = "${local.lambda_{{i}}_region}"
+}
+{%- endfor %}

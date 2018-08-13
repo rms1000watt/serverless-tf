@@ -13,7 +13,8 @@ resource "aws_lambda_function" "lambda_go_0" {
     variables = "${local.lambda_0_env}"
   }
 
-  count = "${local.lambda_go_0_count}"
+  provider = "aws.0"
+  count    = "${local.lambda_go_0_count}"
 }
 
 resource "aws_lambda_function" "lambda_py_0" {
@@ -29,7 +30,8 @@ resource "aws_lambda_function" "lambda_py_0" {
     variables = "${local.lambda_0_env}"
   }
 
-  count = "${local.lambda_py_0_count}"
+  provider = "aws.0"
+  count    = "${local.lambda_py_0_count}"
 }
 
 resource "aws_lambda_function" "lambda_js_0" {
@@ -45,7 +47,8 @@ resource "aws_lambda_function" "lambda_js_0" {
     variables = "${local.lambda_0_env}"
   }
 
-  count = "${local.lambda_js_0_count}"
+  provider = "aws.0"
+  count    = "${local.lambda_js_0_count}"
 }
 
 resource "aws_lambda_permission" "cloudwatch_0" {
@@ -61,7 +64,8 @@ resource "aws_lambda_permission" "cloudwatch_0" {
     "aws_lambda_function.lambda_js_0",
   ]
 
-  count = "${local.cloudwatch_0_count}"
+  provider = "aws.0"
+  count    = "${local.cloudwatch_0_count}"
 }
 
 resource "aws_lambda_permission" "s3_0" {
@@ -71,15 +75,16 @@ resource "aws_lambda_permission" "s3_0" {
   principal     = "s3.amazonaws.com"
   source_arn    = "${local.s3_0_bucket_arn}"
 
-  count = "${local.s3_0_count}"
+  provider = "aws.0"
+  count    = "${local.s3_0_count}"
 }
 
-resource "aws_lambda_permission" "api_gateway_0_n_auth" {
+resource "aws_lambda_permission" "api_gateway_0_n_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_0_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.0_n_auth.http_method}${aws_api_gateway_resource.0.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_0_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.0_regional.id}/*/${aws_api_gateway_method.0_n_auth_regional.http_method}${aws_api_gateway_resource.0_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_0",
@@ -87,15 +92,16 @@ resource "aws_lambda_permission" "api_gateway_0_n_auth" {
     "aws_lambda_function.lambda_js_0",
   ]
 
-  count = "${local.api_gateway_0_count + local.api_gateway_0_authorizer_count == 1 ? 1 : 0}"
+  provider = "aws.0"
+  count    = "${(local.api_gateway_0_count + local.api_gateway_0_authorizer_count == 1) && (local.api_gateway_0_regional_count == 1) ? 1 : 0}"
 }
 
-resource "aws_lambda_permission" "api_gateway_0_w_auth" {
+resource "aws_lambda_permission" "api_gateway_0_w_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_0_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.0_w_auth.http_method}${aws_api_gateway_resource.0.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_0_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.0_regional.id}/*/${aws_api_gateway_method.0_w_auth_regional.http_method}${aws_api_gateway_resource.0_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_0",
@@ -103,7 +109,42 @@ resource "aws_lambda_permission" "api_gateway_0_w_auth" {
     "aws_lambda_function.lambda_js_0",
   ]
 
-  count = "${local.api_gateway_0_count + local.api_gateway_0_authorizer_count == 2 ? 1 : 0}"
+  provider = "aws.0"
+  count    = "${local.api_gateway_0_count + local.api_gateway_0_authorizer_count + local.api_gateway_0_regional_count == 3 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_0_n_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_0_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_0_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.0_n_auth_global.http_method}${aws_api_gateway_resource.0_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_0",
+    "aws_lambda_function.lambda_py_0",
+    "aws_lambda_function.lambda_js_0",
+  ]
+
+  provider = "aws.0"
+  count    = "${(local.api_gateway_0_count + local.api_gateway_0_authorizer_count == 1) && (local.api_gateway_0_global_count == 1) ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_0_w_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_0_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_0_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.0_w_auth_global.http_method}${aws_api_gateway_resource.0_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_0",
+    "aws_lambda_function.lambda_py_0",
+    "aws_lambda_function.lambda_js_0",
+  ]
+
+  provider = "aws.0"
+  count    = "${local.api_gateway_0_count + local.api_gateway_0_authorizer_count + local.api_gateway_0_global_count == 3 ? 1 : 0}"
 }
 
 resource "aws_lambda_function" "lambda_go_1" {
@@ -119,7 +160,8 @@ resource "aws_lambda_function" "lambda_go_1" {
     variables = "${local.lambda_1_env}"
   }
 
-  count = "${local.lambda_go_1_count}"
+  provider = "aws.1"
+  count    = "${local.lambda_go_1_count}"
 }
 
 resource "aws_lambda_function" "lambda_py_1" {
@@ -135,7 +177,8 @@ resource "aws_lambda_function" "lambda_py_1" {
     variables = "${local.lambda_1_env}"
   }
 
-  count = "${local.lambda_py_1_count}"
+  provider = "aws.1"
+  count    = "${local.lambda_py_1_count}"
 }
 
 resource "aws_lambda_function" "lambda_js_1" {
@@ -151,7 +194,8 @@ resource "aws_lambda_function" "lambda_js_1" {
     variables = "${local.lambda_1_env}"
   }
 
-  count = "${local.lambda_js_1_count}"
+  provider = "aws.1"
+  count    = "${local.lambda_js_1_count}"
 }
 
 resource "aws_lambda_permission" "cloudwatch_1" {
@@ -167,7 +211,8 @@ resource "aws_lambda_permission" "cloudwatch_1" {
     "aws_lambda_function.lambda_js_1",
   ]
 
-  count = "${local.cloudwatch_1_count}"
+  provider = "aws.1"
+  count    = "${local.cloudwatch_1_count}"
 }
 
 resource "aws_lambda_permission" "s3_1" {
@@ -177,15 +222,16 @@ resource "aws_lambda_permission" "s3_1" {
   principal     = "s3.amazonaws.com"
   source_arn    = "${local.s3_1_bucket_arn}"
 
-  count = "${local.s3_1_count}"
+  provider = "aws.1"
+  count    = "${local.s3_1_count}"
 }
 
-resource "aws_lambda_permission" "api_gateway_1_n_auth" {
+resource "aws_lambda_permission" "api_gateway_1_n_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_1_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.1_n_auth.http_method}${aws_api_gateway_resource.1.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_1_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.1_regional.id}/*/${aws_api_gateway_method.1_n_auth_regional.http_method}${aws_api_gateway_resource.1_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_1",
@@ -193,15 +239,16 @@ resource "aws_lambda_permission" "api_gateway_1_n_auth" {
     "aws_lambda_function.lambda_js_1",
   ]
 
-  count = "${local.api_gateway_1_count + local.api_gateway_1_authorizer_count == 1 ? 1 : 0}"
+  provider = "aws.1"
+  count    = "${(local.api_gateway_1_count + local.api_gateway_1_authorizer_count == 1) && (local.api_gateway_1_regional_count == 1) ? 1 : 0}"
 }
 
-resource "aws_lambda_permission" "api_gateway_1_w_auth" {
+resource "aws_lambda_permission" "api_gateway_1_w_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_1_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.1_w_auth.http_method}${aws_api_gateway_resource.1.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_1_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.1_regional.id}/*/${aws_api_gateway_method.1_w_auth_regional.http_method}${aws_api_gateway_resource.1_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_1",
@@ -209,7 +256,42 @@ resource "aws_lambda_permission" "api_gateway_1_w_auth" {
     "aws_lambda_function.lambda_js_1",
   ]
 
-  count = "${local.api_gateway_1_count + local.api_gateway_1_authorizer_count == 2 ? 1 : 0}"
+  provider = "aws.1"
+  count    = "${local.api_gateway_1_count + local.api_gateway_1_authorizer_count + local.api_gateway_1_regional_count == 3 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_1_n_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_1_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_1_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.1_n_auth_global.http_method}${aws_api_gateway_resource.1_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_1",
+    "aws_lambda_function.lambda_py_1",
+    "aws_lambda_function.lambda_js_1",
+  ]
+
+  provider = "aws.1"
+  count    = "${(local.api_gateway_1_count + local.api_gateway_1_authorizer_count == 1) && (local.api_gateway_1_global_count == 1) ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_1_w_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_1_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_1_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.1_w_auth_global.http_method}${aws_api_gateway_resource.1_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_1",
+    "aws_lambda_function.lambda_py_1",
+    "aws_lambda_function.lambda_js_1",
+  ]
+
+  provider = "aws.1"
+  count    = "${local.api_gateway_1_count + local.api_gateway_1_authorizer_count + local.api_gateway_1_global_count == 3 ? 1 : 0}"
 }
 
 resource "aws_lambda_function" "lambda_go_2" {
@@ -225,7 +307,8 @@ resource "aws_lambda_function" "lambda_go_2" {
     variables = "${local.lambda_2_env}"
   }
 
-  count = "${local.lambda_go_2_count}"
+  provider = "aws.2"
+  count    = "${local.lambda_go_2_count}"
 }
 
 resource "aws_lambda_function" "lambda_py_2" {
@@ -241,7 +324,8 @@ resource "aws_lambda_function" "lambda_py_2" {
     variables = "${local.lambda_2_env}"
   }
 
-  count = "${local.lambda_py_2_count}"
+  provider = "aws.2"
+  count    = "${local.lambda_py_2_count}"
 }
 
 resource "aws_lambda_function" "lambda_js_2" {
@@ -257,7 +341,8 @@ resource "aws_lambda_function" "lambda_js_2" {
     variables = "${local.lambda_2_env}"
   }
 
-  count = "${local.lambda_js_2_count}"
+  provider = "aws.2"
+  count    = "${local.lambda_js_2_count}"
 }
 
 resource "aws_lambda_permission" "cloudwatch_2" {
@@ -273,7 +358,8 @@ resource "aws_lambda_permission" "cloudwatch_2" {
     "aws_lambda_function.lambda_js_2",
   ]
 
-  count = "${local.cloudwatch_2_count}"
+  provider = "aws.2"
+  count    = "${local.cloudwatch_2_count}"
 }
 
 resource "aws_lambda_permission" "s3_2" {
@@ -283,15 +369,16 @@ resource "aws_lambda_permission" "s3_2" {
   principal     = "s3.amazonaws.com"
   source_arn    = "${local.s3_2_bucket_arn}"
 
-  count = "${local.s3_2_count}"
+  provider = "aws.2"
+  count    = "${local.s3_2_count}"
 }
 
-resource "aws_lambda_permission" "api_gateway_2_n_auth" {
+resource "aws_lambda_permission" "api_gateway_2_n_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_2_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.2_n_auth.http_method}${aws_api_gateway_resource.2.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_2_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.2_regional.id}/*/${aws_api_gateway_method.2_n_auth_regional.http_method}${aws_api_gateway_resource.2_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_2",
@@ -299,15 +386,16 @@ resource "aws_lambda_permission" "api_gateway_2_n_auth" {
     "aws_lambda_function.lambda_js_2",
   ]
 
-  count = "${local.api_gateway_2_count + local.api_gateway_2_authorizer_count == 1 ? 1 : 0}"
+  provider = "aws.2"
+  count    = "${(local.api_gateway_2_count + local.api_gateway_2_authorizer_count == 1) && (local.api_gateway_2_regional_count == 1) ? 1 : 0}"
 }
 
-resource "aws_lambda_permission" "api_gateway_2_w_auth" {
+resource "aws_lambda_permission" "api_gateway_2_w_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_2_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.2_w_auth.http_method}${aws_api_gateway_resource.2.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_2_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.2_regional.id}/*/${aws_api_gateway_method.2_w_auth_regional.http_method}${aws_api_gateway_resource.2_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_2",
@@ -315,7 +403,42 @@ resource "aws_lambda_permission" "api_gateway_2_w_auth" {
     "aws_lambda_function.lambda_js_2",
   ]
 
-  count = "${local.api_gateway_2_count + local.api_gateway_2_authorizer_count == 2 ? 1 : 0}"
+  provider = "aws.2"
+  count    = "${local.api_gateway_2_count + local.api_gateway_2_authorizer_count + local.api_gateway_2_regional_count == 3 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_2_n_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_2_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_2_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.2_n_auth_global.http_method}${aws_api_gateway_resource.2_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_2",
+    "aws_lambda_function.lambda_py_2",
+    "aws_lambda_function.lambda_js_2",
+  ]
+
+  provider = "aws.2"
+  count    = "${(local.api_gateway_2_count + local.api_gateway_2_authorizer_count == 1) && (local.api_gateway_2_global_count == 1) ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_2_w_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_2_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_2_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.2_w_auth_global.http_method}${aws_api_gateway_resource.2_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_2",
+    "aws_lambda_function.lambda_py_2",
+    "aws_lambda_function.lambda_js_2",
+  ]
+
+  provider = "aws.2"
+  count    = "${local.api_gateway_2_count + local.api_gateway_2_authorizer_count + local.api_gateway_2_global_count == 3 ? 1 : 0}"
 }
 
 resource "aws_lambda_function" "lambda_go_3" {
@@ -331,7 +454,8 @@ resource "aws_lambda_function" "lambda_go_3" {
     variables = "${local.lambda_3_env}"
   }
 
-  count = "${local.lambda_go_3_count}"
+  provider = "aws.3"
+  count    = "${local.lambda_go_3_count}"
 }
 
 resource "aws_lambda_function" "lambda_py_3" {
@@ -347,7 +471,8 @@ resource "aws_lambda_function" "lambda_py_3" {
     variables = "${local.lambda_3_env}"
   }
 
-  count = "${local.lambda_py_3_count}"
+  provider = "aws.3"
+  count    = "${local.lambda_py_3_count}"
 }
 
 resource "aws_lambda_function" "lambda_js_3" {
@@ -363,7 +488,8 @@ resource "aws_lambda_function" "lambda_js_3" {
     variables = "${local.lambda_3_env}"
   }
 
-  count = "${local.lambda_js_3_count}"
+  provider = "aws.3"
+  count    = "${local.lambda_js_3_count}"
 }
 
 resource "aws_lambda_permission" "cloudwatch_3" {
@@ -379,7 +505,8 @@ resource "aws_lambda_permission" "cloudwatch_3" {
     "aws_lambda_function.lambda_js_3",
   ]
 
-  count = "${local.cloudwatch_3_count}"
+  provider = "aws.3"
+  count    = "${local.cloudwatch_3_count}"
 }
 
 resource "aws_lambda_permission" "s3_3" {
@@ -389,15 +516,16 @@ resource "aws_lambda_permission" "s3_3" {
   principal     = "s3.amazonaws.com"
   source_arn    = "${local.s3_3_bucket_arn}"
 
-  count = "${local.s3_3_count}"
+  provider = "aws.3"
+  count    = "${local.s3_3_count}"
 }
 
-resource "aws_lambda_permission" "api_gateway_3_n_auth" {
+resource "aws_lambda_permission" "api_gateway_3_n_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_3_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.3_n_auth.http_method}${aws_api_gateway_resource.3.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_3_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.3_regional.id}/*/${aws_api_gateway_method.3_n_auth_regional.http_method}${aws_api_gateway_resource.3_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_3",
@@ -405,15 +533,16 @@ resource "aws_lambda_permission" "api_gateway_3_n_auth" {
     "aws_lambda_function.lambda_js_3",
   ]
 
-  count = "${local.api_gateway_3_count + local.api_gateway_3_authorizer_count == 1 ? 1 : 0}"
+  provider = "aws.3"
+  count    = "${(local.api_gateway_3_count + local.api_gateway_3_authorizer_count == 1) && (local.api_gateway_3_regional_count == 1) ? 1 : 0}"
 }
 
-resource "aws_lambda_permission" "api_gateway_3_w_auth" {
+resource "aws_lambda_permission" "api_gateway_3_w_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_3_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.3_w_auth.http_method}${aws_api_gateway_resource.3.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_3_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.3_regional.id}/*/${aws_api_gateway_method.3_w_auth_regional.http_method}${aws_api_gateway_resource.3_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_3",
@@ -421,7 +550,42 @@ resource "aws_lambda_permission" "api_gateway_3_w_auth" {
     "aws_lambda_function.lambda_js_3",
   ]
 
-  count = "${local.api_gateway_3_count + local.api_gateway_3_authorizer_count == 2 ? 1 : 0}"
+  provider = "aws.3"
+  count    = "${local.api_gateway_3_count + local.api_gateway_3_authorizer_count + local.api_gateway_3_regional_count == 3 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_3_n_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_3_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_3_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.3_n_auth_global.http_method}${aws_api_gateway_resource.3_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_3",
+    "aws_lambda_function.lambda_py_3",
+    "aws_lambda_function.lambda_js_3",
+  ]
+
+  provider = "aws.3"
+  count    = "${(local.api_gateway_3_count + local.api_gateway_3_authorizer_count == 1) && (local.api_gateway_3_global_count == 1) ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_3_w_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_3_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_3_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.3_w_auth_global.http_method}${aws_api_gateway_resource.3_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_3",
+    "aws_lambda_function.lambda_py_3",
+    "aws_lambda_function.lambda_js_3",
+  ]
+
+  provider = "aws.3"
+  count    = "${local.api_gateway_3_count + local.api_gateway_3_authorizer_count + local.api_gateway_3_global_count == 3 ? 1 : 0}"
 }
 
 resource "aws_lambda_function" "lambda_go_4" {
@@ -437,7 +601,8 @@ resource "aws_lambda_function" "lambda_go_4" {
     variables = "${local.lambda_4_env}"
   }
 
-  count = "${local.lambda_go_4_count}"
+  provider = "aws.4"
+  count    = "${local.lambda_go_4_count}"
 }
 
 resource "aws_lambda_function" "lambda_py_4" {
@@ -453,7 +618,8 @@ resource "aws_lambda_function" "lambda_py_4" {
     variables = "${local.lambda_4_env}"
   }
 
-  count = "${local.lambda_py_4_count}"
+  provider = "aws.4"
+  count    = "${local.lambda_py_4_count}"
 }
 
 resource "aws_lambda_function" "lambda_js_4" {
@@ -469,7 +635,8 @@ resource "aws_lambda_function" "lambda_js_4" {
     variables = "${local.lambda_4_env}"
   }
 
-  count = "${local.lambda_js_4_count}"
+  provider = "aws.4"
+  count    = "${local.lambda_js_4_count}"
 }
 
 resource "aws_lambda_permission" "cloudwatch_4" {
@@ -485,7 +652,8 @@ resource "aws_lambda_permission" "cloudwatch_4" {
     "aws_lambda_function.lambda_js_4",
   ]
 
-  count = "${local.cloudwatch_4_count}"
+  provider = "aws.4"
+  count    = "${local.cloudwatch_4_count}"
 }
 
 resource "aws_lambda_permission" "s3_4" {
@@ -495,15 +663,16 @@ resource "aws_lambda_permission" "s3_4" {
   principal     = "s3.amazonaws.com"
   source_arn    = "${local.s3_4_bucket_arn}"
 
-  count = "${local.s3_4_count}"
+  provider = "aws.4"
+  count    = "${local.s3_4_count}"
 }
 
-resource "aws_lambda_permission" "api_gateway_4_n_auth" {
+resource "aws_lambda_permission" "api_gateway_4_n_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_4_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.4_n_auth.http_method}${aws_api_gateway_resource.4.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_4_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.4_regional.id}/*/${aws_api_gateway_method.4_n_auth_regional.http_method}${aws_api_gateway_resource.4_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_4",
@@ -511,15 +680,16 @@ resource "aws_lambda_permission" "api_gateway_4_n_auth" {
     "aws_lambda_function.lambda_js_4",
   ]
 
-  count = "${local.api_gateway_4_count + local.api_gateway_4_authorizer_count == 1 ? 1 : 0}"
+  provider = "aws.4"
+  count    = "${(local.api_gateway_4_count + local.api_gateway_4_authorizer_count == 1) && (local.api_gateway_4_regional_count == 1) ? 1 : 0}"
 }
 
-resource "aws_lambda_permission" "api_gateway_4_w_auth" {
+resource "aws_lambda_permission" "api_gateway_4_w_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_4_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.4_w_auth.http_method}${aws_api_gateway_resource.4.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_4_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.4_regional.id}/*/${aws_api_gateway_method.4_w_auth_regional.http_method}${aws_api_gateway_resource.4_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_4",
@@ -527,7 +697,42 @@ resource "aws_lambda_permission" "api_gateway_4_w_auth" {
     "aws_lambda_function.lambda_js_4",
   ]
 
-  count = "${local.api_gateway_4_count + local.api_gateway_4_authorizer_count == 2 ? 1 : 0}"
+  provider = "aws.4"
+  count    = "${local.api_gateway_4_count + local.api_gateway_4_authorizer_count + local.api_gateway_4_regional_count == 3 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_4_n_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_4_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_4_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.4_n_auth_global.http_method}${aws_api_gateway_resource.4_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_4",
+    "aws_lambda_function.lambda_py_4",
+    "aws_lambda_function.lambda_js_4",
+  ]
+
+  provider = "aws.4"
+  count    = "${(local.api_gateway_4_count + local.api_gateway_4_authorizer_count == 1) && (local.api_gateway_4_global_count == 1) ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_4_w_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_4_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_4_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.4_w_auth_global.http_method}${aws_api_gateway_resource.4_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_4",
+    "aws_lambda_function.lambda_py_4",
+    "aws_lambda_function.lambda_js_4",
+  ]
+
+  provider = "aws.4"
+  count    = "${local.api_gateway_4_count + local.api_gateway_4_authorizer_count + local.api_gateway_4_global_count == 3 ? 1 : 0}"
 }
 
 resource "aws_lambda_function" "lambda_go_5" {
@@ -543,7 +748,8 @@ resource "aws_lambda_function" "lambda_go_5" {
     variables = "${local.lambda_5_env}"
   }
 
-  count = "${local.lambda_go_5_count}"
+  provider = "aws.5"
+  count    = "${local.lambda_go_5_count}"
 }
 
 resource "aws_lambda_function" "lambda_py_5" {
@@ -559,7 +765,8 @@ resource "aws_lambda_function" "lambda_py_5" {
     variables = "${local.lambda_5_env}"
   }
 
-  count = "${local.lambda_py_5_count}"
+  provider = "aws.5"
+  count    = "${local.lambda_py_5_count}"
 }
 
 resource "aws_lambda_function" "lambda_js_5" {
@@ -575,7 +782,8 @@ resource "aws_lambda_function" "lambda_js_5" {
     variables = "${local.lambda_5_env}"
   }
 
-  count = "${local.lambda_js_5_count}"
+  provider = "aws.5"
+  count    = "${local.lambda_js_5_count}"
 }
 
 resource "aws_lambda_permission" "cloudwatch_5" {
@@ -591,7 +799,8 @@ resource "aws_lambda_permission" "cloudwatch_5" {
     "aws_lambda_function.lambda_js_5",
   ]
 
-  count = "${local.cloudwatch_5_count}"
+  provider = "aws.5"
+  count    = "${local.cloudwatch_5_count}"
 }
 
 resource "aws_lambda_permission" "s3_5" {
@@ -601,15 +810,16 @@ resource "aws_lambda_permission" "s3_5" {
   principal     = "s3.amazonaws.com"
   source_arn    = "${local.s3_5_bucket_arn}"
 
-  count = "${local.s3_5_count}"
+  provider = "aws.5"
+  count    = "${local.s3_5_count}"
 }
 
-resource "aws_lambda_permission" "api_gateway_5_n_auth" {
+resource "aws_lambda_permission" "api_gateway_5_n_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_5_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.5_n_auth.http_method}${aws_api_gateway_resource.5.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_5_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.5_regional.id}/*/${aws_api_gateway_method.5_n_auth_regional.http_method}${aws_api_gateway_resource.5_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_5",
@@ -617,15 +827,16 @@ resource "aws_lambda_permission" "api_gateway_5_n_auth" {
     "aws_lambda_function.lambda_js_5",
   ]
 
-  count = "${local.api_gateway_5_count + local.api_gateway_5_authorizer_count == 1 ? 1 : 0}"
+  provider = "aws.5"
+  count    = "${(local.api_gateway_5_count + local.api_gateway_5_authorizer_count == 1) && (local.api_gateway_5_regional_count == 1) ? 1 : 0}"
 }
 
-resource "aws_lambda_permission" "api_gateway_5_w_auth" {
+resource "aws_lambda_permission" "api_gateway_5_w_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_5_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.5_w_auth.http_method}${aws_api_gateway_resource.5.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_5_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.5_regional.id}/*/${aws_api_gateway_method.5_w_auth_regional.http_method}${aws_api_gateway_resource.5_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_5",
@@ -633,7 +844,42 @@ resource "aws_lambda_permission" "api_gateway_5_w_auth" {
     "aws_lambda_function.lambda_js_5",
   ]
 
-  count = "${local.api_gateway_5_count + local.api_gateway_5_authorizer_count == 2 ? 1 : 0}"
+  provider = "aws.5"
+  count    = "${local.api_gateway_5_count + local.api_gateway_5_authorizer_count + local.api_gateway_5_regional_count == 3 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_5_n_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_5_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_5_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.5_n_auth_global.http_method}${aws_api_gateway_resource.5_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_5",
+    "aws_lambda_function.lambda_py_5",
+    "aws_lambda_function.lambda_js_5",
+  ]
+
+  provider = "aws.5"
+  count    = "${(local.api_gateway_5_count + local.api_gateway_5_authorizer_count == 1) && (local.api_gateway_5_global_count == 1) ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_5_w_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_5_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_5_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.5_w_auth_global.http_method}${aws_api_gateway_resource.5_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_5",
+    "aws_lambda_function.lambda_py_5",
+    "aws_lambda_function.lambda_js_5",
+  ]
+
+  provider = "aws.5"
+  count    = "${local.api_gateway_5_count + local.api_gateway_5_authorizer_count + local.api_gateway_5_global_count == 3 ? 1 : 0}"
 }
 
 resource "aws_lambda_function" "lambda_go_6" {
@@ -649,7 +895,8 @@ resource "aws_lambda_function" "lambda_go_6" {
     variables = "${local.lambda_6_env}"
   }
 
-  count = "${local.lambda_go_6_count}"
+  provider = "aws.6"
+  count    = "${local.lambda_go_6_count}"
 }
 
 resource "aws_lambda_function" "lambda_py_6" {
@@ -665,7 +912,8 @@ resource "aws_lambda_function" "lambda_py_6" {
     variables = "${local.lambda_6_env}"
   }
 
-  count = "${local.lambda_py_6_count}"
+  provider = "aws.6"
+  count    = "${local.lambda_py_6_count}"
 }
 
 resource "aws_lambda_function" "lambda_js_6" {
@@ -681,7 +929,8 @@ resource "aws_lambda_function" "lambda_js_6" {
     variables = "${local.lambda_6_env}"
   }
 
-  count = "${local.lambda_js_6_count}"
+  provider = "aws.6"
+  count    = "${local.lambda_js_6_count}"
 }
 
 resource "aws_lambda_permission" "cloudwatch_6" {
@@ -697,7 +946,8 @@ resource "aws_lambda_permission" "cloudwatch_6" {
     "aws_lambda_function.lambda_js_6",
   ]
 
-  count = "${local.cloudwatch_6_count}"
+  provider = "aws.6"
+  count    = "${local.cloudwatch_6_count}"
 }
 
 resource "aws_lambda_permission" "s3_6" {
@@ -707,15 +957,16 @@ resource "aws_lambda_permission" "s3_6" {
   principal     = "s3.amazonaws.com"
   source_arn    = "${local.s3_6_bucket_arn}"
 
-  count = "${local.s3_6_count}"
+  provider = "aws.6"
+  count    = "${local.s3_6_count}"
 }
 
-resource "aws_lambda_permission" "api_gateway_6_n_auth" {
+resource "aws_lambda_permission" "api_gateway_6_n_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_6_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.6_n_auth.http_method}${aws_api_gateway_resource.6.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_6_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.6_regional.id}/*/${aws_api_gateway_method.6_n_auth_regional.http_method}${aws_api_gateway_resource.6_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_6",
@@ -723,15 +974,16 @@ resource "aws_lambda_permission" "api_gateway_6_n_auth" {
     "aws_lambda_function.lambda_js_6",
   ]
 
-  count = "${local.api_gateway_6_count + local.api_gateway_6_authorizer_count == 1 ? 1 : 0}"
+  provider = "aws.6"
+  count    = "${(local.api_gateway_6_count + local.api_gateway_6_authorizer_count == 1) && (local.api_gateway_6_regional_count == 1) ? 1 : 0}"
 }
 
-resource "aws_lambda_permission" "api_gateway_6_w_auth" {
+resource "aws_lambda_permission" "api_gateway_6_w_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_6_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.6_w_auth.http_method}${aws_api_gateway_resource.6.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_6_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.6_regional.id}/*/${aws_api_gateway_method.6_w_auth_regional.http_method}${aws_api_gateway_resource.6_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_6",
@@ -739,7 +991,42 @@ resource "aws_lambda_permission" "api_gateway_6_w_auth" {
     "aws_lambda_function.lambda_js_6",
   ]
 
-  count = "${local.api_gateway_6_count + local.api_gateway_6_authorizer_count == 2 ? 1 : 0}"
+  provider = "aws.6"
+  count    = "${local.api_gateway_6_count + local.api_gateway_6_authorizer_count + local.api_gateway_6_regional_count == 3 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_6_n_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_6_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_6_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.6_n_auth_global.http_method}${aws_api_gateway_resource.6_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_6",
+    "aws_lambda_function.lambda_py_6",
+    "aws_lambda_function.lambda_js_6",
+  ]
+
+  provider = "aws.6"
+  count    = "${(local.api_gateway_6_count + local.api_gateway_6_authorizer_count == 1) && (local.api_gateway_6_global_count == 1) ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_6_w_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_6_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_6_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.6_w_auth_global.http_method}${aws_api_gateway_resource.6_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_6",
+    "aws_lambda_function.lambda_py_6",
+    "aws_lambda_function.lambda_js_6",
+  ]
+
+  provider = "aws.6"
+  count    = "${local.api_gateway_6_count + local.api_gateway_6_authorizer_count + local.api_gateway_6_global_count == 3 ? 1 : 0}"
 }
 
 resource "aws_lambda_function" "lambda_go_7" {
@@ -755,7 +1042,8 @@ resource "aws_lambda_function" "lambda_go_7" {
     variables = "${local.lambda_7_env}"
   }
 
-  count = "${local.lambda_go_7_count}"
+  provider = "aws.7"
+  count    = "${local.lambda_go_7_count}"
 }
 
 resource "aws_lambda_function" "lambda_py_7" {
@@ -771,7 +1059,8 @@ resource "aws_lambda_function" "lambda_py_7" {
     variables = "${local.lambda_7_env}"
   }
 
-  count = "${local.lambda_py_7_count}"
+  provider = "aws.7"
+  count    = "${local.lambda_py_7_count}"
 }
 
 resource "aws_lambda_function" "lambda_js_7" {
@@ -787,7 +1076,8 @@ resource "aws_lambda_function" "lambda_js_7" {
     variables = "${local.lambda_7_env}"
   }
 
-  count = "${local.lambda_js_7_count}"
+  provider = "aws.7"
+  count    = "${local.lambda_js_7_count}"
 }
 
 resource "aws_lambda_permission" "cloudwatch_7" {
@@ -803,7 +1093,8 @@ resource "aws_lambda_permission" "cloudwatch_7" {
     "aws_lambda_function.lambda_js_7",
   ]
 
-  count = "${local.cloudwatch_7_count}"
+  provider = "aws.7"
+  count    = "${local.cloudwatch_7_count}"
 }
 
 resource "aws_lambda_permission" "s3_7" {
@@ -813,15 +1104,16 @@ resource "aws_lambda_permission" "s3_7" {
   principal     = "s3.amazonaws.com"
   source_arn    = "${local.s3_7_bucket_arn}"
 
-  count = "${local.s3_7_count}"
+  provider = "aws.7"
+  count    = "${local.s3_7_count}"
 }
 
-resource "aws_lambda_permission" "api_gateway_7_n_auth" {
+resource "aws_lambda_permission" "api_gateway_7_n_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_7_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.7_n_auth.http_method}${aws_api_gateway_resource.7.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_7_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.7_regional.id}/*/${aws_api_gateway_method.7_n_auth_regional.http_method}${aws_api_gateway_resource.7_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_7",
@@ -829,15 +1121,16 @@ resource "aws_lambda_permission" "api_gateway_7_n_auth" {
     "aws_lambda_function.lambda_js_7",
   ]
 
-  count = "${local.api_gateway_7_count + local.api_gateway_7_authorizer_count == 1 ? 1 : 0}"
+  provider = "aws.7"
+  count    = "${(local.api_gateway_7_count + local.api_gateway_7_authorizer_count == 1) && (local.api_gateway_7_regional_count == 1) ? 1 : 0}"
 }
 
-resource "aws_lambda_permission" "api_gateway_7_w_auth" {
+resource "aws_lambda_permission" "api_gateway_7_w_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_7_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.7_w_auth.http_method}${aws_api_gateway_resource.7.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_7_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.7_regional.id}/*/${aws_api_gateway_method.7_w_auth_regional.http_method}${aws_api_gateway_resource.7_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_7",
@@ -845,7 +1138,42 @@ resource "aws_lambda_permission" "api_gateway_7_w_auth" {
     "aws_lambda_function.lambda_js_7",
   ]
 
-  count = "${local.api_gateway_7_count + local.api_gateway_7_authorizer_count == 2 ? 1 : 0}"
+  provider = "aws.7"
+  count    = "${local.api_gateway_7_count + local.api_gateway_7_authorizer_count + local.api_gateway_7_regional_count == 3 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_7_n_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_7_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_7_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.7_n_auth_global.http_method}${aws_api_gateway_resource.7_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_7",
+    "aws_lambda_function.lambda_py_7",
+    "aws_lambda_function.lambda_js_7",
+  ]
+
+  provider = "aws.7"
+  count    = "${(local.api_gateway_7_count + local.api_gateway_7_authorizer_count == 1) && (local.api_gateway_7_global_count == 1) ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_7_w_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_7_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_7_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.7_w_auth_global.http_method}${aws_api_gateway_resource.7_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_7",
+    "aws_lambda_function.lambda_py_7",
+    "aws_lambda_function.lambda_js_7",
+  ]
+
+  provider = "aws.7"
+  count    = "${local.api_gateway_7_count + local.api_gateway_7_authorizer_count + local.api_gateway_7_global_count == 3 ? 1 : 0}"
 }
 
 resource "aws_lambda_function" "lambda_go_8" {
@@ -861,7 +1189,8 @@ resource "aws_lambda_function" "lambda_go_8" {
     variables = "${local.lambda_8_env}"
   }
 
-  count = "${local.lambda_go_8_count}"
+  provider = "aws.8"
+  count    = "${local.lambda_go_8_count}"
 }
 
 resource "aws_lambda_function" "lambda_py_8" {
@@ -877,7 +1206,8 @@ resource "aws_lambda_function" "lambda_py_8" {
     variables = "${local.lambda_8_env}"
   }
 
-  count = "${local.lambda_py_8_count}"
+  provider = "aws.8"
+  count    = "${local.lambda_py_8_count}"
 }
 
 resource "aws_lambda_function" "lambda_js_8" {
@@ -893,7 +1223,8 @@ resource "aws_lambda_function" "lambda_js_8" {
     variables = "${local.lambda_8_env}"
   }
 
-  count = "${local.lambda_js_8_count}"
+  provider = "aws.8"
+  count    = "${local.lambda_js_8_count}"
 }
 
 resource "aws_lambda_permission" "cloudwatch_8" {
@@ -909,7 +1240,8 @@ resource "aws_lambda_permission" "cloudwatch_8" {
     "aws_lambda_function.lambda_js_8",
   ]
 
-  count = "${local.cloudwatch_8_count}"
+  provider = "aws.8"
+  count    = "${local.cloudwatch_8_count}"
 }
 
 resource "aws_lambda_permission" "s3_8" {
@@ -919,15 +1251,16 @@ resource "aws_lambda_permission" "s3_8" {
   principal     = "s3.amazonaws.com"
   source_arn    = "${local.s3_8_bucket_arn}"
 
-  count = "${local.s3_8_count}"
+  provider = "aws.8"
+  count    = "${local.s3_8_count}"
 }
 
-resource "aws_lambda_permission" "api_gateway_8_n_auth" {
+resource "aws_lambda_permission" "api_gateway_8_n_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_8_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.8_n_auth.http_method}${aws_api_gateway_resource.8.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_8_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.8_regional.id}/*/${aws_api_gateway_method.8_n_auth_regional.http_method}${aws_api_gateway_resource.8_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_8",
@@ -935,15 +1268,16 @@ resource "aws_lambda_permission" "api_gateway_8_n_auth" {
     "aws_lambda_function.lambda_js_8",
   ]
 
-  count = "${local.api_gateway_8_count + local.api_gateway_8_authorizer_count == 1 ? 1 : 0}"
+  provider = "aws.8"
+  count    = "${(local.api_gateway_8_count + local.api_gateway_8_authorizer_count == 1) && (local.api_gateway_8_regional_count == 1) ? 1 : 0}"
 }
 
-resource "aws_lambda_permission" "api_gateway_8_w_auth" {
+resource "aws_lambda_permission" "api_gateway_8_w_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_8_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.8_w_auth.http_method}${aws_api_gateway_resource.8.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_8_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.8_regional.id}/*/${aws_api_gateway_method.8_w_auth_regional.http_method}${aws_api_gateway_resource.8_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_8",
@@ -951,7 +1285,42 @@ resource "aws_lambda_permission" "api_gateway_8_w_auth" {
     "aws_lambda_function.lambda_js_8",
   ]
 
-  count = "${local.api_gateway_8_count + local.api_gateway_8_authorizer_count == 2 ? 1 : 0}"
+  provider = "aws.8"
+  count    = "${local.api_gateway_8_count + local.api_gateway_8_authorizer_count + local.api_gateway_8_regional_count == 3 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_8_n_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_8_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_8_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.8_n_auth_global.http_method}${aws_api_gateway_resource.8_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_8",
+    "aws_lambda_function.lambda_py_8",
+    "aws_lambda_function.lambda_js_8",
+  ]
+
+  provider = "aws.8"
+  count    = "${(local.api_gateway_8_count + local.api_gateway_8_authorizer_count == 1) && (local.api_gateway_8_global_count == 1) ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_8_w_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_8_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_8_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.8_w_auth_global.http_method}${aws_api_gateway_resource.8_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_8",
+    "aws_lambda_function.lambda_py_8",
+    "aws_lambda_function.lambda_js_8",
+  ]
+
+  provider = "aws.8"
+  count    = "${local.api_gateway_8_count + local.api_gateway_8_authorizer_count + local.api_gateway_8_global_count == 3 ? 1 : 0}"
 }
 
 resource "aws_lambda_function" "lambda_go_9" {
@@ -967,7 +1336,8 @@ resource "aws_lambda_function" "lambda_go_9" {
     variables = "${local.lambda_9_env}"
   }
 
-  count = "${local.lambda_go_9_count}"
+  provider = "aws.9"
+  count    = "${local.lambda_go_9_count}"
 }
 
 resource "aws_lambda_function" "lambda_py_9" {
@@ -983,7 +1353,8 @@ resource "aws_lambda_function" "lambda_py_9" {
     variables = "${local.lambda_9_env}"
   }
 
-  count = "${local.lambda_py_9_count}"
+  provider = "aws.9"
+  count    = "${local.lambda_py_9_count}"
 }
 
 resource "aws_lambda_function" "lambda_js_9" {
@@ -999,7 +1370,8 @@ resource "aws_lambda_function" "lambda_js_9" {
     variables = "${local.lambda_9_env}"
   }
 
-  count = "${local.lambda_js_9_count}"
+  provider = "aws.9"
+  count    = "${local.lambda_js_9_count}"
 }
 
 resource "aws_lambda_permission" "cloudwatch_9" {
@@ -1015,7 +1387,8 @@ resource "aws_lambda_permission" "cloudwatch_9" {
     "aws_lambda_function.lambda_js_9",
   ]
 
-  count = "${local.cloudwatch_9_count}"
+  provider = "aws.9"
+  count    = "${local.cloudwatch_9_count}"
 }
 
 resource "aws_lambda_permission" "s3_9" {
@@ -1025,15 +1398,16 @@ resource "aws_lambda_permission" "s3_9" {
   principal     = "s3.amazonaws.com"
   source_arn    = "${local.s3_9_bucket_arn}"
 
-  count = "${local.s3_9_count}"
+  provider = "aws.9"
+  count    = "${local.s3_9_count}"
 }
 
-resource "aws_lambda_permission" "api_gateway_9_n_auth" {
+resource "aws_lambda_permission" "api_gateway_9_n_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_9_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.9_n_auth.http_method}${aws_api_gateway_resource.9.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_9_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.9_regional.id}/*/${aws_api_gateway_method.9_n_auth_regional.http_method}${aws_api_gateway_resource.9_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_9",
@@ -1041,15 +1415,16 @@ resource "aws_lambda_permission" "api_gateway_9_n_auth" {
     "aws_lambda_function.lambda_js_9",
   ]
 
-  count = "${local.api_gateway_9_count + local.api_gateway_9_authorizer_count == 1 ? 1 : 0}"
+  provider = "aws.9"
+  count    = "${(local.api_gateway_9_count + local.api_gateway_9_authorizer_count == 1) && (local.api_gateway_9_regional_count == 1) ? 1 : 0}"
 }
 
-resource "aws_lambda_permission" "api_gateway_9_w_auth" {
+resource "aws_lambda_permission" "api_gateway_9_w_auth_regional" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
   principal     = "apigateway.amazonaws.com"
   function_name = "${local.lambda_9_name_computed}"
-  source_arn    = "arn:aws:execute-api:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.9_w_auth.http_method}${aws_api_gateway_resource.9.path}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_9_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.9_regional.id}/*/${aws_api_gateway_method.9_w_auth_regional.http_method}${aws_api_gateway_resource.9_regional.path}"
 
   depends_on = [
     "aws_lambda_function.lambda_go_9",
@@ -1057,5 +1432,40 @@ resource "aws_lambda_permission" "api_gateway_9_w_auth" {
     "aws_lambda_function.lambda_js_9",
   ]
 
-  count = "${local.api_gateway_9_count + local.api_gateway_9_authorizer_count == 2 ? 1 : 0}"
+  provider = "aws.9"
+  count    = "${local.api_gateway_9_count + local.api_gateway_9_authorizer_count + local.api_gateway_9_regional_count == 3 ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_9_n_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_9_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_9_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.9_n_auth_global.http_method}${aws_api_gateway_resource.9_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_9",
+    "aws_lambda_function.lambda_py_9",
+    "aws_lambda_function.lambda_js_9",
+  ]
+
+  provider = "aws.9"
+  count    = "${(local.api_gateway_9_count + local.api_gateway_9_authorizer_count == 1) && (local.api_gateway_9_global_count == 1) ? 1 : 0}"
+}
+
+resource "aws_lambda_permission" "api_gateway_9_w_auth_global" {
+  statement_id  = "AllowExecutionFromAPIGateway"
+  action        = "lambda:InvokeFunction"
+  principal     = "apigateway.amazonaws.com"
+  function_name = "${local.lambda_9_name_computed}"
+  source_arn    = "arn:aws:execute-api:${local.lambda_9_region}:${data.aws_caller_identity.current.account_id}:${aws_api_gateway_rest_api.global.id}/*/${aws_api_gateway_method.9_w_auth_global.http_method}${aws_api_gateway_resource.9_global.path}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_9",
+    "aws_lambda_function.lambda_py_9",
+    "aws_lambda_function.lambda_js_9",
+  ]
+
+  provider = "aws.9"
+  count    = "${local.api_gateway_9_count + local.api_gateway_9_authorizer_count + local.api_gateway_9_global_count == 3 ? 1 : 0}"
 }

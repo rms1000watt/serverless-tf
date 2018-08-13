@@ -36,7 +36,7 @@ locals {
   lambda_0_rebuild      = "${lookup(local.lambda_0, "rebuild", local.default_rebuild) != local.default_rebuild}"
   lambda_0_role_arn     = "${lookup(local.lambda_0, "role_arn", "")}"
   lambda_0_dir          = "${dirname(local.lambda_0_file)}"
-  lambda_0_arn          = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_0_name_computed}"
+  lambda_0_arn          = "arn:aws:lambda:${local.lambda_0_region}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_0_name_computed}"
   lambda_0_file_replace = "${replace(replace(replace(replace(replace(local.lambda_0_file, ".go", ""), ".py", ""), ".js", ""), "/", "-"), "..", "-")}"
 
   lambda_0_env_keys             = "${lookup(local.lambda_0, "env_keys", "AUTHOR")}"
@@ -46,6 +46,10 @@ locals {
   lambda_0_env_keys_list_length = "${length(local.lambda_0_env_keys_list)}"
   lambda_0_env_vals_list_length = "${length(local.lambda_0_env_vals_list)}"
   lambda_0_env                  = "${zipmap(local.lambda_0_env_keys_list, local.lambda_0_env_vals_list)}"
+
+  lambda_0_region_in   = "${lookup(local.lambda_0, "region", "")}"
+  lambda_0_region      = "${local.lambda_0_region_in != "" ? local.lambda_0_region_in  : data.aws_region.current.name}"
+  lambda_0_same_region = "${local.lambda_0_region == data.aws_region.current.name}"
 
   // Lambda for Golang
   lambda_go_0         = "${contains(split(".", local.lambda_0_file), "go")}"
@@ -78,22 +82,24 @@ locals {
   lambda_0_name_computed = "${local.lambda_go_0 ? local.lambda_go_0_name : (local.lambda_py_0 ? local.lambda_py_0_name : (local.lambda_js_0 ? local.lambda_js_0_name : local.default_lambda_name))}"
 
   // API Gateway
-  api_gateway_0               = "${lookup(local.lambda_0, "http", "" ) != "" || lookup(local.lambda_0, "http_path", "") != "" || lookup(local.lambda_0, "http_method", "") != "" || lookup(local.lambda_0, "http_authorizer", "") != "" || lookup(local.lambda_0, "http_stage", "") != ""}"
-  api_gateway_0_count         = "${local.api_gateway_0 ? 1 : 0}"
-  api_gateway_0_name          = "${local.lambda_0_name_computed}"
-  api_gateway_0_path          = "${lookup(local.lambda_0, "http_path", local.lambda_0_name_computed)}"
-  api_gateway_0_method        = "${upper(lookup(local.lambda_0, "http_method", "get"))}"
-  api_gateway_0_stage         = "${local.stage}"
-  api_gateway_0_metrics       = "${lookup(local.lambda_0, "http_metrics", "") != ""}"
-  api_gateway_0_logging       = "${lookup(local.lambda_0, "http_logging", "") != ""}"
-  api_gateway_0_logging_level = "${local.api_gateway_0_logging ? "INFO" : "OFF"}"
+  api_gateway_0                = "${lookup(local.lambda_0, "http", "" ) != "" || lookup(local.lambda_0, "http_path", "") != "" || lookup(local.lambda_0, "http_method", "") != "" || lookup(local.lambda_0, "http_authorizer", "") != "" || lookup(local.lambda_0, "http_stage", "") != ""}"
+  api_gateway_0_count          = "${local.api_gateway_0 ? 1 : 0}"
+  api_gateway_0_name           = "${local.lambda_0_name_computed}"
+  api_gateway_0_path           = "${lookup(local.lambda_0, "http_path", local.lambda_0_name_computed)}"
+  api_gateway_0_method         = "${upper(lookup(local.lambda_0, "http_method", "get"))}"
+  api_gateway_0_stage          = "${local.stage}"
+  api_gateway_0_metrics        = "${lookup(local.lambda_0, "http_metrics", "") != ""}"
+  api_gateway_0_logging        = "${lookup(local.lambda_0, "http_logging", "") != ""}"
+  api_gateway_0_logging_level  = "${local.api_gateway_0_logging ? "INFO" : "OFF"}"
+  api_gateway_0_regional_count = "${local.lambda_0_same_region ? 0 : 1}"
+  api_gateway_0_global_count   = "${local.lambda_0_same_region ? 1 : 0}"
 
   api_gateway_0_authorizer                  = "${lookup(local.lambda_0, "http_authorizer", "")}"
   api_gateway_0_authorizer_count            = "${local.api_gateway_0_authorizer != "" ? 1 : 0}"
   api_gateway_0_authorization               = "${local.api_gateway_0_authorizer != "" ? "CUSTOM" : "NONE"}"
   api_gateway_0_authorizer_full_name        = "${local.service_name}-${local.stage}-${local.api_gateway_0_authorizer}"
-  api_gateway_0_authorizer_uri              = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_0_authorizer_full_name}/invocations"
-  api_gateway_0_authorizer_lambda_arn       = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_0_authorizer_full_name}"
+  api_gateway_0_authorizer_lambda_arn       = "arn:aws:lambda:${lookup(local.lambda_name_region, local.api_gateway_0_authorizer)}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_0_authorizer_full_name}"
+  api_gateway_0_authorizer_uri              = "arn:aws:apigateway:${local.lambda_0_region}:lambda:path/2015-03-31/functions/${local.api_gateway_0_authorizer_lambda_arn}/invocations"
   api_gateway_0_authorizer_policy_arn       = "${lookup(local.lambda_0, "http_authorizer_policy_arn", "")}"
   api_gateway_0_authorizer_policy_arn_count = "${local.api_gateway_0_authorizer_policy_arn != "" ? 1 : 0}"
 
@@ -129,7 +135,7 @@ locals {
   lambda_1_rebuild      = "${lookup(local.lambda_1, "rebuild", local.default_rebuild) != local.default_rebuild}"
   lambda_1_role_arn     = "${lookup(local.lambda_1, "role_arn", "")}"
   lambda_1_dir          = "${dirname(local.lambda_1_file)}"
-  lambda_1_arn          = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_1_name_computed}"
+  lambda_1_arn          = "arn:aws:lambda:${local.lambda_1_region}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_1_name_computed}"
   lambda_1_file_replace = "${replace(replace(replace(replace(replace(local.lambda_1_file, ".go", ""), ".py", ""), ".js", ""), "/", "-"), "..", "-")}"
 
   lambda_1_env_keys             = "${lookup(local.lambda_1, "env_keys", "AUTHOR")}"
@@ -139,6 +145,10 @@ locals {
   lambda_1_env_keys_list_length = "${length(local.lambda_1_env_keys_list)}"
   lambda_1_env_vals_list_length = "${length(local.lambda_1_env_vals_list)}"
   lambda_1_env                  = "${zipmap(local.lambda_1_env_keys_list, local.lambda_1_env_vals_list)}"
+
+  lambda_1_region_in   = "${lookup(local.lambda_1, "region", "")}"
+  lambda_1_region      = "${local.lambda_1_region_in != "" ? local.lambda_1_region_in  : data.aws_region.current.name}"
+  lambda_1_same_region = "${local.lambda_1_region == data.aws_region.current.name}"
 
   // Lambda for Golang
   lambda_go_1         = "${contains(split(".", local.lambda_1_file), "go")}"
@@ -171,22 +181,24 @@ locals {
   lambda_1_name_computed = "${local.lambda_go_1 ? local.lambda_go_1_name : (local.lambda_py_1 ? local.lambda_py_1_name : (local.lambda_js_1 ? local.lambda_js_1_name : local.default_lambda_name))}"
 
   // API Gateway
-  api_gateway_1               = "${lookup(local.lambda_1, "http", "" ) != "" || lookup(local.lambda_1, "http_path", "") != "" || lookup(local.lambda_1, "http_method", "") != "" || lookup(local.lambda_1, "http_authorizer", "") != "" || lookup(local.lambda_1, "http_stage", "") != ""}"
-  api_gateway_1_count         = "${local.api_gateway_1 ? 1 : 0}"
-  api_gateway_1_name          = "${local.lambda_1_name_computed}"
-  api_gateway_1_path          = "${lookup(local.lambda_1, "http_path", local.lambda_1_name_computed)}"
-  api_gateway_1_method        = "${upper(lookup(local.lambda_1, "http_method", "get"))}"
-  api_gateway_1_stage         = "${local.stage}"
-  api_gateway_1_metrics       = "${lookup(local.lambda_1, "http_metrics", "") != ""}"
-  api_gateway_1_logging       = "${lookup(local.lambda_1, "http_logging", "") != ""}"
-  api_gateway_1_logging_level = "${local.api_gateway_1_logging ? "INFO" : "OFF"}"
+  api_gateway_1                = "${lookup(local.lambda_1, "http", "" ) != "" || lookup(local.lambda_1, "http_path", "") != "" || lookup(local.lambda_1, "http_method", "") != "" || lookup(local.lambda_1, "http_authorizer", "") != "" || lookup(local.lambda_1, "http_stage", "") != ""}"
+  api_gateway_1_count          = "${local.api_gateway_1 ? 1 : 0}"
+  api_gateway_1_name           = "${local.lambda_1_name_computed}"
+  api_gateway_1_path           = "${lookup(local.lambda_1, "http_path", local.lambda_1_name_computed)}"
+  api_gateway_1_method         = "${upper(lookup(local.lambda_1, "http_method", "get"))}"
+  api_gateway_1_stage          = "${local.stage}"
+  api_gateway_1_metrics        = "${lookup(local.lambda_1, "http_metrics", "") != ""}"
+  api_gateway_1_logging        = "${lookup(local.lambda_1, "http_logging", "") != ""}"
+  api_gateway_1_logging_level  = "${local.api_gateway_1_logging ? "INFO" : "OFF"}"
+  api_gateway_1_regional_count = "${local.lambda_1_same_region ? 0 : 1}"
+  api_gateway_1_global_count   = "${local.lambda_1_same_region ? 1 : 0}"
 
   api_gateway_1_authorizer                  = "${lookup(local.lambda_1, "http_authorizer", "")}"
   api_gateway_1_authorizer_count            = "${local.api_gateway_1_authorizer != "" ? 1 : 0}"
   api_gateway_1_authorization               = "${local.api_gateway_1_authorizer != "" ? "CUSTOM" : "NONE"}"
   api_gateway_1_authorizer_full_name        = "${local.service_name}-${local.stage}-${local.api_gateway_1_authorizer}"
-  api_gateway_1_authorizer_uri              = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_1_authorizer_full_name}/invocations"
-  api_gateway_1_authorizer_lambda_arn       = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_1_authorizer_full_name}"
+  api_gateway_1_authorizer_lambda_arn       = "arn:aws:lambda:${lookup(local.lambda_name_region, local.api_gateway_1_authorizer)}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_1_authorizer_full_name}"
+  api_gateway_1_authorizer_uri              = "arn:aws:apigateway:${local.lambda_1_region}:lambda:path/2015-03-31/functions/${local.api_gateway_1_authorizer_lambda_arn}/invocations"
   api_gateway_1_authorizer_policy_arn       = "${lookup(local.lambda_1, "http_authorizer_policy_arn", "")}"
   api_gateway_1_authorizer_policy_arn_count = "${local.api_gateway_1_authorizer_policy_arn != "" ? 1 : 0}"
 
@@ -222,7 +234,7 @@ locals {
   lambda_2_rebuild      = "${lookup(local.lambda_2, "rebuild", local.default_rebuild) != local.default_rebuild}"
   lambda_2_role_arn     = "${lookup(local.lambda_2, "role_arn", "")}"
   lambda_2_dir          = "${dirname(local.lambda_2_file)}"
-  lambda_2_arn          = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_2_name_computed}"
+  lambda_2_arn          = "arn:aws:lambda:${local.lambda_2_region}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_2_name_computed}"
   lambda_2_file_replace = "${replace(replace(replace(replace(replace(local.lambda_2_file, ".go", ""), ".py", ""), ".js", ""), "/", "-"), "..", "-")}"
 
   lambda_2_env_keys             = "${lookup(local.lambda_2, "env_keys", "AUTHOR")}"
@@ -232,6 +244,10 @@ locals {
   lambda_2_env_keys_list_length = "${length(local.lambda_2_env_keys_list)}"
   lambda_2_env_vals_list_length = "${length(local.lambda_2_env_vals_list)}"
   lambda_2_env                  = "${zipmap(local.lambda_2_env_keys_list, local.lambda_2_env_vals_list)}"
+
+  lambda_2_region_in   = "${lookup(local.lambda_2, "region", "")}"
+  lambda_2_region      = "${local.lambda_2_region_in != "" ? local.lambda_2_region_in  : data.aws_region.current.name}"
+  lambda_2_same_region = "${local.lambda_2_region == data.aws_region.current.name}"
 
   // Lambda for Golang
   lambda_go_2         = "${contains(split(".", local.lambda_2_file), "go")}"
@@ -264,22 +280,24 @@ locals {
   lambda_2_name_computed = "${local.lambda_go_2 ? local.lambda_go_2_name : (local.lambda_py_2 ? local.lambda_py_2_name : (local.lambda_js_2 ? local.lambda_js_2_name : local.default_lambda_name))}"
 
   // API Gateway
-  api_gateway_2               = "${lookup(local.lambda_2, "http", "" ) != "" || lookup(local.lambda_2, "http_path", "") != "" || lookup(local.lambda_2, "http_method", "") != "" || lookup(local.lambda_2, "http_authorizer", "") != "" || lookup(local.lambda_2, "http_stage", "") != ""}"
-  api_gateway_2_count         = "${local.api_gateway_2 ? 1 : 0}"
-  api_gateway_2_name          = "${local.lambda_2_name_computed}"
-  api_gateway_2_path          = "${lookup(local.lambda_2, "http_path", local.lambda_2_name_computed)}"
-  api_gateway_2_method        = "${upper(lookup(local.lambda_2, "http_method", "get"))}"
-  api_gateway_2_stage         = "${local.stage}"
-  api_gateway_2_metrics       = "${lookup(local.lambda_2, "http_metrics", "") != ""}"
-  api_gateway_2_logging       = "${lookup(local.lambda_2, "http_logging", "") != ""}"
-  api_gateway_2_logging_level = "${local.api_gateway_2_logging ? "INFO" : "OFF"}"
+  api_gateway_2                = "${lookup(local.lambda_2, "http", "" ) != "" || lookup(local.lambda_2, "http_path", "") != "" || lookup(local.lambda_2, "http_method", "") != "" || lookup(local.lambda_2, "http_authorizer", "") != "" || lookup(local.lambda_2, "http_stage", "") != ""}"
+  api_gateway_2_count          = "${local.api_gateway_2 ? 1 : 0}"
+  api_gateway_2_name           = "${local.lambda_2_name_computed}"
+  api_gateway_2_path           = "${lookup(local.lambda_2, "http_path", local.lambda_2_name_computed)}"
+  api_gateway_2_method         = "${upper(lookup(local.lambda_2, "http_method", "get"))}"
+  api_gateway_2_stage          = "${local.stage}"
+  api_gateway_2_metrics        = "${lookup(local.lambda_2, "http_metrics", "") != ""}"
+  api_gateway_2_logging        = "${lookup(local.lambda_2, "http_logging", "") != ""}"
+  api_gateway_2_logging_level  = "${local.api_gateway_2_logging ? "INFO" : "OFF"}"
+  api_gateway_2_regional_count = "${local.lambda_2_same_region ? 0 : 1}"
+  api_gateway_2_global_count   = "${local.lambda_2_same_region ? 1 : 0}"
 
   api_gateway_2_authorizer                  = "${lookup(local.lambda_2, "http_authorizer", "")}"
   api_gateway_2_authorizer_count            = "${local.api_gateway_2_authorizer != "" ? 1 : 0}"
   api_gateway_2_authorization               = "${local.api_gateway_2_authorizer != "" ? "CUSTOM" : "NONE"}"
   api_gateway_2_authorizer_full_name        = "${local.service_name}-${local.stage}-${local.api_gateway_2_authorizer}"
-  api_gateway_2_authorizer_uri              = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_2_authorizer_full_name}/invocations"
-  api_gateway_2_authorizer_lambda_arn       = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_2_authorizer_full_name}"
+  api_gateway_2_authorizer_lambda_arn       = "arn:aws:lambda:${lookup(local.lambda_name_region, local.api_gateway_2_authorizer)}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_2_authorizer_full_name}"
+  api_gateway_2_authorizer_uri              = "arn:aws:apigateway:${local.lambda_2_region}:lambda:path/2015-03-31/functions/${local.api_gateway_2_authorizer_lambda_arn}/invocations"
   api_gateway_2_authorizer_policy_arn       = "${lookup(local.lambda_2, "http_authorizer_policy_arn", "")}"
   api_gateway_2_authorizer_policy_arn_count = "${local.api_gateway_2_authorizer_policy_arn != "" ? 1 : 0}"
 
@@ -315,7 +333,7 @@ locals {
   lambda_3_rebuild      = "${lookup(local.lambda_3, "rebuild", local.default_rebuild) != local.default_rebuild}"
   lambda_3_role_arn     = "${lookup(local.lambda_3, "role_arn", "")}"
   lambda_3_dir          = "${dirname(local.lambda_3_file)}"
-  lambda_3_arn          = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_3_name_computed}"
+  lambda_3_arn          = "arn:aws:lambda:${local.lambda_3_region}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_3_name_computed}"
   lambda_3_file_replace = "${replace(replace(replace(replace(replace(local.lambda_3_file, ".go", ""), ".py", ""), ".js", ""), "/", "-"), "..", "-")}"
 
   lambda_3_env_keys             = "${lookup(local.lambda_3, "env_keys", "AUTHOR")}"
@@ -325,6 +343,10 @@ locals {
   lambda_3_env_keys_list_length = "${length(local.lambda_3_env_keys_list)}"
   lambda_3_env_vals_list_length = "${length(local.lambda_3_env_vals_list)}"
   lambda_3_env                  = "${zipmap(local.lambda_3_env_keys_list, local.lambda_3_env_vals_list)}"
+
+  lambda_3_region_in   = "${lookup(local.lambda_3, "region", "")}"
+  lambda_3_region      = "${local.lambda_3_region_in != "" ? local.lambda_3_region_in  : data.aws_region.current.name}"
+  lambda_3_same_region = "${local.lambda_3_region == data.aws_region.current.name}"
 
   // Lambda for Golang
   lambda_go_3         = "${contains(split(".", local.lambda_3_file), "go")}"
@@ -357,22 +379,24 @@ locals {
   lambda_3_name_computed = "${local.lambda_go_3 ? local.lambda_go_3_name : (local.lambda_py_3 ? local.lambda_py_3_name : (local.lambda_js_3 ? local.lambda_js_3_name : local.default_lambda_name))}"
 
   // API Gateway
-  api_gateway_3               = "${lookup(local.lambda_3, "http", "" ) != "" || lookup(local.lambda_3, "http_path", "") != "" || lookup(local.lambda_3, "http_method", "") != "" || lookup(local.lambda_3, "http_authorizer", "") != "" || lookup(local.lambda_3, "http_stage", "") != ""}"
-  api_gateway_3_count         = "${local.api_gateway_3 ? 1 : 0}"
-  api_gateway_3_name          = "${local.lambda_3_name_computed}"
-  api_gateway_3_path          = "${lookup(local.lambda_3, "http_path", local.lambda_3_name_computed)}"
-  api_gateway_3_method        = "${upper(lookup(local.lambda_3, "http_method", "get"))}"
-  api_gateway_3_stage         = "${local.stage}"
-  api_gateway_3_metrics       = "${lookup(local.lambda_3, "http_metrics", "") != ""}"
-  api_gateway_3_logging       = "${lookup(local.lambda_3, "http_logging", "") != ""}"
-  api_gateway_3_logging_level = "${local.api_gateway_3_logging ? "INFO" : "OFF"}"
+  api_gateway_3                = "${lookup(local.lambda_3, "http", "" ) != "" || lookup(local.lambda_3, "http_path", "") != "" || lookup(local.lambda_3, "http_method", "") != "" || lookup(local.lambda_3, "http_authorizer", "") != "" || lookup(local.lambda_3, "http_stage", "") != ""}"
+  api_gateway_3_count          = "${local.api_gateway_3 ? 1 : 0}"
+  api_gateway_3_name           = "${local.lambda_3_name_computed}"
+  api_gateway_3_path           = "${lookup(local.lambda_3, "http_path", local.lambda_3_name_computed)}"
+  api_gateway_3_method         = "${upper(lookup(local.lambda_3, "http_method", "get"))}"
+  api_gateway_3_stage          = "${local.stage}"
+  api_gateway_3_metrics        = "${lookup(local.lambda_3, "http_metrics", "") != ""}"
+  api_gateway_3_logging        = "${lookup(local.lambda_3, "http_logging", "") != ""}"
+  api_gateway_3_logging_level  = "${local.api_gateway_3_logging ? "INFO" : "OFF"}"
+  api_gateway_3_regional_count = "${local.lambda_3_same_region ? 0 : 1}"
+  api_gateway_3_global_count   = "${local.lambda_3_same_region ? 1 : 0}"
 
   api_gateway_3_authorizer                  = "${lookup(local.lambda_3, "http_authorizer", "")}"
   api_gateway_3_authorizer_count            = "${local.api_gateway_3_authorizer != "" ? 1 : 0}"
   api_gateway_3_authorization               = "${local.api_gateway_3_authorizer != "" ? "CUSTOM" : "NONE"}"
   api_gateway_3_authorizer_full_name        = "${local.service_name}-${local.stage}-${local.api_gateway_3_authorizer}"
-  api_gateway_3_authorizer_uri              = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_3_authorizer_full_name}/invocations"
-  api_gateway_3_authorizer_lambda_arn       = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_3_authorizer_full_name}"
+  api_gateway_3_authorizer_lambda_arn       = "arn:aws:lambda:${lookup(local.lambda_name_region, local.api_gateway_3_authorizer)}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_3_authorizer_full_name}"
+  api_gateway_3_authorizer_uri              = "arn:aws:apigateway:${local.lambda_3_region}:lambda:path/2015-03-31/functions/${local.api_gateway_3_authorizer_lambda_arn}/invocations"
   api_gateway_3_authorizer_policy_arn       = "${lookup(local.lambda_3, "http_authorizer_policy_arn", "")}"
   api_gateway_3_authorizer_policy_arn_count = "${local.api_gateway_3_authorizer_policy_arn != "" ? 1 : 0}"
 
@@ -408,7 +432,7 @@ locals {
   lambda_4_rebuild      = "${lookup(local.lambda_4, "rebuild", local.default_rebuild) != local.default_rebuild}"
   lambda_4_role_arn     = "${lookup(local.lambda_4, "role_arn", "")}"
   lambda_4_dir          = "${dirname(local.lambda_4_file)}"
-  lambda_4_arn          = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_4_name_computed}"
+  lambda_4_arn          = "arn:aws:lambda:${local.lambda_4_region}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_4_name_computed}"
   lambda_4_file_replace = "${replace(replace(replace(replace(replace(local.lambda_4_file, ".go", ""), ".py", ""), ".js", ""), "/", "-"), "..", "-")}"
 
   lambda_4_env_keys             = "${lookup(local.lambda_4, "env_keys", "AUTHOR")}"
@@ -418,6 +442,10 @@ locals {
   lambda_4_env_keys_list_length = "${length(local.lambda_4_env_keys_list)}"
   lambda_4_env_vals_list_length = "${length(local.lambda_4_env_vals_list)}"
   lambda_4_env                  = "${zipmap(local.lambda_4_env_keys_list, local.lambda_4_env_vals_list)}"
+
+  lambda_4_region_in   = "${lookup(local.lambda_4, "region", "")}"
+  lambda_4_region      = "${local.lambda_4_region_in != "" ? local.lambda_4_region_in  : data.aws_region.current.name}"
+  lambda_4_same_region = "${local.lambda_4_region == data.aws_region.current.name}"
 
   // Lambda for Golang
   lambda_go_4         = "${contains(split(".", local.lambda_4_file), "go")}"
@@ -450,22 +478,24 @@ locals {
   lambda_4_name_computed = "${local.lambda_go_4 ? local.lambda_go_4_name : (local.lambda_py_4 ? local.lambda_py_4_name : (local.lambda_js_4 ? local.lambda_js_4_name : local.default_lambda_name))}"
 
   // API Gateway
-  api_gateway_4               = "${lookup(local.lambda_4, "http", "" ) != "" || lookup(local.lambda_4, "http_path", "") != "" || lookup(local.lambda_4, "http_method", "") != "" || lookup(local.lambda_4, "http_authorizer", "") != "" || lookup(local.lambda_4, "http_stage", "") != ""}"
-  api_gateway_4_count         = "${local.api_gateway_4 ? 1 : 0}"
-  api_gateway_4_name          = "${local.lambda_4_name_computed}"
-  api_gateway_4_path          = "${lookup(local.lambda_4, "http_path", local.lambda_4_name_computed)}"
-  api_gateway_4_method        = "${upper(lookup(local.lambda_4, "http_method", "get"))}"
-  api_gateway_4_stage         = "${local.stage}"
-  api_gateway_4_metrics       = "${lookup(local.lambda_4, "http_metrics", "") != ""}"
-  api_gateway_4_logging       = "${lookup(local.lambda_4, "http_logging", "") != ""}"
-  api_gateway_4_logging_level = "${local.api_gateway_4_logging ? "INFO" : "OFF"}"
+  api_gateway_4                = "${lookup(local.lambda_4, "http", "" ) != "" || lookup(local.lambda_4, "http_path", "") != "" || lookup(local.lambda_4, "http_method", "") != "" || lookup(local.lambda_4, "http_authorizer", "") != "" || lookup(local.lambda_4, "http_stage", "") != ""}"
+  api_gateway_4_count          = "${local.api_gateway_4 ? 1 : 0}"
+  api_gateway_4_name           = "${local.lambda_4_name_computed}"
+  api_gateway_4_path           = "${lookup(local.lambda_4, "http_path", local.lambda_4_name_computed)}"
+  api_gateway_4_method         = "${upper(lookup(local.lambda_4, "http_method", "get"))}"
+  api_gateway_4_stage          = "${local.stage}"
+  api_gateway_4_metrics        = "${lookup(local.lambda_4, "http_metrics", "") != ""}"
+  api_gateway_4_logging        = "${lookup(local.lambda_4, "http_logging", "") != ""}"
+  api_gateway_4_logging_level  = "${local.api_gateway_4_logging ? "INFO" : "OFF"}"
+  api_gateway_4_regional_count = "${local.lambda_4_same_region ? 0 : 1}"
+  api_gateway_4_global_count   = "${local.lambda_4_same_region ? 1 : 0}"
 
   api_gateway_4_authorizer                  = "${lookup(local.lambda_4, "http_authorizer", "")}"
   api_gateway_4_authorizer_count            = "${local.api_gateway_4_authorizer != "" ? 1 : 0}"
   api_gateway_4_authorization               = "${local.api_gateway_4_authorizer != "" ? "CUSTOM" : "NONE"}"
   api_gateway_4_authorizer_full_name        = "${local.service_name}-${local.stage}-${local.api_gateway_4_authorizer}"
-  api_gateway_4_authorizer_uri              = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_4_authorizer_full_name}/invocations"
-  api_gateway_4_authorizer_lambda_arn       = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_4_authorizer_full_name}"
+  api_gateway_4_authorizer_lambda_arn       = "arn:aws:lambda:${lookup(local.lambda_name_region, local.api_gateway_4_authorizer)}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_4_authorizer_full_name}"
+  api_gateway_4_authorizer_uri              = "arn:aws:apigateway:${local.lambda_4_region}:lambda:path/2015-03-31/functions/${local.api_gateway_4_authorizer_lambda_arn}/invocations"
   api_gateway_4_authorizer_policy_arn       = "${lookup(local.lambda_4, "http_authorizer_policy_arn", "")}"
   api_gateway_4_authorizer_policy_arn_count = "${local.api_gateway_4_authorizer_policy_arn != "" ? 1 : 0}"
 
@@ -501,7 +531,7 @@ locals {
   lambda_5_rebuild      = "${lookup(local.lambda_5, "rebuild", local.default_rebuild) != local.default_rebuild}"
   lambda_5_role_arn     = "${lookup(local.lambda_5, "role_arn", "")}"
   lambda_5_dir          = "${dirname(local.lambda_5_file)}"
-  lambda_5_arn          = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_5_name_computed}"
+  lambda_5_arn          = "arn:aws:lambda:${local.lambda_5_region}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_5_name_computed}"
   lambda_5_file_replace = "${replace(replace(replace(replace(replace(local.lambda_5_file, ".go", ""), ".py", ""), ".js", ""), "/", "-"), "..", "-")}"
 
   lambda_5_env_keys             = "${lookup(local.lambda_5, "env_keys", "AUTHOR")}"
@@ -511,6 +541,10 @@ locals {
   lambda_5_env_keys_list_length = "${length(local.lambda_5_env_keys_list)}"
   lambda_5_env_vals_list_length = "${length(local.lambda_5_env_vals_list)}"
   lambda_5_env                  = "${zipmap(local.lambda_5_env_keys_list, local.lambda_5_env_vals_list)}"
+
+  lambda_5_region_in   = "${lookup(local.lambda_5, "region", "")}"
+  lambda_5_region      = "${local.lambda_5_region_in != "" ? local.lambda_5_region_in  : data.aws_region.current.name}"
+  lambda_5_same_region = "${local.lambda_5_region == data.aws_region.current.name}"
 
   // Lambda for Golang
   lambda_go_5         = "${contains(split(".", local.lambda_5_file), "go")}"
@@ -543,22 +577,24 @@ locals {
   lambda_5_name_computed = "${local.lambda_go_5 ? local.lambda_go_5_name : (local.lambda_py_5 ? local.lambda_py_5_name : (local.lambda_js_5 ? local.lambda_js_5_name : local.default_lambda_name))}"
 
   // API Gateway
-  api_gateway_5               = "${lookup(local.lambda_5, "http", "" ) != "" || lookup(local.lambda_5, "http_path", "") != "" || lookup(local.lambda_5, "http_method", "") != "" || lookup(local.lambda_5, "http_authorizer", "") != "" || lookup(local.lambda_5, "http_stage", "") != ""}"
-  api_gateway_5_count         = "${local.api_gateway_5 ? 1 : 0}"
-  api_gateway_5_name          = "${local.lambda_5_name_computed}"
-  api_gateway_5_path          = "${lookup(local.lambda_5, "http_path", local.lambda_5_name_computed)}"
-  api_gateway_5_method        = "${upper(lookup(local.lambda_5, "http_method", "get"))}"
-  api_gateway_5_stage         = "${local.stage}"
-  api_gateway_5_metrics       = "${lookup(local.lambda_5, "http_metrics", "") != ""}"
-  api_gateway_5_logging       = "${lookup(local.lambda_5, "http_logging", "") != ""}"
-  api_gateway_5_logging_level = "${local.api_gateway_5_logging ? "INFO" : "OFF"}"
+  api_gateway_5                = "${lookup(local.lambda_5, "http", "" ) != "" || lookup(local.lambda_5, "http_path", "") != "" || lookup(local.lambda_5, "http_method", "") != "" || lookup(local.lambda_5, "http_authorizer", "") != "" || lookup(local.lambda_5, "http_stage", "") != ""}"
+  api_gateway_5_count          = "${local.api_gateway_5 ? 1 : 0}"
+  api_gateway_5_name           = "${local.lambda_5_name_computed}"
+  api_gateway_5_path           = "${lookup(local.lambda_5, "http_path", local.lambda_5_name_computed)}"
+  api_gateway_5_method         = "${upper(lookup(local.lambda_5, "http_method", "get"))}"
+  api_gateway_5_stage          = "${local.stage}"
+  api_gateway_5_metrics        = "${lookup(local.lambda_5, "http_metrics", "") != ""}"
+  api_gateway_5_logging        = "${lookup(local.lambda_5, "http_logging", "") != ""}"
+  api_gateway_5_logging_level  = "${local.api_gateway_5_logging ? "INFO" : "OFF"}"
+  api_gateway_5_regional_count = "${local.lambda_5_same_region ? 0 : 1}"
+  api_gateway_5_global_count   = "${local.lambda_5_same_region ? 1 : 0}"
 
   api_gateway_5_authorizer                  = "${lookup(local.lambda_5, "http_authorizer", "")}"
   api_gateway_5_authorizer_count            = "${local.api_gateway_5_authorizer != "" ? 1 : 0}"
   api_gateway_5_authorization               = "${local.api_gateway_5_authorizer != "" ? "CUSTOM" : "NONE"}"
   api_gateway_5_authorizer_full_name        = "${local.service_name}-${local.stage}-${local.api_gateway_5_authorizer}"
-  api_gateway_5_authorizer_uri              = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_5_authorizer_full_name}/invocations"
-  api_gateway_5_authorizer_lambda_arn       = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_5_authorizer_full_name}"
+  api_gateway_5_authorizer_lambda_arn       = "arn:aws:lambda:${lookup(local.lambda_name_region, local.api_gateway_5_authorizer)}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_5_authorizer_full_name}"
+  api_gateway_5_authorizer_uri              = "arn:aws:apigateway:${local.lambda_5_region}:lambda:path/2015-03-31/functions/${local.api_gateway_5_authorizer_lambda_arn}/invocations"
   api_gateway_5_authorizer_policy_arn       = "${lookup(local.lambda_5, "http_authorizer_policy_arn", "")}"
   api_gateway_5_authorizer_policy_arn_count = "${local.api_gateway_5_authorizer_policy_arn != "" ? 1 : 0}"
 
@@ -594,7 +630,7 @@ locals {
   lambda_6_rebuild      = "${lookup(local.lambda_6, "rebuild", local.default_rebuild) != local.default_rebuild}"
   lambda_6_role_arn     = "${lookup(local.lambda_6, "role_arn", "")}"
   lambda_6_dir          = "${dirname(local.lambda_6_file)}"
-  lambda_6_arn          = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_6_name_computed}"
+  lambda_6_arn          = "arn:aws:lambda:${local.lambda_6_region}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_6_name_computed}"
   lambda_6_file_replace = "${replace(replace(replace(replace(replace(local.lambda_6_file, ".go", ""), ".py", ""), ".js", ""), "/", "-"), "..", "-")}"
 
   lambda_6_env_keys             = "${lookup(local.lambda_6, "env_keys", "AUTHOR")}"
@@ -604,6 +640,10 @@ locals {
   lambda_6_env_keys_list_length = "${length(local.lambda_6_env_keys_list)}"
   lambda_6_env_vals_list_length = "${length(local.lambda_6_env_vals_list)}"
   lambda_6_env                  = "${zipmap(local.lambda_6_env_keys_list, local.lambda_6_env_vals_list)}"
+
+  lambda_6_region_in   = "${lookup(local.lambda_6, "region", "")}"
+  lambda_6_region      = "${local.lambda_6_region_in != "" ? local.lambda_6_region_in  : data.aws_region.current.name}"
+  lambda_6_same_region = "${local.lambda_6_region == data.aws_region.current.name}"
 
   // Lambda for Golang
   lambda_go_6         = "${contains(split(".", local.lambda_6_file), "go")}"
@@ -636,22 +676,24 @@ locals {
   lambda_6_name_computed = "${local.lambda_go_6 ? local.lambda_go_6_name : (local.lambda_py_6 ? local.lambda_py_6_name : (local.lambda_js_6 ? local.lambda_js_6_name : local.default_lambda_name))}"
 
   // API Gateway
-  api_gateway_6               = "${lookup(local.lambda_6, "http", "" ) != "" || lookup(local.lambda_6, "http_path", "") != "" || lookup(local.lambda_6, "http_method", "") != "" || lookup(local.lambda_6, "http_authorizer", "") != "" || lookup(local.lambda_6, "http_stage", "") != ""}"
-  api_gateway_6_count         = "${local.api_gateway_6 ? 1 : 0}"
-  api_gateway_6_name          = "${local.lambda_6_name_computed}"
-  api_gateway_6_path          = "${lookup(local.lambda_6, "http_path", local.lambda_6_name_computed)}"
-  api_gateway_6_method        = "${upper(lookup(local.lambda_6, "http_method", "get"))}"
-  api_gateway_6_stage         = "${local.stage}"
-  api_gateway_6_metrics       = "${lookup(local.lambda_6, "http_metrics", "") != ""}"
-  api_gateway_6_logging       = "${lookup(local.lambda_6, "http_logging", "") != ""}"
-  api_gateway_6_logging_level = "${local.api_gateway_6_logging ? "INFO" : "OFF"}"
+  api_gateway_6                = "${lookup(local.lambda_6, "http", "" ) != "" || lookup(local.lambda_6, "http_path", "") != "" || lookup(local.lambda_6, "http_method", "") != "" || lookup(local.lambda_6, "http_authorizer", "") != "" || lookup(local.lambda_6, "http_stage", "") != ""}"
+  api_gateway_6_count          = "${local.api_gateway_6 ? 1 : 0}"
+  api_gateway_6_name           = "${local.lambda_6_name_computed}"
+  api_gateway_6_path           = "${lookup(local.lambda_6, "http_path", local.lambda_6_name_computed)}"
+  api_gateway_6_method         = "${upper(lookup(local.lambda_6, "http_method", "get"))}"
+  api_gateway_6_stage          = "${local.stage}"
+  api_gateway_6_metrics        = "${lookup(local.lambda_6, "http_metrics", "") != ""}"
+  api_gateway_6_logging        = "${lookup(local.lambda_6, "http_logging", "") != ""}"
+  api_gateway_6_logging_level  = "${local.api_gateway_6_logging ? "INFO" : "OFF"}"
+  api_gateway_6_regional_count = "${local.lambda_6_same_region ? 0 : 1}"
+  api_gateway_6_global_count   = "${local.lambda_6_same_region ? 1 : 0}"
 
   api_gateway_6_authorizer                  = "${lookup(local.lambda_6, "http_authorizer", "")}"
   api_gateway_6_authorizer_count            = "${local.api_gateway_6_authorizer != "" ? 1 : 0}"
   api_gateway_6_authorization               = "${local.api_gateway_6_authorizer != "" ? "CUSTOM" : "NONE"}"
   api_gateway_6_authorizer_full_name        = "${local.service_name}-${local.stage}-${local.api_gateway_6_authorizer}"
-  api_gateway_6_authorizer_uri              = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_6_authorizer_full_name}/invocations"
-  api_gateway_6_authorizer_lambda_arn       = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_6_authorizer_full_name}"
+  api_gateway_6_authorizer_lambda_arn       = "arn:aws:lambda:${lookup(local.lambda_name_region, local.api_gateway_6_authorizer)}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_6_authorizer_full_name}"
+  api_gateway_6_authorizer_uri              = "arn:aws:apigateway:${local.lambda_6_region}:lambda:path/2015-03-31/functions/${local.api_gateway_6_authorizer_lambda_arn}/invocations"
   api_gateway_6_authorizer_policy_arn       = "${lookup(local.lambda_6, "http_authorizer_policy_arn", "")}"
   api_gateway_6_authorizer_policy_arn_count = "${local.api_gateway_6_authorizer_policy_arn != "" ? 1 : 0}"
 
@@ -687,7 +729,7 @@ locals {
   lambda_7_rebuild      = "${lookup(local.lambda_7, "rebuild", local.default_rebuild) != local.default_rebuild}"
   lambda_7_role_arn     = "${lookup(local.lambda_7, "role_arn", "")}"
   lambda_7_dir          = "${dirname(local.lambda_7_file)}"
-  lambda_7_arn          = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_7_name_computed}"
+  lambda_7_arn          = "arn:aws:lambda:${local.lambda_7_region}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_7_name_computed}"
   lambda_7_file_replace = "${replace(replace(replace(replace(replace(local.lambda_7_file, ".go", ""), ".py", ""), ".js", ""), "/", "-"), "..", "-")}"
 
   lambda_7_env_keys             = "${lookup(local.lambda_7, "env_keys", "AUTHOR")}"
@@ -697,6 +739,10 @@ locals {
   lambda_7_env_keys_list_length = "${length(local.lambda_7_env_keys_list)}"
   lambda_7_env_vals_list_length = "${length(local.lambda_7_env_vals_list)}"
   lambda_7_env                  = "${zipmap(local.lambda_7_env_keys_list, local.lambda_7_env_vals_list)}"
+
+  lambda_7_region_in   = "${lookup(local.lambda_7, "region", "")}"
+  lambda_7_region      = "${local.lambda_7_region_in != "" ? local.lambda_7_region_in  : data.aws_region.current.name}"
+  lambda_7_same_region = "${local.lambda_7_region == data.aws_region.current.name}"
 
   // Lambda for Golang
   lambda_go_7         = "${contains(split(".", local.lambda_7_file), "go")}"
@@ -729,22 +775,24 @@ locals {
   lambda_7_name_computed = "${local.lambda_go_7 ? local.lambda_go_7_name : (local.lambda_py_7 ? local.lambda_py_7_name : (local.lambda_js_7 ? local.lambda_js_7_name : local.default_lambda_name))}"
 
   // API Gateway
-  api_gateway_7               = "${lookup(local.lambda_7, "http", "" ) != "" || lookup(local.lambda_7, "http_path", "") != "" || lookup(local.lambda_7, "http_method", "") != "" || lookup(local.lambda_7, "http_authorizer", "") != "" || lookup(local.lambda_7, "http_stage", "") != ""}"
-  api_gateway_7_count         = "${local.api_gateway_7 ? 1 : 0}"
-  api_gateway_7_name          = "${local.lambda_7_name_computed}"
-  api_gateway_7_path          = "${lookup(local.lambda_7, "http_path", local.lambda_7_name_computed)}"
-  api_gateway_7_method        = "${upper(lookup(local.lambda_7, "http_method", "get"))}"
-  api_gateway_7_stage         = "${local.stage}"
-  api_gateway_7_metrics       = "${lookup(local.lambda_7, "http_metrics", "") != ""}"
-  api_gateway_7_logging       = "${lookup(local.lambda_7, "http_logging", "") != ""}"
-  api_gateway_7_logging_level = "${local.api_gateway_7_logging ? "INFO" : "OFF"}"
+  api_gateway_7                = "${lookup(local.lambda_7, "http", "" ) != "" || lookup(local.lambda_7, "http_path", "") != "" || lookup(local.lambda_7, "http_method", "") != "" || lookup(local.lambda_7, "http_authorizer", "") != "" || lookup(local.lambda_7, "http_stage", "") != ""}"
+  api_gateway_7_count          = "${local.api_gateway_7 ? 1 : 0}"
+  api_gateway_7_name           = "${local.lambda_7_name_computed}"
+  api_gateway_7_path           = "${lookup(local.lambda_7, "http_path", local.lambda_7_name_computed)}"
+  api_gateway_7_method         = "${upper(lookup(local.lambda_7, "http_method", "get"))}"
+  api_gateway_7_stage          = "${local.stage}"
+  api_gateway_7_metrics        = "${lookup(local.lambda_7, "http_metrics", "") != ""}"
+  api_gateway_7_logging        = "${lookup(local.lambda_7, "http_logging", "") != ""}"
+  api_gateway_7_logging_level  = "${local.api_gateway_7_logging ? "INFO" : "OFF"}"
+  api_gateway_7_regional_count = "${local.lambda_7_same_region ? 0 : 1}"
+  api_gateway_7_global_count   = "${local.lambda_7_same_region ? 1 : 0}"
 
   api_gateway_7_authorizer                  = "${lookup(local.lambda_7, "http_authorizer", "")}"
   api_gateway_7_authorizer_count            = "${local.api_gateway_7_authorizer != "" ? 1 : 0}"
   api_gateway_7_authorization               = "${local.api_gateway_7_authorizer != "" ? "CUSTOM" : "NONE"}"
   api_gateway_7_authorizer_full_name        = "${local.service_name}-${local.stage}-${local.api_gateway_7_authorizer}"
-  api_gateway_7_authorizer_uri              = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_7_authorizer_full_name}/invocations"
-  api_gateway_7_authorizer_lambda_arn       = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_7_authorizer_full_name}"
+  api_gateway_7_authorizer_lambda_arn       = "arn:aws:lambda:${lookup(local.lambda_name_region, local.api_gateway_7_authorizer)}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_7_authorizer_full_name}"
+  api_gateway_7_authorizer_uri              = "arn:aws:apigateway:${local.lambda_7_region}:lambda:path/2015-03-31/functions/${local.api_gateway_7_authorizer_lambda_arn}/invocations"
   api_gateway_7_authorizer_policy_arn       = "${lookup(local.lambda_7, "http_authorizer_policy_arn", "")}"
   api_gateway_7_authorizer_policy_arn_count = "${local.api_gateway_7_authorizer_policy_arn != "" ? 1 : 0}"
 
@@ -780,7 +828,7 @@ locals {
   lambda_8_rebuild      = "${lookup(local.lambda_8, "rebuild", local.default_rebuild) != local.default_rebuild}"
   lambda_8_role_arn     = "${lookup(local.lambda_8, "role_arn", "")}"
   lambda_8_dir          = "${dirname(local.lambda_8_file)}"
-  lambda_8_arn          = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_8_name_computed}"
+  lambda_8_arn          = "arn:aws:lambda:${local.lambda_8_region}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_8_name_computed}"
   lambda_8_file_replace = "${replace(replace(replace(replace(replace(local.lambda_8_file, ".go", ""), ".py", ""), ".js", ""), "/", "-"), "..", "-")}"
 
   lambda_8_env_keys             = "${lookup(local.lambda_8, "env_keys", "AUTHOR")}"
@@ -790,6 +838,10 @@ locals {
   lambda_8_env_keys_list_length = "${length(local.lambda_8_env_keys_list)}"
   lambda_8_env_vals_list_length = "${length(local.lambda_8_env_vals_list)}"
   lambda_8_env                  = "${zipmap(local.lambda_8_env_keys_list, local.lambda_8_env_vals_list)}"
+
+  lambda_8_region_in   = "${lookup(local.lambda_8, "region", "")}"
+  lambda_8_region      = "${local.lambda_8_region_in != "" ? local.lambda_8_region_in  : data.aws_region.current.name}"
+  lambda_8_same_region = "${local.lambda_8_region == data.aws_region.current.name}"
 
   // Lambda for Golang
   lambda_go_8         = "${contains(split(".", local.lambda_8_file), "go")}"
@@ -822,22 +874,24 @@ locals {
   lambda_8_name_computed = "${local.lambda_go_8 ? local.lambda_go_8_name : (local.lambda_py_8 ? local.lambda_py_8_name : (local.lambda_js_8 ? local.lambda_js_8_name : local.default_lambda_name))}"
 
   // API Gateway
-  api_gateway_8               = "${lookup(local.lambda_8, "http", "" ) != "" || lookup(local.lambda_8, "http_path", "") != "" || lookup(local.lambda_8, "http_method", "") != "" || lookup(local.lambda_8, "http_authorizer", "") != "" || lookup(local.lambda_8, "http_stage", "") != ""}"
-  api_gateway_8_count         = "${local.api_gateway_8 ? 1 : 0}"
-  api_gateway_8_name          = "${local.lambda_8_name_computed}"
-  api_gateway_8_path          = "${lookup(local.lambda_8, "http_path", local.lambda_8_name_computed)}"
-  api_gateway_8_method        = "${upper(lookup(local.lambda_8, "http_method", "get"))}"
-  api_gateway_8_stage         = "${local.stage}"
-  api_gateway_8_metrics       = "${lookup(local.lambda_8, "http_metrics", "") != ""}"
-  api_gateway_8_logging       = "${lookup(local.lambda_8, "http_logging", "") != ""}"
-  api_gateway_8_logging_level = "${local.api_gateway_8_logging ? "INFO" : "OFF"}"
+  api_gateway_8                = "${lookup(local.lambda_8, "http", "" ) != "" || lookup(local.lambda_8, "http_path", "") != "" || lookup(local.lambda_8, "http_method", "") != "" || lookup(local.lambda_8, "http_authorizer", "") != "" || lookup(local.lambda_8, "http_stage", "") != ""}"
+  api_gateway_8_count          = "${local.api_gateway_8 ? 1 : 0}"
+  api_gateway_8_name           = "${local.lambda_8_name_computed}"
+  api_gateway_8_path           = "${lookup(local.lambda_8, "http_path", local.lambda_8_name_computed)}"
+  api_gateway_8_method         = "${upper(lookup(local.lambda_8, "http_method", "get"))}"
+  api_gateway_8_stage          = "${local.stage}"
+  api_gateway_8_metrics        = "${lookup(local.lambda_8, "http_metrics", "") != ""}"
+  api_gateway_8_logging        = "${lookup(local.lambda_8, "http_logging", "") != ""}"
+  api_gateway_8_logging_level  = "${local.api_gateway_8_logging ? "INFO" : "OFF"}"
+  api_gateway_8_regional_count = "${local.lambda_8_same_region ? 0 : 1}"
+  api_gateway_8_global_count   = "${local.lambda_8_same_region ? 1 : 0}"
 
   api_gateway_8_authorizer                  = "${lookup(local.lambda_8, "http_authorizer", "")}"
   api_gateway_8_authorizer_count            = "${local.api_gateway_8_authorizer != "" ? 1 : 0}"
   api_gateway_8_authorization               = "${local.api_gateway_8_authorizer != "" ? "CUSTOM" : "NONE"}"
   api_gateway_8_authorizer_full_name        = "${local.service_name}-${local.stage}-${local.api_gateway_8_authorizer}"
-  api_gateway_8_authorizer_uri              = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_8_authorizer_full_name}/invocations"
-  api_gateway_8_authorizer_lambda_arn       = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_8_authorizer_full_name}"
+  api_gateway_8_authorizer_lambda_arn       = "arn:aws:lambda:${lookup(local.lambda_name_region, local.api_gateway_8_authorizer)}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_8_authorizer_full_name}"
+  api_gateway_8_authorizer_uri              = "arn:aws:apigateway:${local.lambda_8_region}:lambda:path/2015-03-31/functions/${local.api_gateway_8_authorizer_lambda_arn}/invocations"
   api_gateway_8_authorizer_policy_arn       = "${lookup(local.lambda_8, "http_authorizer_policy_arn", "")}"
   api_gateway_8_authorizer_policy_arn_count = "${local.api_gateway_8_authorizer_policy_arn != "" ? 1 : 0}"
 
@@ -873,7 +927,7 @@ locals {
   lambda_9_rebuild      = "${lookup(local.lambda_9, "rebuild", local.default_rebuild) != local.default_rebuild}"
   lambda_9_role_arn     = "${lookup(local.lambda_9, "role_arn", "")}"
   lambda_9_dir          = "${dirname(local.lambda_9_file)}"
-  lambda_9_arn          = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_9_name_computed}"
+  lambda_9_arn          = "arn:aws:lambda:${local.lambda_9_region}:${data.aws_caller_identity.current.account_id}:function:${local.lambda_9_name_computed}"
   lambda_9_file_replace = "${replace(replace(replace(replace(replace(local.lambda_9_file, ".go", ""), ".py", ""), ".js", ""), "/", "-"), "..", "-")}"
 
   lambda_9_env_keys             = "${lookup(local.lambda_9, "env_keys", "AUTHOR")}"
@@ -883,6 +937,10 @@ locals {
   lambda_9_env_keys_list_length = "${length(local.lambda_9_env_keys_list)}"
   lambda_9_env_vals_list_length = "${length(local.lambda_9_env_vals_list)}"
   lambda_9_env                  = "${zipmap(local.lambda_9_env_keys_list, local.lambda_9_env_vals_list)}"
+
+  lambda_9_region_in   = "${lookup(local.lambda_9, "region", "")}"
+  lambda_9_region      = "${local.lambda_9_region_in != "" ? local.lambda_9_region_in  : data.aws_region.current.name}"
+  lambda_9_same_region = "${local.lambda_9_region == data.aws_region.current.name}"
 
   // Lambda for Golang
   lambda_go_9         = "${contains(split(".", local.lambda_9_file), "go")}"
@@ -915,22 +973,24 @@ locals {
   lambda_9_name_computed = "${local.lambda_go_9 ? local.lambda_go_9_name : (local.lambda_py_9 ? local.lambda_py_9_name : (local.lambda_js_9 ? local.lambda_js_9_name : local.default_lambda_name))}"
 
   // API Gateway
-  api_gateway_9               = "${lookup(local.lambda_9, "http", "" ) != "" || lookup(local.lambda_9, "http_path", "") != "" || lookup(local.lambda_9, "http_method", "") != "" || lookup(local.lambda_9, "http_authorizer", "") != "" || lookup(local.lambda_9, "http_stage", "") != ""}"
-  api_gateway_9_count         = "${local.api_gateway_9 ? 1 : 0}"
-  api_gateway_9_name          = "${local.lambda_9_name_computed}"
-  api_gateway_9_path          = "${lookup(local.lambda_9, "http_path", local.lambda_9_name_computed)}"
-  api_gateway_9_method        = "${upper(lookup(local.lambda_9, "http_method", "get"))}"
-  api_gateway_9_stage         = "${local.stage}"
-  api_gateway_9_metrics       = "${lookup(local.lambda_9, "http_metrics", "") != ""}"
-  api_gateway_9_logging       = "${lookup(local.lambda_9, "http_logging", "") != ""}"
-  api_gateway_9_logging_level = "${local.api_gateway_9_logging ? "INFO" : "OFF"}"
+  api_gateway_9                = "${lookup(local.lambda_9, "http", "" ) != "" || lookup(local.lambda_9, "http_path", "") != "" || lookup(local.lambda_9, "http_method", "") != "" || lookup(local.lambda_9, "http_authorizer", "") != "" || lookup(local.lambda_9, "http_stage", "") != ""}"
+  api_gateway_9_count          = "${local.api_gateway_9 ? 1 : 0}"
+  api_gateway_9_name           = "${local.lambda_9_name_computed}"
+  api_gateway_9_path           = "${lookup(local.lambda_9, "http_path", local.lambda_9_name_computed)}"
+  api_gateway_9_method         = "${upper(lookup(local.lambda_9, "http_method", "get"))}"
+  api_gateway_9_stage          = "${local.stage}"
+  api_gateway_9_metrics        = "${lookup(local.lambda_9, "http_metrics", "") != ""}"
+  api_gateway_9_logging        = "${lookup(local.lambda_9, "http_logging", "") != ""}"
+  api_gateway_9_logging_level  = "${local.api_gateway_9_logging ? "INFO" : "OFF"}"
+  api_gateway_9_regional_count = "${local.lambda_9_same_region ? 0 : 1}"
+  api_gateway_9_global_count   = "${local.lambda_9_same_region ? 1 : 0}"
 
   api_gateway_9_authorizer                  = "${lookup(local.lambda_9, "http_authorizer", "")}"
   api_gateway_9_authorizer_count            = "${local.api_gateway_9_authorizer != "" ? 1 : 0}"
   api_gateway_9_authorization               = "${local.api_gateway_9_authorizer != "" ? "CUSTOM" : "NONE"}"
   api_gateway_9_authorizer_full_name        = "${local.service_name}-${local.stage}-${local.api_gateway_9_authorizer}"
-  api_gateway_9_authorizer_uri              = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_9_authorizer_full_name}/invocations"
-  api_gateway_9_authorizer_lambda_arn       = "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_9_authorizer_full_name}"
+  api_gateway_9_authorizer_lambda_arn       = "arn:aws:lambda:${lookup(local.lambda_name_region, local.api_gateway_9_authorizer)}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_9_authorizer_full_name}"
+  api_gateway_9_authorizer_uri              = "arn:aws:apigateway:${local.lambda_9_region}:lambda:path/2015-03-31/functions/${local.api_gateway_9_authorizer_lambda_arn}/invocations"
   api_gateway_9_authorizer_policy_arn       = "${lookup(local.lambda_9, "http_authorizer_policy_arn", "")}"
   api_gateway_9_authorizer_policy_arn_count = "${local.api_gateway_9_authorizer_policy_arn != "" ? 1 : 0}"
 
@@ -948,4 +1008,19 @@ locals {
   s3_9_suffix      = "${lookup(local.lambda_9, "s3_suffix", "")}"
   s3_9_events      = "${lookup(local.lambda_9, "s3_events", local.default_s3_events)}"
   s3_9_events_list = "${split(" ", local.s3_9_events)}"
+}
+
+locals {
+  lambda_name_region {
+    "${local.lambda_0_name}" = "${local.lambda_0_region}",
+    "${local.lambda_1_name}" = "${local.lambda_1_region}",
+    "${local.lambda_2_name}" = "${local.lambda_2_region}",
+    "${local.lambda_3_name}" = "${local.lambda_3_region}",
+    "${local.lambda_4_name}" = "${local.lambda_4_region}",
+    "${local.lambda_5_name}" = "${local.lambda_5_region}",
+    "${local.lambda_6_name}" = "${local.lambda_6_region}",
+    "${local.lambda_7_name}" = "${local.lambda_7_region}",
+    "${local.lambda_8_name}" = "${local.lambda_8_region}",
+    "${local.lambda_9_name}" = "${local.lambda_9_region}",
+  }
 }
