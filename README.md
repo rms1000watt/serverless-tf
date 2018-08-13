@@ -4,7 +4,17 @@
 
 I really love [Serverless](https://www.serverless.com) for their ease of use--but a lot of enterprises are already integrated with Terraform. So, this Terraform module was designed to be as simple to use as Serverless by mirroring the structure of `serverless.yml`.
 
-This is a work in progress, but API Gateway (http) & Cloudwatch Rate (schedule) are functional. Feel free to contribute! 😊
+Supported languages:
+
+- Go
+- Python
+- Javascript
+
+Supported Events:
+
+- S3
+- HTTP (API Gateway)
+- Schedule (Cloudwatch Cron)
 
 ## Contents
 
