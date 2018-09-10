@@ -94,6 +94,12 @@ resource "aws_api_gateway_deployment" "{{i}}_regional" {
     deployed_at = "${timestamp()}"
   }
 
+  depends_on = [
+    {%- for n in range(i+1, max_functions) %}
+    "aws_api_gateway_deployment.{{n}}_regional",
+    {%- endfor %}
+  ]
+
   provider = "aws.{{i}}"
   count    = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_regional_count == 2 ? 1 : 0}"
 }
@@ -194,6 +200,12 @@ resource "aws_api_gateway_deployment" "{{i}}_global" {
   variables {
     deployed_at = "${timestamp()}"
   }
+
+  depends_on = [
+    {%- for n in range(i+1, max_functions) %}
+    "aws_api_gateway_deployment.{{n}}_global",
+    {%- endfor %}
+  ]
 
   provider = "aws.{{i}}"
   count    = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_global_count == 2 ? 1 : 0}"
