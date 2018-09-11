@@ -258,6 +258,8 @@ module "serverless" {
       s3_events = "" // optional (default: "s3:ObjectRemoved:* s3:ObjectCreated:* s3:ReducedRedundancyLostObject" when s3_bucket != "") (usage: space delimited list)
       s3_prefix = "" // optional (default: "")
       s3_suffix = "" // optional (default: "")
+
+      cloudwatch_event_pattern = "" // optional (default: "") (usage: a cloudwatch event pattern in a file or HEREDOC style)
     },
   ]
 }

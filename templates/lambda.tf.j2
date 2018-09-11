@@ -69,6 +69,23 @@ resource "aws_lambda_permission" "cloudwatch_{{i}}" {
   count    = "${local.cloudwatch_{{i}}_count}"
 }
 
+resource "aws_lambda_permission" "cloudwatch_event_{{i}}" {
+  statement_id  = "AllowExecutionFromCloudWatchEvent"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_{{i}}_name_computed}"
+  principal     = "events.amazonaws.com"
+  source_arn    = "${aws_cloudwatch_event_rule.cloudwatch_event_{{i}}.arn}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_{{i}}",
+    "aws_lambda_function.lambda_py_{{i}}",
+    "aws_lambda_function.lambda_js_{{i}}",
+  ]
+
+  provider = "aws.{{i}}"
+  count    = "${local.cloudwatch_event_{{i}}_count}"
+}
+
 resource "aws_lambda_permission" "s3_{{i}}" {
   statement_id  = "AllowExecutionFromS3Bucket"
   action        = "lambda:InvokeFunction"

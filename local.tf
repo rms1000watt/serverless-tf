@@ -117,6 +117,12 @@ locals {
   s3_0_suffix      = "${lookup(local.lambda_0, "s3_suffix", "")}"
   s3_0_events      = "${lookup(local.lambda_0, "s3_events", local.default_s3_events)}"
   s3_0_events_list = "${split(" ", local.s3_0_events)}"
+
+  // Cloudwatch Event
+  cloudwatch_event_0         = "${local.cloudwatch_event_0_pattern != ""}"
+  cloudwatch_event_0_count   = "${local.cloudwatch_event_0 ? 1 : 0}"
+  cloudwatch_event_0_name    = "${local.lambda_0_name_computed}"
+  cloudwatch_event_0_pattern = "${lookup(local.lambda_0, "cloudwatch_event_pattern", "")}"
 }
 
 // locals for lambda_1
@@ -216,6 +222,12 @@ locals {
   s3_1_suffix      = "${lookup(local.lambda_1, "s3_suffix", "")}"
   s3_1_events      = "${lookup(local.lambda_1, "s3_events", local.default_s3_events)}"
   s3_1_events_list = "${split(" ", local.s3_1_events)}"
+
+  // Cloudwatch Event
+  cloudwatch_event_1         = "${local.cloudwatch_event_1_pattern != ""}"
+  cloudwatch_event_1_count   = "${local.cloudwatch_event_1 ? 1 : 0}"
+  cloudwatch_event_1_name    = "${local.lambda_1_name_computed}"
+  cloudwatch_event_1_pattern = "${lookup(local.lambda_1, "cloudwatch_event_pattern", "")}"
 }
 
 // locals for lambda_2
@@ -315,6 +327,12 @@ locals {
   s3_2_suffix      = "${lookup(local.lambda_2, "s3_suffix", "")}"
   s3_2_events      = "${lookup(local.lambda_2, "s3_events", local.default_s3_events)}"
   s3_2_events_list = "${split(" ", local.s3_2_events)}"
+
+  // Cloudwatch Event
+  cloudwatch_event_2         = "${local.cloudwatch_event_2_pattern != ""}"
+  cloudwatch_event_2_count   = "${local.cloudwatch_event_2 ? 1 : 0}"
+  cloudwatch_event_2_name    = "${local.lambda_2_name_computed}"
+  cloudwatch_event_2_pattern = "${lookup(local.lambda_2, "cloudwatch_event_pattern", "")}"
 }
 
 // locals for lambda_3
@@ -414,6 +432,12 @@ locals {
   s3_3_suffix      = "${lookup(local.lambda_3, "s3_suffix", "")}"
   s3_3_events      = "${lookup(local.lambda_3, "s3_events", local.default_s3_events)}"
   s3_3_events_list = "${split(" ", local.s3_3_events)}"
+
+  // Cloudwatch Event
+  cloudwatch_event_3         = "${local.cloudwatch_event_3_pattern != ""}"
+  cloudwatch_event_3_count   = "${local.cloudwatch_event_3 ? 1 : 0}"
+  cloudwatch_event_3_name    = "${local.lambda_3_name_computed}"
+  cloudwatch_event_3_pattern = "${lookup(local.lambda_3, "cloudwatch_event_pattern", "")}"
 }
 
 // locals for lambda_4
@@ -513,6 +537,12 @@ locals {
   s3_4_suffix      = "${lookup(local.lambda_4, "s3_suffix", "")}"
   s3_4_events      = "${lookup(local.lambda_4, "s3_events", local.default_s3_events)}"
   s3_4_events_list = "${split(" ", local.s3_4_events)}"
+
+  // Cloudwatch Event
+  cloudwatch_event_4         = "${local.cloudwatch_event_4_pattern != ""}"
+  cloudwatch_event_4_count   = "${local.cloudwatch_event_4 ? 1 : 0}"
+  cloudwatch_event_4_name    = "${local.lambda_4_name_computed}"
+  cloudwatch_event_4_pattern = "${lookup(local.lambda_4, "cloudwatch_event_pattern", "")}"
 }
 
 // locals for lambda_5
@@ -612,6 +642,12 @@ locals {
   s3_5_suffix      = "${lookup(local.lambda_5, "s3_suffix", "")}"
   s3_5_events      = "${lookup(local.lambda_5, "s3_events", local.default_s3_events)}"
   s3_5_events_list = "${split(" ", local.s3_5_events)}"
+
+  // Cloudwatch Event
+  cloudwatch_event_5         = "${local.cloudwatch_event_5_pattern != ""}"
+  cloudwatch_event_5_count   = "${local.cloudwatch_event_5 ? 1 : 0}"
+  cloudwatch_event_5_name    = "${local.lambda_5_name_computed}"
+  cloudwatch_event_5_pattern = "${lookup(local.lambda_5, "cloudwatch_event_pattern", "")}"
 }
 
 // locals for lambda_6
@@ -711,6 +747,12 @@ locals {
   s3_6_suffix      = "${lookup(local.lambda_6, "s3_suffix", "")}"
   s3_6_events      = "${lookup(local.lambda_6, "s3_events", local.default_s3_events)}"
   s3_6_events_list = "${split(" ", local.s3_6_events)}"
+
+  // Cloudwatch Event
+  cloudwatch_event_6         = "${local.cloudwatch_event_6_pattern != ""}"
+  cloudwatch_event_6_count   = "${local.cloudwatch_event_6 ? 1 : 0}"
+  cloudwatch_event_6_name    = "${local.lambda_6_name_computed}"
+  cloudwatch_event_6_pattern = "${lookup(local.lambda_6, "cloudwatch_event_pattern", "")}"
 }
 
 // locals for lambda_7
@@ -810,6 +852,12 @@ locals {
   s3_7_suffix      = "${lookup(local.lambda_7, "s3_suffix", "")}"
   s3_7_events      = "${lookup(local.lambda_7, "s3_events", local.default_s3_events)}"
   s3_7_events_list = "${split(" ", local.s3_7_events)}"
+
+  // Cloudwatch Event
+  cloudwatch_event_7         = "${local.cloudwatch_event_7_pattern != ""}"
+  cloudwatch_event_7_count   = "${local.cloudwatch_event_7 ? 1 : 0}"
+  cloudwatch_event_7_name    = "${local.lambda_7_name_computed}"
+  cloudwatch_event_7_pattern = "${lookup(local.lambda_7, "cloudwatch_event_pattern", "")}"
 }
 
 // locals for lambda_8
@@ -909,6 +957,12 @@ locals {
   s3_8_suffix      = "${lookup(local.lambda_8, "s3_suffix", "")}"
   s3_8_events      = "${lookup(local.lambda_8, "s3_events", local.default_s3_events)}"
   s3_8_events_list = "${split(" ", local.s3_8_events)}"
+
+  // Cloudwatch Event
+  cloudwatch_event_8         = "${local.cloudwatch_event_8_pattern != ""}"
+  cloudwatch_event_8_count   = "${local.cloudwatch_event_8 ? 1 : 0}"
+  cloudwatch_event_8_name    = "${local.lambda_8_name_computed}"
+  cloudwatch_event_8_pattern = "${lookup(local.lambda_8, "cloudwatch_event_pattern", "")}"
 }
 
 // locals for lambda_9
@@ -1008,6 +1062,12 @@ locals {
   s3_9_suffix      = "${lookup(local.lambda_9, "s3_suffix", "")}"
   s3_9_events      = "${lookup(local.lambda_9, "s3_events", local.default_s3_events)}"
   s3_9_events_list = "${split(" ", local.s3_9_events)}"
+
+  // Cloudwatch Event
+  cloudwatch_event_9         = "${local.cloudwatch_event_9_pattern != ""}"
+  cloudwatch_event_9_count   = "${local.cloudwatch_event_9 ? 1 : 0}"
+  cloudwatch_event_9_name    = "${local.lambda_9_name_computed}"
+  cloudwatch_event_9_pattern = "${lookup(local.lambda_9, "cloudwatch_event_pattern", "")}"
 }
 
 locals {

@@ -1,0 +1,20 @@
+// GENERATED FILE: DO NOT EDIT
+{%- for i in range(max_functions) %}
+
+resource "aws_cloudwatch_event_rule" "cloudwatch_event_{{i}}" {
+  name        = "${local.cloudwatch_event_{{i}}_name}"
+  event_pattern = <<EOF
+${local.cloudwatch_event_{{i}}_pattern}
+EOF
+
+  count = "${local.cloudwatch_event_{{i}}_count}"
+}
+
+resource "aws_cloudwatch_event_target" "cloudwatch_event_{{i}}" {
+  rule      = "${aws_cloudwatch_event_rule.cloudwatch_event_{{i}}.name}"
+  target_id = "${local.cloudwatch_event_{{i}}_name}"
+  arn       = "${local.lambda_{{i}}_arn}"
+
+  count = "${local.cloudwatch_event_{{i}}_count}"
+}
+{%- endfor %}

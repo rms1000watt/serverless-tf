@@ -68,6 +68,23 @@ resource "aws_lambda_permission" "cloudwatch_0" {
   count    = "${local.cloudwatch_0_count}"
 }
 
+resource "aws_lambda_permission" "cloudwatch_event_0" {
+  statement_id  = "AllowExecutionFromCloudWatchEvent"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_0_name_computed}"
+  principal     = "events.amazonaws.com"
+  source_arn    = "${aws_cloudwatch_event_rule.cloudwatch_event_0.arn}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_0",
+    "aws_lambda_function.lambda_py_0",
+    "aws_lambda_function.lambda_js_0",
+  ]
+
+  provider = "aws.0"
+  count    = "${local.cloudwatch_event_0_count}"
+}
+
 resource "aws_lambda_permission" "s3_0" {
   statement_id  = "AllowExecutionFromS3Bucket"
   action        = "lambda:InvokeFunction"
@@ -213,6 +230,23 @@ resource "aws_lambda_permission" "cloudwatch_1" {
 
   provider = "aws.1"
   count    = "${local.cloudwatch_1_count}"
+}
+
+resource "aws_lambda_permission" "cloudwatch_event_1" {
+  statement_id  = "AllowExecutionFromCloudWatchEvent"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_1_name_computed}"
+  principal     = "events.amazonaws.com"
+  source_arn    = "${aws_cloudwatch_event_rule.cloudwatch_event_1.arn}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_1",
+    "aws_lambda_function.lambda_py_1",
+    "aws_lambda_function.lambda_js_1",
+  ]
+
+  provider = "aws.1"
+  count    = "${local.cloudwatch_event_1_count}"
 }
 
 resource "aws_lambda_permission" "s3_1" {
@@ -362,6 +396,23 @@ resource "aws_lambda_permission" "cloudwatch_2" {
   count    = "${local.cloudwatch_2_count}"
 }
 
+resource "aws_lambda_permission" "cloudwatch_event_2" {
+  statement_id  = "AllowExecutionFromCloudWatchEvent"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_2_name_computed}"
+  principal     = "events.amazonaws.com"
+  source_arn    = "${aws_cloudwatch_event_rule.cloudwatch_event_2.arn}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_2",
+    "aws_lambda_function.lambda_py_2",
+    "aws_lambda_function.lambda_js_2",
+  ]
+
+  provider = "aws.2"
+  count    = "${local.cloudwatch_event_2_count}"
+}
+
 resource "aws_lambda_permission" "s3_2" {
   statement_id  = "AllowExecutionFromS3Bucket"
   action        = "lambda:InvokeFunction"
@@ -507,6 +558,23 @@ resource "aws_lambda_permission" "cloudwatch_3" {
 
   provider = "aws.3"
   count    = "${local.cloudwatch_3_count}"
+}
+
+resource "aws_lambda_permission" "cloudwatch_event_3" {
+  statement_id  = "AllowExecutionFromCloudWatchEvent"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_3_name_computed}"
+  principal     = "events.amazonaws.com"
+  source_arn    = "${aws_cloudwatch_event_rule.cloudwatch_event_3.arn}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_3",
+    "aws_lambda_function.lambda_py_3",
+    "aws_lambda_function.lambda_js_3",
+  ]
+
+  provider = "aws.3"
+  count    = "${local.cloudwatch_event_3_count}"
 }
 
 resource "aws_lambda_permission" "s3_3" {
@@ -656,6 +724,23 @@ resource "aws_lambda_permission" "cloudwatch_4" {
   count    = "${local.cloudwatch_4_count}"
 }
 
+resource "aws_lambda_permission" "cloudwatch_event_4" {
+  statement_id  = "AllowExecutionFromCloudWatchEvent"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_4_name_computed}"
+  principal     = "events.amazonaws.com"
+  source_arn    = "${aws_cloudwatch_event_rule.cloudwatch_event_4.arn}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_4",
+    "aws_lambda_function.lambda_py_4",
+    "aws_lambda_function.lambda_js_4",
+  ]
+
+  provider = "aws.4"
+  count    = "${local.cloudwatch_event_4_count}"
+}
+
 resource "aws_lambda_permission" "s3_4" {
   statement_id  = "AllowExecutionFromS3Bucket"
   action        = "lambda:InvokeFunction"
@@ -801,6 +886,23 @@ resource "aws_lambda_permission" "cloudwatch_5" {
 
   provider = "aws.5"
   count    = "${local.cloudwatch_5_count}"
+}
+
+resource "aws_lambda_permission" "cloudwatch_event_5" {
+  statement_id  = "AllowExecutionFromCloudWatchEvent"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_5_name_computed}"
+  principal     = "events.amazonaws.com"
+  source_arn    = "${aws_cloudwatch_event_rule.cloudwatch_event_5.arn}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_5",
+    "aws_lambda_function.lambda_py_5",
+    "aws_lambda_function.lambda_js_5",
+  ]
+
+  provider = "aws.5"
+  count    = "${local.cloudwatch_event_5_count}"
 }
 
 resource "aws_lambda_permission" "s3_5" {
@@ -950,6 +1052,23 @@ resource "aws_lambda_permission" "cloudwatch_6" {
   count    = "${local.cloudwatch_6_count}"
 }
 
+resource "aws_lambda_permission" "cloudwatch_event_6" {
+  statement_id  = "AllowExecutionFromCloudWatchEvent"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_6_name_computed}"
+  principal     = "events.amazonaws.com"
+  source_arn    = "${aws_cloudwatch_event_rule.cloudwatch_event_6.arn}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_6",
+    "aws_lambda_function.lambda_py_6",
+    "aws_lambda_function.lambda_js_6",
+  ]
+
+  provider = "aws.6"
+  count    = "${local.cloudwatch_event_6_count}"
+}
+
 resource "aws_lambda_permission" "s3_6" {
   statement_id  = "AllowExecutionFromS3Bucket"
   action        = "lambda:InvokeFunction"
@@ -1095,6 +1214,23 @@ resource "aws_lambda_permission" "cloudwatch_7" {
 
   provider = "aws.7"
   count    = "${local.cloudwatch_7_count}"
+}
+
+resource "aws_lambda_permission" "cloudwatch_event_7" {
+  statement_id  = "AllowExecutionFromCloudWatchEvent"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_7_name_computed}"
+  principal     = "events.amazonaws.com"
+  source_arn    = "${aws_cloudwatch_event_rule.cloudwatch_event_7.arn}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_7",
+    "aws_lambda_function.lambda_py_7",
+    "aws_lambda_function.lambda_js_7",
+  ]
+
+  provider = "aws.7"
+  count    = "${local.cloudwatch_event_7_count}"
 }
 
 resource "aws_lambda_permission" "s3_7" {
@@ -1244,6 +1380,23 @@ resource "aws_lambda_permission" "cloudwatch_8" {
   count    = "${local.cloudwatch_8_count}"
 }
 
+resource "aws_lambda_permission" "cloudwatch_event_8" {
+  statement_id  = "AllowExecutionFromCloudWatchEvent"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_8_name_computed}"
+  principal     = "events.amazonaws.com"
+  source_arn    = "${aws_cloudwatch_event_rule.cloudwatch_event_8.arn}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_8",
+    "aws_lambda_function.lambda_py_8",
+    "aws_lambda_function.lambda_js_8",
+  ]
+
+  provider = "aws.8"
+  count    = "${local.cloudwatch_event_8_count}"
+}
+
 resource "aws_lambda_permission" "s3_8" {
   statement_id  = "AllowExecutionFromS3Bucket"
   action        = "lambda:InvokeFunction"
@@ -1389,6 +1542,23 @@ resource "aws_lambda_permission" "cloudwatch_9" {
 
   provider = "aws.9"
   count    = "${local.cloudwatch_9_count}"
+}
+
+resource "aws_lambda_permission" "cloudwatch_event_9" {
+  statement_id  = "AllowExecutionFromCloudWatchEvent"
+  action        = "lambda:InvokeFunction"
+  function_name = "${local.lambda_9_name_computed}"
+  principal     = "events.amazonaws.com"
+  source_arn    = "${aws_cloudwatch_event_rule.cloudwatch_event_9.arn}"
+
+  depends_on = [
+    "aws_lambda_function.lambda_go_9",
+    "aws_lambda_function.lambda_py_9",
+    "aws_lambda_function.lambda_js_9",
+  ]
+
+  provider = "aws.9"
+  count    = "${local.cloudwatch_event_9_count}"
 }
 
 resource "aws_lambda_permission" "s3_9" {

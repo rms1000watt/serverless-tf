@@ -1,0 +1,14 @@
+{
+  "source": [
+    "aws.ecs"
+  ],
+  "detail-type": [
+    "ECS Task State Change",
+    "ECS Container Instance State Change"
+  ],
+  "detail": {
+    "clusterArn": [
+      "arn:aws:ecs:us-west-2:ACCOUNT_ID:cluster/CLUSTER_NAME"
+    ]
+  }
+}
