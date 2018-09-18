@@ -15,7 +15,7 @@ data "template_file" "0" {
   template = "${file("policy.json.tpl")}"
 
   vars {
-    cidr_blocks = "${join(",", list("${local.current_ip}/32"))}"
+    cidr_blocks = "${join("\",\"", list("${local.current_ip}/32"))}"
   }
 }
 
