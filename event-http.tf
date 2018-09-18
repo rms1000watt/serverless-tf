@@ -131,7 +131,7 @@ resource "aws_api_gateway_method_settings" "0_regional" {
 }
 
 resource "aws_api_gateway_authorizer" "0_regional" {
-  name                   = "${local.api_gateway_0_authorizer}"
+  name                   = "${local.api_gateway_0_authorizer}-0"      // TODO: remove this -0 hack
   rest_api_id            = "${aws_api_gateway_rest_api.0_regional.id}"
   authorizer_uri         = "${local.api_gateway_0_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_0_authorizer.arn}"
@@ -244,7 +244,7 @@ resource "aws_api_gateway_method_settings" "0_global" {
 }
 
 resource "aws_api_gateway_authorizer" "0_global" {
-  name                   = "${local.api_gateway_0_authorizer}"
+  name                   = "${local.api_gateway_0_authorizer}-0"      // TODO: remove this -0 hack
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_0_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_0_authorizer.arn}"
@@ -371,7 +371,7 @@ resource "aws_api_gateway_method_settings" "1_regional" {
 }
 
 resource "aws_api_gateway_authorizer" "1_regional" {
-  name                   = "${local.api_gateway_1_authorizer}"
+  name                   = "${local.api_gateway_1_authorizer}-1"      // TODO: remove this -1 hack
   rest_api_id            = "${aws_api_gateway_rest_api.1_regional.id}"
   authorizer_uri         = "${local.api_gateway_1_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_1_authorizer.arn}"
@@ -483,7 +483,7 @@ resource "aws_api_gateway_method_settings" "1_global" {
 }
 
 resource "aws_api_gateway_authorizer" "1_global" {
-  name                   = "${local.api_gateway_1_authorizer}"
+  name                   = "${local.api_gateway_1_authorizer}-1"      // TODO: remove this -1 hack
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_1_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_1_authorizer.arn}"
@@ -609,7 +609,7 @@ resource "aws_api_gateway_method_settings" "2_regional" {
 }
 
 resource "aws_api_gateway_authorizer" "2_regional" {
-  name                   = "${local.api_gateway_2_authorizer}"
+  name                   = "${local.api_gateway_2_authorizer}-2"      // TODO: remove this -2 hack
   rest_api_id            = "${aws_api_gateway_rest_api.2_regional.id}"
   authorizer_uri         = "${local.api_gateway_2_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_2_authorizer.arn}"
@@ -720,7 +720,7 @@ resource "aws_api_gateway_method_settings" "2_global" {
 }
 
 resource "aws_api_gateway_authorizer" "2_global" {
-  name                   = "${local.api_gateway_2_authorizer}"
+  name                   = "${local.api_gateway_2_authorizer}-2"      // TODO: remove this -2 hack
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_2_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_2_authorizer.arn}"
@@ -845,7 +845,7 @@ resource "aws_api_gateway_method_settings" "3_regional" {
 }
 
 resource "aws_api_gateway_authorizer" "3_regional" {
-  name                   = "${local.api_gateway_3_authorizer}"
+  name                   = "${local.api_gateway_3_authorizer}-3"      // TODO: remove this -3 hack
   rest_api_id            = "${aws_api_gateway_rest_api.3_regional.id}"
   authorizer_uri         = "${local.api_gateway_3_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_3_authorizer.arn}"
@@ -955,7 +955,7 @@ resource "aws_api_gateway_method_settings" "3_global" {
 }
 
 resource "aws_api_gateway_authorizer" "3_global" {
-  name                   = "${local.api_gateway_3_authorizer}"
+  name                   = "${local.api_gateway_3_authorizer}-3"      // TODO: remove this -3 hack
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_3_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_3_authorizer.arn}"
@@ -1079,7 +1079,7 @@ resource "aws_api_gateway_method_settings" "4_regional" {
 }
 
 resource "aws_api_gateway_authorizer" "4_regional" {
-  name                   = "${local.api_gateway_4_authorizer}"
+  name                   = "${local.api_gateway_4_authorizer}-4"      // TODO: remove this -4 hack
   rest_api_id            = "${aws_api_gateway_rest_api.4_regional.id}"
   authorizer_uri         = "${local.api_gateway_4_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_4_authorizer.arn}"
@@ -1188,7 +1188,7 @@ resource "aws_api_gateway_method_settings" "4_global" {
 }
 
 resource "aws_api_gateway_authorizer" "4_global" {
-  name                   = "${local.api_gateway_4_authorizer}"
+  name                   = "${local.api_gateway_4_authorizer}-4"      // TODO: remove this -4 hack
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_4_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_4_authorizer.arn}"
@@ -1311,7 +1311,7 @@ resource "aws_api_gateway_method_settings" "5_regional" {
 }
 
 resource "aws_api_gateway_authorizer" "5_regional" {
-  name                   = "${local.api_gateway_5_authorizer}"
+  name                   = "${local.api_gateway_5_authorizer}-5"      // TODO: remove this -5 hack
   rest_api_id            = "${aws_api_gateway_rest_api.5_regional.id}"
   authorizer_uri         = "${local.api_gateway_5_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_5_authorizer.arn}"
@@ -1419,7 +1419,7 @@ resource "aws_api_gateway_method_settings" "5_global" {
 }
 
 resource "aws_api_gateway_authorizer" "5_global" {
-  name                   = "${local.api_gateway_5_authorizer}"
+  name                   = "${local.api_gateway_5_authorizer}-5"      // TODO: remove this -5 hack
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_5_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_5_authorizer.arn}"
@@ -1541,7 +1541,7 @@ resource "aws_api_gateway_method_settings" "6_regional" {
 }
 
 resource "aws_api_gateway_authorizer" "6_regional" {
-  name                   = "${local.api_gateway_6_authorizer}"
+  name                   = "${local.api_gateway_6_authorizer}-6"      // TODO: remove this -6 hack
   rest_api_id            = "${aws_api_gateway_rest_api.6_regional.id}"
   authorizer_uri         = "${local.api_gateway_6_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_6_authorizer.arn}"
@@ -1648,7 +1648,7 @@ resource "aws_api_gateway_method_settings" "6_global" {
 }
 
 resource "aws_api_gateway_authorizer" "6_global" {
-  name                   = "${local.api_gateway_6_authorizer}"
+  name                   = "${local.api_gateway_6_authorizer}-6"      // TODO: remove this -6 hack
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_6_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_6_authorizer.arn}"
@@ -1769,7 +1769,7 @@ resource "aws_api_gateway_method_settings" "7_regional" {
 }
 
 resource "aws_api_gateway_authorizer" "7_regional" {
-  name                   = "${local.api_gateway_7_authorizer}"
+  name                   = "${local.api_gateway_7_authorizer}-7"      // TODO: remove this -7 hack
   rest_api_id            = "${aws_api_gateway_rest_api.7_regional.id}"
   authorizer_uri         = "${local.api_gateway_7_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_7_authorizer.arn}"
@@ -1875,7 +1875,7 @@ resource "aws_api_gateway_method_settings" "7_global" {
 }
 
 resource "aws_api_gateway_authorizer" "7_global" {
-  name                   = "${local.api_gateway_7_authorizer}"
+  name                   = "${local.api_gateway_7_authorizer}-7"      // TODO: remove this -7 hack
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_7_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_7_authorizer.arn}"
@@ -1995,7 +1995,7 @@ resource "aws_api_gateway_method_settings" "8_regional" {
 }
 
 resource "aws_api_gateway_authorizer" "8_regional" {
-  name                   = "${local.api_gateway_8_authorizer}"
+  name                   = "${local.api_gateway_8_authorizer}-8"      // TODO: remove this -8 hack
   rest_api_id            = "${aws_api_gateway_rest_api.8_regional.id}"
   authorizer_uri         = "${local.api_gateway_8_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_8_authorizer.arn}"
@@ -2100,7 +2100,7 @@ resource "aws_api_gateway_method_settings" "8_global" {
 }
 
 resource "aws_api_gateway_authorizer" "8_global" {
-  name                   = "${local.api_gateway_8_authorizer}"
+  name                   = "${local.api_gateway_8_authorizer}-8"      // TODO: remove this -8 hack
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_8_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_8_authorizer.arn}"
@@ -2219,7 +2219,7 @@ resource "aws_api_gateway_method_settings" "9_regional" {
 }
 
 resource "aws_api_gateway_authorizer" "9_regional" {
-  name                   = "${local.api_gateway_9_authorizer}"
+  name                   = "${local.api_gateway_9_authorizer}-9"      // TODO: remove this -9 hack
   rest_api_id            = "${aws_api_gateway_rest_api.9_regional.id}"
   authorizer_uri         = "${local.api_gateway_9_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_9_authorizer.arn}"
@@ -2323,7 +2323,7 @@ resource "aws_api_gateway_method_settings" "9_global" {
 }
 
 resource "aws_api_gateway_authorizer" "9_global" {
-  name                   = "${local.api_gateway_9_authorizer}"
+  name                   = "${local.api_gateway_9_authorizer}-9"      // TODO: remove this -9 hack
   rest_api_id            = "${aws_api_gateway_rest_api.global.id}"
   authorizer_uri         = "${local.api_gateway_9_authorizer_uri}"
   authorizer_credentials = "${aws_iam_role.api_gateway_9_authorizer.arn}"
