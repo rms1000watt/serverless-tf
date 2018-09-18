@@ -1,7 +1,8 @@
 // GENERATED FILE: DO NOT EDIT
 
 resource "aws_api_gateway_rest_api" "global" {
-  name  = "${local.service_name}"
+  name   = "${local.service_name}"
+  policy = "${local.http_policy}"
 
   count = "${ {%- for i in range(max_functions) %}(local.api_gateway_{{i}} && local.lambda_{{i}}_same_region) || {% endfor %}false ? 1 : 0}"
 }
@@ -14,7 +15,8 @@ resource "aws_api_gateway_account" "global" {
 {%- for i in range(max_functions) %}
 
 resource "aws_api_gateway_rest_api" "{{i}}_regional" {
-  name  = "${local.service_name}-${local.lambda_{{i}}_region}"
+  name   = "${local.service_name}-${local.lambda_{{i}}_region}"
+  policy = "${local.http_policy}"
 
   provider = "aws.{{i}}"
   count    = "${local.api_gateway_{{i}} && (local.api_gateway_{{i}}_regional_count == 1) ? 1 : 0}"

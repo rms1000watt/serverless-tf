@@ -8,6 +8,11 @@ variable "stage" {
   default     = "dev"
 }
 
+variable "http_policy" {
+  description = "A policy to add to all API Gateway requests (ie. whitelist cidr block"
+  default     = ""
+}
+
 variable "functions" {
   description = "List of maps of lambda functions"
   default     = [{}]

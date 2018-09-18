@@ -7,6 +7,7 @@ locals {
   parent_dir     = "${element(local.path_root_list, local.path_root_len - 1)}"
   service_name   = "${var.service != "" ? var.service : local.parent_dir}"
   stage          = "${var.stage}"
+  http_policy    = "${var.http_policy}"
 
   default_lambda_name = "${local.service_name}-serverless-tf"
   default_rebuild     = "never"

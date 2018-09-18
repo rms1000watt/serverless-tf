@@ -226,8 +226,9 @@ Here are the options that each function supports.
 module "serverless" {
   source = "rms1000watt/serverless-tf/aws"
 
-  service = "" // optional (default: folder name)
-  stage   = "" // optional (default: dev)
+  service     = "" // optional (default: folder name)
+  stage       = "" // optional (default: dev)
+  http_policy = "" // optional (default: "") (usage: Global API Gateway policy to restrict access)
 
   functions = [
     {

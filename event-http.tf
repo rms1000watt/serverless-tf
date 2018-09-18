@@ -1,7 +1,8 @@
 // GENERATED FILE: DO NOT EDIT
 
 resource "aws_api_gateway_rest_api" "global" {
-  name  = "${local.service_name}"
+  name   = "${local.service_name}"
+  policy = "${local.http_policy}"
 
   count = "${(local.api_gateway_0 && local.lambda_0_same_region) || (local.api_gateway_1 && local.lambda_1_same_region) || (local.api_gateway_2 && local.lambda_2_same_region) || (local.api_gateway_3 && local.lambda_3_same_region) || (local.api_gateway_4 && local.lambda_4_same_region) || (local.api_gateway_5 && local.lambda_5_same_region) || (local.api_gateway_6 && local.lambda_6_same_region) || (local.api_gateway_7 && local.lambda_7_same_region) || (local.api_gateway_8 && local.lambda_8_same_region) || (local.api_gateway_9 && local.lambda_9_same_region) || false ? 1 : 0}"
 }
@@ -13,7 +14,8 @@ resource "aws_api_gateway_account" "global" {
 }
 
 resource "aws_api_gateway_rest_api" "0_regional" {
-  name  = "${local.service_name}-${local.lambda_0_region}"
+  name   = "${local.service_name}-${local.lambda_0_region}"
+  policy = "${local.http_policy}"
 
   provider = "aws.0"
   count    = "${local.api_gateway_0 && (local.api_gateway_0_regional_count == 1) ? 1 : 0}"
@@ -253,7 +255,8 @@ resource "aws_api_gateway_authorizer" "0_global" {
 }
 
 resource "aws_api_gateway_rest_api" "1_regional" {
-  name  = "${local.service_name}-${local.lambda_1_region}"
+  name   = "${local.service_name}-${local.lambda_1_region}"
+  policy = "${local.http_policy}"
 
   provider = "aws.1"
   count    = "${local.api_gateway_1 && (local.api_gateway_1_regional_count == 1) ? 1 : 0}"
@@ -491,7 +494,8 @@ resource "aws_api_gateway_authorizer" "1_global" {
 }
 
 resource "aws_api_gateway_rest_api" "2_regional" {
-  name  = "${local.service_name}-${local.lambda_2_region}"
+  name   = "${local.service_name}-${local.lambda_2_region}"
+  policy = "${local.http_policy}"
 
   provider = "aws.2"
   count    = "${local.api_gateway_2 && (local.api_gateway_2_regional_count == 1) ? 1 : 0}"
@@ -727,7 +731,8 @@ resource "aws_api_gateway_authorizer" "2_global" {
 }
 
 resource "aws_api_gateway_rest_api" "3_regional" {
-  name  = "${local.service_name}-${local.lambda_3_region}"
+  name   = "${local.service_name}-${local.lambda_3_region}"
+  policy = "${local.http_policy}"
 
   provider = "aws.3"
   count    = "${local.api_gateway_3 && (local.api_gateway_3_regional_count == 1) ? 1 : 0}"
@@ -961,7 +966,8 @@ resource "aws_api_gateway_authorizer" "3_global" {
 }
 
 resource "aws_api_gateway_rest_api" "4_regional" {
-  name  = "${local.service_name}-${local.lambda_4_region}"
+  name   = "${local.service_name}-${local.lambda_4_region}"
+  policy = "${local.http_policy}"
 
   provider = "aws.4"
   count    = "${local.api_gateway_4 && (local.api_gateway_4_regional_count == 1) ? 1 : 0}"
@@ -1193,7 +1199,8 @@ resource "aws_api_gateway_authorizer" "4_global" {
 }
 
 resource "aws_api_gateway_rest_api" "5_regional" {
-  name  = "${local.service_name}-${local.lambda_5_region}"
+  name   = "${local.service_name}-${local.lambda_5_region}"
+  policy = "${local.http_policy}"
 
   provider = "aws.5"
   count    = "${local.api_gateway_5 && (local.api_gateway_5_regional_count == 1) ? 1 : 0}"
@@ -1423,7 +1430,8 @@ resource "aws_api_gateway_authorizer" "5_global" {
 }
 
 resource "aws_api_gateway_rest_api" "6_regional" {
-  name  = "${local.service_name}-${local.lambda_6_region}"
+  name   = "${local.service_name}-${local.lambda_6_region}"
+  policy = "${local.http_policy}"
 
   provider = "aws.6"
   count    = "${local.api_gateway_6 && (local.api_gateway_6_regional_count == 1) ? 1 : 0}"
@@ -1651,7 +1659,8 @@ resource "aws_api_gateway_authorizer" "6_global" {
 }
 
 resource "aws_api_gateway_rest_api" "7_regional" {
-  name  = "${local.service_name}-${local.lambda_7_region}"
+  name   = "${local.service_name}-${local.lambda_7_region}"
+  policy = "${local.http_policy}"
 
   provider = "aws.7"
   count    = "${local.api_gateway_7 && (local.api_gateway_7_regional_count == 1) ? 1 : 0}"
@@ -1877,7 +1886,8 @@ resource "aws_api_gateway_authorizer" "7_global" {
 }
 
 resource "aws_api_gateway_rest_api" "8_regional" {
-  name  = "${local.service_name}-${local.lambda_8_region}"
+  name   = "${local.service_name}-${local.lambda_8_region}"
+  policy = "${local.http_policy}"
 
   provider = "aws.8"
   count    = "${local.api_gateway_8 && (local.api_gateway_8_regional_count == 1) ? 1 : 0}"
@@ -2101,7 +2111,8 @@ resource "aws_api_gateway_authorizer" "8_global" {
 }
 
 resource "aws_api_gateway_rest_api" "9_regional" {
-  name  = "${local.service_name}-${local.lambda_9_region}"
+  name   = "${local.service_name}-${local.lambda_9_region}"
+  policy = "${local.http_policy}"
 
   provider = "aws.9"
   count    = "${local.api_gateway_9 && (local.api_gateway_9_regional_count == 1) ? 1 : 0}"
