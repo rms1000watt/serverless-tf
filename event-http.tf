@@ -107,6 +107,10 @@ resource "aws_api_gateway_deployment" "0_regional" {
     "aws_api_gateway_deployment.9_regional",
   ]
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   provider = "aws.0"
   count    = "${local.api_gateway_0_count + local.api_gateway_0_regional_count == 2 ? 1 : 0}"
 }
@@ -219,6 +223,10 @@ resource "aws_api_gateway_deployment" "0_global" {
     "aws_api_gateway_deployment.8_global",
     "aws_api_gateway_deployment.9_global",
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   provider = "aws.0"
   count    = "${local.api_gateway_0_count + local.api_gateway_0_global_count == 2 ? 1 : 0}"
@@ -347,6 +355,10 @@ resource "aws_api_gateway_deployment" "1_regional" {
     "aws_api_gateway_deployment.9_regional",
   ]
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   provider = "aws.1"
   count    = "${local.api_gateway_1_count + local.api_gateway_1_regional_count == 2 ? 1 : 0}"
 }
@@ -458,6 +470,10 @@ resource "aws_api_gateway_deployment" "1_global" {
     "aws_api_gateway_deployment.8_global",
     "aws_api_gateway_deployment.9_global",
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   provider = "aws.1"
   count    = "${local.api_gateway_1_count + local.api_gateway_1_global_count == 2 ? 1 : 0}"
@@ -585,6 +601,10 @@ resource "aws_api_gateway_deployment" "2_regional" {
     "aws_api_gateway_deployment.9_regional",
   ]
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   provider = "aws.2"
   count    = "${local.api_gateway_2_count + local.api_gateway_2_regional_count == 2 ? 1 : 0}"
 }
@@ -695,6 +715,10 @@ resource "aws_api_gateway_deployment" "2_global" {
     "aws_api_gateway_deployment.8_global",
     "aws_api_gateway_deployment.9_global",
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   provider = "aws.2"
   count    = "${local.api_gateway_2_count + local.api_gateway_2_global_count == 2 ? 1 : 0}"
@@ -821,6 +845,10 @@ resource "aws_api_gateway_deployment" "3_regional" {
     "aws_api_gateway_deployment.9_regional",
   ]
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   provider = "aws.3"
   count    = "${local.api_gateway_3_count + local.api_gateway_3_regional_count == 2 ? 1 : 0}"
 }
@@ -930,6 +958,10 @@ resource "aws_api_gateway_deployment" "3_global" {
     "aws_api_gateway_deployment.8_global",
     "aws_api_gateway_deployment.9_global",
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   provider = "aws.3"
   count    = "${local.api_gateway_3_count + local.api_gateway_3_global_count == 2 ? 1 : 0}"
@@ -1055,6 +1087,10 @@ resource "aws_api_gateway_deployment" "4_regional" {
     "aws_api_gateway_deployment.9_regional",
   ]
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   provider = "aws.4"
   count    = "${local.api_gateway_4_count + local.api_gateway_4_regional_count == 2 ? 1 : 0}"
 }
@@ -1163,6 +1199,10 @@ resource "aws_api_gateway_deployment" "4_global" {
     "aws_api_gateway_deployment.8_global",
     "aws_api_gateway_deployment.9_global",
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   provider = "aws.4"
   count    = "${local.api_gateway_4_count + local.api_gateway_4_global_count == 2 ? 1 : 0}"
@@ -1287,6 +1327,10 @@ resource "aws_api_gateway_deployment" "5_regional" {
     "aws_api_gateway_deployment.9_regional",
   ]
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   provider = "aws.5"
   count    = "${local.api_gateway_5_count + local.api_gateway_5_regional_count == 2 ? 1 : 0}"
 }
@@ -1394,6 +1438,10 @@ resource "aws_api_gateway_deployment" "5_global" {
     "aws_api_gateway_deployment.8_global",
     "aws_api_gateway_deployment.9_global",
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   provider = "aws.5"
   count    = "${local.api_gateway_5_count + local.api_gateway_5_global_count == 2 ? 1 : 0}"
@@ -1517,6 +1565,10 @@ resource "aws_api_gateway_deployment" "6_regional" {
     "aws_api_gateway_deployment.9_regional",
   ]
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   provider = "aws.6"
   count    = "${local.api_gateway_6_count + local.api_gateway_6_regional_count == 2 ? 1 : 0}"
 }
@@ -1623,6 +1675,10 @@ resource "aws_api_gateway_deployment" "6_global" {
     "aws_api_gateway_deployment.8_global",
     "aws_api_gateway_deployment.9_global",
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   provider = "aws.6"
   count    = "${local.api_gateway_6_count + local.api_gateway_6_global_count == 2 ? 1 : 0}"
@@ -1745,6 +1801,10 @@ resource "aws_api_gateway_deployment" "7_regional" {
     "aws_api_gateway_deployment.9_regional",
   ]
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   provider = "aws.7"
   count    = "${local.api_gateway_7_count + local.api_gateway_7_regional_count == 2 ? 1 : 0}"
 }
@@ -1850,6 +1910,10 @@ resource "aws_api_gateway_deployment" "7_global" {
     "aws_api_gateway_deployment.8_global",
     "aws_api_gateway_deployment.9_global",
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   provider = "aws.7"
   count    = "${local.api_gateway_7_count + local.api_gateway_7_global_count == 2 ? 1 : 0}"
@@ -1971,6 +2035,10 @@ resource "aws_api_gateway_deployment" "8_regional" {
     "aws_api_gateway_deployment.9_regional",
   ]
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   provider = "aws.8"
   count    = "${local.api_gateway_8_count + local.api_gateway_8_regional_count == 2 ? 1 : 0}"
 }
@@ -2075,6 +2143,10 @@ resource "aws_api_gateway_deployment" "8_global" {
   depends_on = [
     "aws_api_gateway_deployment.9_global",
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   provider = "aws.8"
   count    = "${local.api_gateway_8_count + local.api_gateway_8_global_count == 2 ? 1 : 0}"
@@ -2195,6 +2267,10 @@ resource "aws_api_gateway_deployment" "9_regional" {
   depends_on = [
   ]
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   provider = "aws.9"
   count    = "${local.api_gateway_9_count + local.api_gateway_9_regional_count == 2 ? 1 : 0}"
 }
@@ -2298,6 +2374,10 @@ resource "aws_api_gateway_deployment" "9_global" {
 
   depends_on = [
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   provider = "aws.9"
   count    = "${local.api_gateway_9_count + local.api_gateway_9_global_count == 2 ? 1 : 0}"

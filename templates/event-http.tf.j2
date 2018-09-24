@@ -102,6 +102,10 @@ resource "aws_api_gateway_deployment" "{{i}}_regional" {
     {%- endfor %}
   ]
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   provider = "aws.{{i}}"
   count    = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_regional_count == 2 ? 1 : 0}"
 }
@@ -208,6 +212,10 @@ resource "aws_api_gateway_deployment" "{{i}}_global" {
     "aws_api_gateway_deployment.{{n}}_global",
     {%- endfor %}
   ]
+
+  lifecycle {
+    create_before_destroy = true
+  }
 
   provider = "aws.{{i}}"
   count    = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_global_count == 2 ? 1 : 0}"
