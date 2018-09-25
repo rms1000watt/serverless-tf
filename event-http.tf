@@ -83,11 +83,6 @@ resource "aws_api_gateway_integration" "0_w_auth_regional" {
 }
 
 resource "aws_api_gateway_deployment" "0_regional" {
-  depends_on = [
-    "aws_api_gateway_integration.0_n_auth_regional",
-    "aws_api_gateway_integration.0_w_auth_regional",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.0_regional.id}"
   stage_name  = "${local.api_gateway_0_stage}"
 
@@ -96,6 +91,8 @@ resource "aws_api_gateway_deployment" "0_regional" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.0_n_auth_regional",
+    "aws_api_gateway_integration.0_w_auth_regional",
     "aws_api_gateway_deployment.1_regional",
     "aws_api_gateway_deployment.2_regional",
     "aws_api_gateway_deployment.3_regional",
@@ -200,11 +197,6 @@ resource "aws_api_gateway_integration" "0_w_auth_global" {
 }
 
 resource "aws_api_gateway_deployment" "0_global" {
-  depends_on = [
-    "aws_api_gateway_integration.0_n_auth_global",
-    "aws_api_gateway_integration.0_w_auth_global",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
   stage_name  = "${local.api_gateway_0_stage}"
 
@@ -213,6 +205,8 @@ resource "aws_api_gateway_deployment" "0_global" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.0_n_auth_global",
+    "aws_api_gateway_integration.0_w_auth_global",
     "aws_api_gateway_deployment.1_global",
     "aws_api_gateway_deployment.2_global",
     "aws_api_gateway_deployment.3_global",
@@ -332,11 +326,6 @@ resource "aws_api_gateway_integration" "1_w_auth_regional" {
 }
 
 resource "aws_api_gateway_deployment" "1_regional" {
-  depends_on = [
-    "aws_api_gateway_integration.1_n_auth_regional",
-    "aws_api_gateway_integration.1_w_auth_regional",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.1_regional.id}"
   stage_name  = "${local.api_gateway_1_stage}"
 
@@ -345,6 +334,8 @@ resource "aws_api_gateway_deployment" "1_regional" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.1_n_auth_regional",
+    "aws_api_gateway_integration.1_w_auth_regional",
     "aws_api_gateway_deployment.2_regional",
     "aws_api_gateway_deployment.3_regional",
     "aws_api_gateway_deployment.4_regional",
@@ -448,11 +439,6 @@ resource "aws_api_gateway_integration" "1_w_auth_global" {
 }
 
 resource "aws_api_gateway_deployment" "1_global" {
-  depends_on = [
-    "aws_api_gateway_integration.1_n_auth_global",
-    "aws_api_gateway_integration.1_w_auth_global",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
   stage_name  = "${local.api_gateway_1_stage}"
 
@@ -461,6 +447,8 @@ resource "aws_api_gateway_deployment" "1_global" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.1_n_auth_global",
+    "aws_api_gateway_integration.1_w_auth_global",
     "aws_api_gateway_deployment.2_global",
     "aws_api_gateway_deployment.3_global",
     "aws_api_gateway_deployment.4_global",
@@ -579,11 +567,6 @@ resource "aws_api_gateway_integration" "2_w_auth_regional" {
 }
 
 resource "aws_api_gateway_deployment" "2_regional" {
-  depends_on = [
-    "aws_api_gateway_integration.2_n_auth_regional",
-    "aws_api_gateway_integration.2_w_auth_regional",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.2_regional.id}"
   stage_name  = "${local.api_gateway_2_stage}"
 
@@ -592,6 +575,8 @@ resource "aws_api_gateway_deployment" "2_regional" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.2_n_auth_regional",
+    "aws_api_gateway_integration.2_w_auth_regional",
     "aws_api_gateway_deployment.3_regional",
     "aws_api_gateway_deployment.4_regional",
     "aws_api_gateway_deployment.5_regional",
@@ -694,11 +679,6 @@ resource "aws_api_gateway_integration" "2_w_auth_global" {
 }
 
 resource "aws_api_gateway_deployment" "2_global" {
-  depends_on = [
-    "aws_api_gateway_integration.2_n_auth_global",
-    "aws_api_gateway_integration.2_w_auth_global",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
   stage_name  = "${local.api_gateway_2_stage}"
 
@@ -707,6 +687,8 @@ resource "aws_api_gateway_deployment" "2_global" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.2_n_auth_global",
+    "aws_api_gateway_integration.2_w_auth_global",
     "aws_api_gateway_deployment.3_global",
     "aws_api_gateway_deployment.4_global",
     "aws_api_gateway_deployment.5_global",
@@ -824,11 +806,6 @@ resource "aws_api_gateway_integration" "3_w_auth_regional" {
 }
 
 resource "aws_api_gateway_deployment" "3_regional" {
-  depends_on = [
-    "aws_api_gateway_integration.3_n_auth_regional",
-    "aws_api_gateway_integration.3_w_auth_regional",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.3_regional.id}"
   stage_name  = "${local.api_gateway_3_stage}"
 
@@ -837,6 +814,8 @@ resource "aws_api_gateway_deployment" "3_regional" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.3_n_auth_regional",
+    "aws_api_gateway_integration.3_w_auth_regional",
     "aws_api_gateway_deployment.4_regional",
     "aws_api_gateway_deployment.5_regional",
     "aws_api_gateway_deployment.6_regional",
@@ -938,11 +917,6 @@ resource "aws_api_gateway_integration" "3_w_auth_global" {
 }
 
 resource "aws_api_gateway_deployment" "3_global" {
-  depends_on = [
-    "aws_api_gateway_integration.3_n_auth_global",
-    "aws_api_gateway_integration.3_w_auth_global",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
   stage_name  = "${local.api_gateway_3_stage}"
 
@@ -951,6 +925,8 @@ resource "aws_api_gateway_deployment" "3_global" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.3_n_auth_global",
+    "aws_api_gateway_integration.3_w_auth_global",
     "aws_api_gateway_deployment.4_global",
     "aws_api_gateway_deployment.5_global",
     "aws_api_gateway_deployment.6_global",
@@ -1067,11 +1043,6 @@ resource "aws_api_gateway_integration" "4_w_auth_regional" {
 }
 
 resource "aws_api_gateway_deployment" "4_regional" {
-  depends_on = [
-    "aws_api_gateway_integration.4_n_auth_regional",
-    "aws_api_gateway_integration.4_w_auth_regional",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.4_regional.id}"
   stage_name  = "${local.api_gateway_4_stage}"
 
@@ -1080,6 +1051,8 @@ resource "aws_api_gateway_deployment" "4_regional" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.4_n_auth_regional",
+    "aws_api_gateway_integration.4_w_auth_regional",
     "aws_api_gateway_deployment.5_regional",
     "aws_api_gateway_deployment.6_regional",
     "aws_api_gateway_deployment.7_regional",
@@ -1180,11 +1153,6 @@ resource "aws_api_gateway_integration" "4_w_auth_global" {
 }
 
 resource "aws_api_gateway_deployment" "4_global" {
-  depends_on = [
-    "aws_api_gateway_integration.4_n_auth_global",
-    "aws_api_gateway_integration.4_w_auth_global",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
   stage_name  = "${local.api_gateway_4_stage}"
 
@@ -1193,6 +1161,8 @@ resource "aws_api_gateway_deployment" "4_global" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.4_n_auth_global",
+    "aws_api_gateway_integration.4_w_auth_global",
     "aws_api_gateway_deployment.5_global",
     "aws_api_gateway_deployment.6_global",
     "aws_api_gateway_deployment.7_global",
@@ -1308,11 +1278,6 @@ resource "aws_api_gateway_integration" "5_w_auth_regional" {
 }
 
 resource "aws_api_gateway_deployment" "5_regional" {
-  depends_on = [
-    "aws_api_gateway_integration.5_n_auth_regional",
-    "aws_api_gateway_integration.5_w_auth_regional",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.5_regional.id}"
   stage_name  = "${local.api_gateway_5_stage}"
 
@@ -1321,6 +1286,8 @@ resource "aws_api_gateway_deployment" "5_regional" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.5_n_auth_regional",
+    "aws_api_gateway_integration.5_w_auth_regional",
     "aws_api_gateway_deployment.6_regional",
     "aws_api_gateway_deployment.7_regional",
     "aws_api_gateway_deployment.8_regional",
@@ -1420,11 +1387,6 @@ resource "aws_api_gateway_integration" "5_w_auth_global" {
 }
 
 resource "aws_api_gateway_deployment" "5_global" {
-  depends_on = [
-    "aws_api_gateway_integration.5_n_auth_global",
-    "aws_api_gateway_integration.5_w_auth_global",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
   stage_name  = "${local.api_gateway_5_stage}"
 
@@ -1433,6 +1395,8 @@ resource "aws_api_gateway_deployment" "5_global" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.5_n_auth_global",
+    "aws_api_gateway_integration.5_w_auth_global",
     "aws_api_gateway_deployment.6_global",
     "aws_api_gateway_deployment.7_global",
     "aws_api_gateway_deployment.8_global",
@@ -1547,11 +1511,6 @@ resource "aws_api_gateway_integration" "6_w_auth_regional" {
 }
 
 resource "aws_api_gateway_deployment" "6_regional" {
-  depends_on = [
-    "aws_api_gateway_integration.6_n_auth_regional",
-    "aws_api_gateway_integration.6_w_auth_regional",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.6_regional.id}"
   stage_name  = "${local.api_gateway_6_stage}"
 
@@ -1560,6 +1519,8 @@ resource "aws_api_gateway_deployment" "6_regional" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.6_n_auth_regional",
+    "aws_api_gateway_integration.6_w_auth_regional",
     "aws_api_gateway_deployment.7_regional",
     "aws_api_gateway_deployment.8_regional",
     "aws_api_gateway_deployment.9_regional",
@@ -1658,11 +1619,6 @@ resource "aws_api_gateway_integration" "6_w_auth_global" {
 }
 
 resource "aws_api_gateway_deployment" "6_global" {
-  depends_on = [
-    "aws_api_gateway_integration.6_n_auth_global",
-    "aws_api_gateway_integration.6_w_auth_global",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
   stage_name  = "${local.api_gateway_6_stage}"
 
@@ -1671,6 +1627,8 @@ resource "aws_api_gateway_deployment" "6_global" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.6_n_auth_global",
+    "aws_api_gateway_integration.6_w_auth_global",
     "aws_api_gateway_deployment.7_global",
     "aws_api_gateway_deployment.8_global",
     "aws_api_gateway_deployment.9_global",
@@ -1784,11 +1742,6 @@ resource "aws_api_gateway_integration" "7_w_auth_regional" {
 }
 
 resource "aws_api_gateway_deployment" "7_regional" {
-  depends_on = [
-    "aws_api_gateway_integration.7_n_auth_regional",
-    "aws_api_gateway_integration.7_w_auth_regional",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.7_regional.id}"
   stage_name  = "${local.api_gateway_7_stage}"
 
@@ -1797,6 +1750,8 @@ resource "aws_api_gateway_deployment" "7_regional" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.7_n_auth_regional",
+    "aws_api_gateway_integration.7_w_auth_regional",
     "aws_api_gateway_deployment.8_regional",
     "aws_api_gateway_deployment.9_regional",
   ]
@@ -1894,11 +1849,6 @@ resource "aws_api_gateway_integration" "7_w_auth_global" {
 }
 
 resource "aws_api_gateway_deployment" "7_global" {
-  depends_on = [
-    "aws_api_gateway_integration.7_n_auth_global",
-    "aws_api_gateway_integration.7_w_auth_global",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
   stage_name  = "${local.api_gateway_7_stage}"
 
@@ -1907,6 +1857,8 @@ resource "aws_api_gateway_deployment" "7_global" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.7_n_auth_global",
+    "aws_api_gateway_integration.7_w_auth_global",
     "aws_api_gateway_deployment.8_global",
     "aws_api_gateway_deployment.9_global",
   ]
@@ -2019,11 +1971,6 @@ resource "aws_api_gateway_integration" "8_w_auth_regional" {
 }
 
 resource "aws_api_gateway_deployment" "8_regional" {
-  depends_on = [
-    "aws_api_gateway_integration.8_n_auth_regional",
-    "aws_api_gateway_integration.8_w_auth_regional",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.8_regional.id}"
   stage_name  = "${local.api_gateway_8_stage}"
 
@@ -2032,6 +1979,8 @@ resource "aws_api_gateway_deployment" "8_regional" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.8_n_auth_regional",
+    "aws_api_gateway_integration.8_w_auth_regional",
     "aws_api_gateway_deployment.9_regional",
   ]
 
@@ -2128,11 +2077,6 @@ resource "aws_api_gateway_integration" "8_w_auth_global" {
 }
 
 resource "aws_api_gateway_deployment" "8_global" {
-  depends_on = [
-    "aws_api_gateway_integration.8_n_auth_global",
-    "aws_api_gateway_integration.8_w_auth_global",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
   stage_name  = "${local.api_gateway_8_stage}"
 
@@ -2141,6 +2085,8 @@ resource "aws_api_gateway_deployment" "8_global" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.8_n_auth_global",
+    "aws_api_gateway_integration.8_w_auth_global",
     "aws_api_gateway_deployment.9_global",
   ]
 
@@ -2252,11 +2198,6 @@ resource "aws_api_gateway_integration" "9_w_auth_regional" {
 }
 
 resource "aws_api_gateway_deployment" "9_regional" {
-  depends_on = [
-    "aws_api_gateway_integration.9_n_auth_regional",
-    "aws_api_gateway_integration.9_w_auth_regional",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.9_regional.id}"
   stage_name  = "${local.api_gateway_9_stage}"
 
@@ -2265,6 +2206,8 @@ resource "aws_api_gateway_deployment" "9_regional" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.9_n_auth_regional",
+    "aws_api_gateway_integration.9_w_auth_regional",
   ]
 
   lifecycle {
@@ -2360,11 +2303,6 @@ resource "aws_api_gateway_integration" "9_w_auth_global" {
 }
 
 resource "aws_api_gateway_deployment" "9_global" {
-  depends_on = [
-    "aws_api_gateway_integration.9_n_auth_global",
-    "aws_api_gateway_integration.9_w_auth_global",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
   stage_name  = "${local.api_gateway_9_stage}"
 
@@ -2373,6 +2311,8 @@ resource "aws_api_gateway_deployment" "9_global" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.9_n_auth_global",
+    "aws_api_gateway_integration.9_w_auth_global",
   ]
 
   lifecycle {

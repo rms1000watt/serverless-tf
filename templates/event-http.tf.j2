@@ -84,11 +84,6 @@ resource "aws_api_gateway_integration" "{{i}}_w_auth_regional" {
 }
 
 resource "aws_api_gateway_deployment" "{{i}}_regional" {
-  depends_on = [
-    "aws_api_gateway_integration.{{i}}_n_auth_regional",
-    "aws_api_gateway_integration.{{i}}_w_auth_regional",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.{{i}}_regional.id}"
   stage_name  = "${local.api_gateway_{{i}}_stage}"
 
@@ -97,6 +92,8 @@ resource "aws_api_gateway_deployment" "{{i}}_regional" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.{{i}}_n_auth_regional",
+    "aws_api_gateway_integration.{{i}}_w_auth_regional",
     {%- for n in range(i+1, max_functions) %}
     "aws_api_gateway_deployment.{{n}}_regional",
     {%- endfor %}
@@ -195,11 +192,6 @@ resource "aws_api_gateway_integration" "{{i}}_w_auth_global" {
 }
 
 resource "aws_api_gateway_deployment" "{{i}}_global" {
-  depends_on = [
-    "aws_api_gateway_integration.{{i}}_n_auth_global",
-    "aws_api_gateway_integration.{{i}}_w_auth_global",
-  ]
-
   rest_api_id = "${aws_api_gateway_rest_api.global.id}"
   stage_name  = "${local.api_gateway_{{i}}_stage}"
 
@@ -208,6 +200,8 @@ resource "aws_api_gateway_deployment" "{{i}}_global" {
   }
 
   depends_on = [
+    "aws_api_gateway_integration.{{i}}_n_auth_global",
+    "aws_api_gateway_integration.{{i}}_w_auth_global",
     {%- for n in range(i+1, max_functions) %}
     "aws_api_gateway_deployment.{{n}}_global",
     {%- endfor %}
