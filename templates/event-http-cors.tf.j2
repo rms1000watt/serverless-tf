@@ -1,0 +1,126 @@
+// GENERATED FILE: DO NOT EDIT
+{%- for i in range(max_functions) %}
+
+resource "aws_api_gateway_method" "{{i}}_options_global" {
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  resource_id = "${aws_api_gateway_resource.{{i}}_global.id}"
+  http_method = "OPTIONS"
+  authorization = "NONE"
+
+  provider = "aws.{{i}}"
+  count    = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_global_count == 2 ? 1 : 0}"
+}
+
+resource "aws_api_gateway_integration" "{{i}}_options_global" {
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  resource_id = "${aws_api_gateway_resource.{{i}}_global.id}"
+  http_method = "${aws_api_gateway_method.{{i}}_options_global.http_method}"
+  type = "MOCK"
+
+  request_templates = {
+    "application/json" = <<EOF
+{ "statusCode": 200 }
+EOF
+  }
+
+  provider = "aws.{{i}}"
+  count    = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_global_count == 2 ? 1 : 0}"
+}
+
+resource "aws_api_gateway_integration_response" "{{i}}_options_global" {
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  resource_id = "${aws_api_gateway_resource.{{i}}_global.id}"
+  http_method = "${aws_api_gateway_method.{{i}}_options_global.http_method}"
+  status_code = "200"
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods" = "'POST,OPTIONS,GET,PUT,PATCH,DELETE'",
+    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+  }
+
+  depends_on = ["aws_api_gateway_integration.{{i}}_options_global"]
+
+  provider = "aws.{{i}}"
+  count    = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_global_count == 2 ? 1 : 0}"
+}
+
+resource "aws_api_gateway_method_response" "{{i}}_options_global" {
+  rest_api_id = "${aws_api_gateway_rest_api.global.id}"
+  resource_id = "${aws_api_gateway_resource.{{i}}_global.id}"
+  http_method = "OPTIONS"
+  status_code = "200"
+  response_models = { "application/json" = "Empty" }
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true,
+    "method.response.header.Access-Control-Allow-Origin" = true
+  }
+
+  depends_on = ["aws_api_gateway_method.{{i}}_options_global"]
+
+  provider = "aws.{{i}}"
+  count    = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_global_count == 2 ? 1 : 0}"
+}
+
+resource "aws_api_gateway_method" "{{i}}_options_regional" {
+  rest_api_id = "${aws_api_gateway_rest_api.{{i}}_regional.id}"
+  resource_id = "${aws_api_gateway_resource.{{i}}_regional.id}"
+  http_method = "OPTIONS"
+  authorization = "NONE"
+
+  provider = "aws.{{i}}"
+  count    = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_regional_count == 2 ? 1 : 0}"
+}
+
+resource "aws_api_gateway_integration" "{{i}}_options_regional" {
+  rest_api_id = "${aws_api_gateway_rest_api.{{i}}_regional.id}"
+  resource_id = "${aws_api_gateway_resource.{{i}}_regional.id}"
+  http_method = "${aws_api_gateway_method.{{i}}_options_regional.http_method}"
+  type = "MOCK"
+
+  request_templates = {
+    "application/json" = <<EOF
+{ "statusCode": 200 }
+EOF
+  }
+
+  provider = "aws.{{i}}"
+  count    = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_regional_count == 2 ? 1 : 0}"
+}
+
+resource "aws_api_gateway_integration_response" "{{i}}_options_regional" {
+  rest_api_id = "${aws_api_gateway_rest_api.{{i}}_regional.id}"
+  resource_id = "${aws_api_gateway_resource.{{i}}_regional.id}"
+  http_method = "${aws_api_gateway_method.{{i}}_options_regional.http_method}"
+  status_code = "200"
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'",
+    "method.response.header.Access-Control-Allow-Methods" = "'POST,OPTIONS,GET,PUT,PATCH,DELETE'",
+    "method.response.header.Access-Control-Allow-Origin" = "'*'"
+  }
+
+  depends_on = ["aws_api_gateway_integration.{{i}}_options_regional"]
+
+  provider = "aws.{{i}}"
+  count    = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_regional_count == 2 ? 1 : 0}"
+}
+
+resource "aws_api_gateway_method_response" "{{i}}_options_regional" {
+  rest_api_id = "${aws_api_gateway_rest_api.{{i}}_regional.id}"
+  resource_id = "${aws_api_gateway_resource.{{i}}_regional.id}"
+  http_method = "OPTIONS"
+  status_code = "200"
+  response_models = { "application/json" = "Empty" }
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = true,
+    "method.response.header.Access-Control-Allow-Methods" = true,
+    "method.response.header.Access-Control-Allow-Origin" = true
+  }
+
+  depends_on = ["aws_api_gateway_method.{{i}}_options_regional"]
+
+  provider = "aws.{{i}}"
+  count    = "${local.api_gateway_{{i}}_count + local.api_gateway_{{i}}_regional_count == 2 ? 1 : 0}"
+}
+
+{%- endfor %}

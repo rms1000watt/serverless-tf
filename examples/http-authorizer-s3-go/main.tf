@@ -32,7 +32,7 @@ module "serverless" {
     {
       file       = "main.go"
       name       = "authorizer-1"
-      vendor_cmd = "govendor sync"
+      vendor_cmd = "dep ensure"
     },
     {
       file = "../http-go/main.go"

@@ -8,7 +8,7 @@ module "serverless" {
   functions = [
     {
       file          = "main.go"
-      vendor_cmd    = "govendor sync"
+      vendor_cmd    = "dep ensure"
       test_cmd      = "go test ./..."
       schedule_rate = "rate(1 minute)"
     },

@@ -2,10 +2,7 @@
 bin
 .terraform
 *tfstate*
-*vendor/*
-!*vendor/vendor.json
-examples/*/vendor/*
-!examples/*/vendor/vendor.json
+vendor
 saved-plan
 j2.json
 ignore*

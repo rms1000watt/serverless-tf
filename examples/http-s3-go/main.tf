@@ -41,7 +41,7 @@ module "serverless" {
   functions = [
     {
       file       = "main.go"
-      vendor_cmd = "govendor sync"
+      vendor_cmd = "dep ensure"
       role_arn   = "arn:aws:iam::${local.account_id}:role/${local.role_name}"
       http_path  = "s3-get"
 

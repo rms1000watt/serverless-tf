@@ -202,7 +202,7 @@ module "serverless" {
     {
       file       = "main.go"
       name       = "authorizer-1"
-      vendor_cmd = "govendor sync"
+      vendor_cmd = "dep ensure"
     },
     {
       file = "../hello-world-go/main.go"
@@ -233,7 +233,7 @@ module "serverless" {
   functions = [
     {
       file       = "main.go"       // required (usage: relative path to file: main.go, ../main.go, path/to/main.go)
-      vendor_cmd = "govendor sync" // optional (default: "")
+      vendor_cmd = "dep ensure" // optional (default: "")
       test_cmd   = "go test ./..." // optional (default: "")
       name       = ""              // optional (default: folder name + basename(file) + list_index, only required if this will be authorizer)
       runtime    = ""              // optional (default: go1.x for *.go, python3.6 for *.py, nodejs8.10 for *.js)
