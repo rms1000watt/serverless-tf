@@ -100,7 +100,7 @@ locals {
   api_gateway_{{i}}_authorizer_count            = "${local.api_gateway_{{i}}_authorizer != "" ? 1 : 0}"
   api_gateway_{{i}}_authorization               = "${local.api_gateway_{{i}}_authorizer != "" ? "CUSTOM" : "NONE"}"
   api_gateway_{{i}}_authorizer_full_name        = "${local.service_name}-${local.stage}-${local.api_gateway_{{i}}_authorizer}"
-  api_gateway_{{i}}_authorizer_lambda_arn       = "arn:aws:lambda:${lookup(local.lambda_name_region, local.api_gateway_{{i}}_authorizer)}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_{{i}}_authorizer_full_name}"
+  api_gateway_{{i}}_authorizer_lambda_arn       = "arn:aws:lambda:${lookup(local.lambda_name_region, local.api_gateway_{{i}}_authorizer, "")}:${data.aws_caller_identity.current.account_id}:function:${local.api_gateway_{{i}}_authorizer_full_name}"
   api_gateway_{{i}}_authorizer_uri              = "arn:aws:apigateway:${local.lambda_{{i}}_region}:lambda:path/2015-03-31/functions/${local.api_gateway_{{i}}_authorizer_lambda_arn}/invocations"
   api_gateway_{{i}}_authorizer_policy_arn       = "${lookup(local.lambda_{{i}}, "http_authorizer_policy_arn", "")}"
   api_gateway_{{i}}_authorizer_policy_arn_count = "${local.api_gateway_{{i}}_authorizer_policy_arn != "" ? 1 : 0}"
