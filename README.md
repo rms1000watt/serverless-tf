@@ -272,7 +272,7 @@ Since this is a module, the ouput needs to be mapped from the module to your imp
 
 ## Limitations
 
-- Up to 10 functions per module (configurable.. update `generator.sh` then submit a PR)
+- Up to 5 functions per module (configurable.. update `generator.sh` then submit a PR)
 - No duplicate event-type per function (ie. only 1 `http_path` per function)
 - Depth of 1 API Gateway path
 - No dynamic path parameters in API Gateway

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-MAX_FUNCTIONS=10
+MAX_FUNCTIONS=5
 
 echo "Requires:"
 echo "    sudo pip install jinja2 jinja2-cli"
